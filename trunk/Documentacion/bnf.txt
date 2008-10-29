@@ -1,0 +1,65 @@
+=======================================
+Gramatica Inicial
+=======================================
+
+ExpReg -> ExpReg "|" Concat
+ExpReg -> Concat
+
+Concat -> Concat Grupo
+Concat -> Grupo
+
+Grupo  -> Elem Oper
+Grupo  -> Elem
+
+Elem   -> "(" ExpReg ")"
+Elem   -> SimLen
+
+Oper   -> "*"
+Oper   -> "+"
+Oper   -> "?"
+
+SimLen -> simbolos_del_alfabeto
+
+=======================================
+Eliminaci n de Recursividad
+=======================================
+
+ExpReg -> Concat R1
+R1     -> "|" Concat R1 | €
+
+Concat -> Grupo R2
+R2     -> Grupo R2 | €
+
+Grupo  -> Elem Oper
+Grupo  -> Elem
+
+Elem   -> "(" ExpReg ")"
+Elem   -> SimLen
+
+Oper   -> "*"
+Oper   -> "+"
+Oper   -> "?"
+
+SimLen -> simbolos_del_alfabeto
+
+=======================================
+Factorizaci n
+=======================================
+
+ExpReg -> Concat R1
+R1     -> "|" Concat R1 | €
+
+Concat -> Grupo R2
+R2     -> Grupo R2 | €
+
+Grupo  -> Elem R3
+R3     -> Oper | €
+
+Elem   -> "(" ExpReg ")"
+Elem   -> SimLen
+
+Oper   -> "*"
+Oper   -> "+"
+Oper   -> "?"
+
+SimLen -> simbolos_del_alfabeto
