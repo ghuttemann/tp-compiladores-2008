@@ -70,7 +70,14 @@ public class Alfabeto {
     
     @Override
     public String toString() {
-        String salida = "";
+        String salida = "{";
+        
+        for (int i=0; i < this.getTamaño(); i++) {
+            salida += simbolos.get(i);
+            
+            if (i < this.getTamaño()-1)
+                salida += ", ";
+        }
         
         return salida;
     }
