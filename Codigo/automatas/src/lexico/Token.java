@@ -6,7 +6,7 @@
 package lexico;
 
 /**
- *
+ * Clase que representa un token de una expresión regular.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  * @see TokenExprReg
@@ -24,8 +24,9 @@ public class Token {
     private String valor;
     
     /**
-     * 
-     * @param token
+     * Constructor por defecto.
+     * @param token El tipo de token que deseamos crear.
+     * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
     public Token(TokenExprReg token) throws Exception {
         if (token == TokenExprReg.CERO_MAS) {
@@ -69,6 +70,10 @@ public class Token {
         }
     }
     
+    /**
+     * Constructor para simbolos del alfabeto.
+     * @param simbolo Símbolo del alfabeto para el token.
+     */
     public Token(String simbolo) {
         ident = TokenExprReg.SIM_LEN;
         valor = simbolo;
