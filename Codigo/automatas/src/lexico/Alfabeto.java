@@ -81,4 +81,39 @@ public class Alfabeto {
         
         return salida;
     }
+    
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        final Alfabeto other = (Alfabeto) obj;
+        
+        // Si los tamaños son distintos, no pueden ser iguales.
+        if (other.getTamaño() != this.getTamaño())
+            return false;
+        
+        // Verificamos cada uno de los símbolos
+        for (int i=0; i < this.getTamaño(); i++) {
+            String tmp1 = this.getSimbolo(i);
+            String tmp2 = other.getSimbolo(i);
+            
+            if (!tmp1.equals(tmp2))
+                return false;
+        }
+        
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 3;
+        hash = 41 * hash + (this.simbolos != null ? this.simbolos.hashCode() : 0);
+        return hash;
+    }
 }
