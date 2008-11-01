@@ -1,8 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico de Compiladores 2008.
+ * 10mo Semestre Ingeniería Infomática.
  */
-
 package lexico;
 
 /**
