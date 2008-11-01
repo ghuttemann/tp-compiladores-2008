@@ -20,7 +20,7 @@ public enum TokenExprReg {
     PAREN_IZQ,
     
     // Operador de unión, "|"
-    OPCION,
+    UNION,
     
     // Operador de cerradura de Kleene, "*"
     CERO_MAS,
