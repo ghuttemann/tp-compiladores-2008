@@ -44,8 +44,8 @@ public class Token {
             ident = TokenExprReg.CONCAT;
             valor = "";
         }
-        else if (token == TokenExprReg.OPCION) {
-            ident = TokenExprReg.OPCION;
+        else if (token == TokenExprReg.UNION) {
+            ident = TokenExprReg.UNION;
             valor = "|";
         }
         else if (token == TokenExprReg.PAREN_DER) {
