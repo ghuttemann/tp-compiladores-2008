@@ -1,5 +1,5 @@
 =======================================
-Gramatica Inicial
+Gramática Inicial
 =======================================
 
 ExpReg -> ExpReg "|" Concat
@@ -21,7 +21,7 @@ Oper   -> "?"
 SimLen -> simbolos_del_alfabeto
 
 =======================================
-Eliminaci n de Recursividad
+Eliminación de Recursividad
 =======================================
 
 ExpReg -> Concat R1
@@ -43,7 +43,7 @@ Oper   -> "?"
 SimLen -> simbolos_del_alfabeto
 
 =======================================
-Factorizaci n
+Factorización
 =======================================
 
 ExpReg -> Concat R1
