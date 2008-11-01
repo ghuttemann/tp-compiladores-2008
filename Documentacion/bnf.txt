@@ -63,3 +63,28 @@ Oper   -> "+"
 Oper   -> "?"
 
 SimLen -> simbolos_del_alfabeto
+
+=======================================
+Esquema de traducción
+=======================================
+
+ExpReg -> Concat R1
+R1     -> "|" Concat {print "|"} R1
+R1     -> €
+
+Concat -> Grupo R2
+R2     -> Grupo {print "#"} R2
+R2     -> €
+
+Grupo  -> Elem R3
+R3     -> Oper
+R3     -> €
+
+Elem   -> "(" ExpReg ")"
+Elem   -> SimLen
+
+Oper   -> "*" {print "*"}
+Oper   -> "+" {print "+"}
+Oper   -> "?" {print "?"}
+
+SimLen -> simbolos_del_alfabeto {print "simbolo"}
