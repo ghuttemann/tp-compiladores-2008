@@ -49,20 +49,28 @@ public class AnalizadorSintactico {
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
         
-        do {
-            ExprReg();
-        } while (preanalisis.getIdentificador() != TokenExprReg.FINAL);
+        ExprReg();
+        
+        if (preanalisis.getIdentificador() != TokenExprReg.FINAL)
+            error("Carácter inválido");
         
         return salida.toString();
     }
     
     /**
      * Método que procesa las uniones de la expresión regular.
-     * @throws java.lang.Exception Propaga la excepción de Concat().
+     * @throws java.lang.Exception Propaga la excepción de Concat() y R1().
      */
     private void ExprReg() throws Exception {
         Concat();
-        
+        R1();
+    }
+    
+    /**
+     * Método que procesa las uniones en forma de lista.
+     * @throws java.lang.Exception Propaga la excepción de Concat().
+     */
+    private void R1() throws Exception {
         while (true) {
             if (preanalisis.getIdentificador() == TokenExprReg.UNION) {
                 match(preanalisis);
@@ -70,6 +78,7 @@ public class AnalizadorSintactico {
                 escribir(new Token(TokenExprReg.UNION));
             }
             else {
+                // Derivar en vacío
                 return;
             }
         }
@@ -77,11 +86,18 @@ public class AnalizadorSintactico {
 
     /**
      * Método que procesa una concatenación en la expresión regular.
-     * @throws java.lang.Exception Propaga la excepción de Grupo().
+     * @throws java.lang.Exception Propaga la excepción de Grupo() y R2().
      */
     private void Concat() throws Exception {
         Grupo();
-        
+        R2();
+    }
+    
+    /**
+     * Método que procesa una concatenación en forma de lista.
+     * @throws java.lang.Exception Propaga la excepción de Grupo().
+     */
+    private void R2() throws Exception {
         while (true) {
             switch (preanalisis.getIdentificador()) {
                 case PAREN_IZQ:
@@ -90,6 +106,7 @@ public class AnalizadorSintactico {
                     escribir(new Token(TokenExprReg.CONCAT));
                     break;
                 default:
+                    // Derivar en vacío
                     return;
             }
         }
@@ -102,7 +119,24 @@ public class AnalizadorSintactico {
      */
     private void Grupo() throws Exception {
         Elem();
-        Oper();
+        R3();
+    }
+    
+    /**
+     * 
+     * @throws java.lang.Exception
+     */
+    private void R3() throws Exception {
+        switch (preanalisis.getIdentificador()) {
+            case CERO_MAS:
+            case UNO_MAS :
+            case CERO_UNO:
+                Oper();
+                break;
+            default:
+                // Derivar en vacío
+                return;
+        }
     }
   
     /**
@@ -132,21 +166,11 @@ public class AnalizadorSintactico {
     
     /**
      * Método que procesa un operador en la expresión regular.
-     * El vacío de R3 se traslada aquí. Se deriva en vacío si
-     * no se encuentra alguno de los operadores.
      * @throws java.lang.Exception Propaga la excepción de match().
      */
     private void Oper() throws Exception {
-        switch (preanalisis.getIdentificador()) {
-            case CERO_MAS:
-            case UNO_MAS :
-            case CERO_UNO:
-                escribir(preanalisis);
-                match(preanalisis);
-                break;
-            default:
-                return;
-        }
+        escribir(preanalisis);
+        match(preanalisis);
     }
     
     /**
@@ -175,7 +199,7 @@ public class AnalizadorSintactico {
         else if (entrada.getIdentificador() == TokenExprReg.PAREN_DER)
             error("Falta paréntesis de cierre");
         else
-            error("Token con valor inválido");
+            error("Carácter inválido");
     }
     
     /**
