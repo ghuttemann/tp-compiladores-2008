@@ -62,22 +62,29 @@ public class Token {
             ident = TokenExprReg.FINAL;
             valor = "";
         }
-        else if (token == TokenExprReg.DESCONOCIDO) {
-            ident = TokenExprReg.DESCONOCIDO;
-            valor = "";
-        }
         else {
             throw new Exception("Token inválido");
         }
     }
     
     /**
-     * Constructor para simbolos del alfabeto.
-     * @param simbolo Símbolo del alfabeto para el token.
+     * Constructor para simbolos del alfabeto y para símbolos desconocidos.
+     * @param token El tipo de token que deseamos crear.
+     * @param simbolo Símbolo del alfabeto o desconocido para el token.
+     * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
-    public Token(String simbolo) {
-        ident = TokenExprReg.SIM_LEN;
-        valor = simbolo;
+    public Token(TokenExprReg token, String simbolo) throws Exception {
+        if (token == TokenExprReg.SIM_LEN) {
+            ident = TokenExprReg.SIM_LEN;
+            valor = simbolo;
+        }
+        else if (token == TokenExprReg.DESCONOCIDO) {
+            ident = TokenExprReg.DESCONOCIDO;
+            valor = simbolo;
+        }
+        else {
+            throw new Exception("Token inválido");
+        }
     }
     
     /**
