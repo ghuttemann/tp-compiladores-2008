@@ -6,7 +6,8 @@
 package analisis;
 
 /**
- * Clase que representa un token de una expresión regular.
+ * Clase que representa un token de una expresión regular. El token
+ * tiene dos atributos: identificador y valor.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  * @see TokenExprReg
@@ -43,7 +44,7 @@ public class Token {
         }
         else if (token == TokenExprReg.CONCAT) {
             ident = TokenExprReg.CONCAT;
-            valor = "";
+            valor = "#";
         }
         else if (token == TokenExprReg.UNION) {
             ident = TokenExprReg.UNION;
@@ -77,6 +78,22 @@ public class Token {
     public Token(String simbolo) {
         ident = TokenExprReg.SIM_LEN;
         valor = simbolo;
+    }
+    
+    /**
+     * Devuelve el atributo <i>identificador</i> del token.
+     * @return Identificador del token.
+     */
+    public TokenExprReg getIdentificador() {
+        return ident;
+    }
+    
+    /**
+     * Devuelve el atributo <i>valor</i> del token.
+     * @return
+     */
+    public String getValor() {
+        return valor;
     }
 
     @Override
