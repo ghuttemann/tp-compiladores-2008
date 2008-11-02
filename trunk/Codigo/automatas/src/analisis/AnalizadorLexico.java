@@ -78,9 +78,9 @@ public class AnalizadorLexico {
             else if (lexema.equals(""))
                 return new Token(TokenExprReg.FINAL);
             else if (alfabeto.contiene(lexema))
-                return new Token(lexema);
+                return new Token(TokenExprReg.SIM_LEN, lexema);
             else
-                return new Token(TokenExprReg.DESCONOCIDO);
+                return new Token(TokenExprReg.DESCONOCIDO, lexema);
         } 
         catch (Exception ex) {
             System.out.println(ex);
