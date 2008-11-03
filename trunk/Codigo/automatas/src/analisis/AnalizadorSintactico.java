@@ -100,10 +100,10 @@ public class AnalizadorSintactico {
     private void R2() throws Exception {
         while (true) {
             switch (preanalisis.getIdentificador()) {
-                case PAREN_IZQ:
-                case SIM_LEN:
+                case PAREN_IZQUIERDO:
+                case ALFABETO:
                     Grupo();
-                    escribir(new Token(TokenExprReg.CONCAT));
+                    escribir(new Token(TokenExprReg.CONCATENACION));
                     break;
                 default:
                     // Derivar en vacío
@@ -128,9 +128,9 @@ public class AnalizadorSintactico {
      */
     private void R3() throws Exception {
         switch (preanalisis.getIdentificador()) {
-            case CERO_MAS:
-            case UNO_MAS :
-            case CERO_UNO:
+            case CERRADURA_KLEENE:
+            case CERRADURA_POSITIVA:
+            case OPCION:
                 Oper();
                 break;
             default:
@@ -150,12 +150,12 @@ public class AnalizadorSintactico {
      */
     private void Elem() throws Exception {
         switch (preanalisis.getIdentificador()) {
-            case PAREN_IZQ:
-                match(new Token(TokenExprReg.PAREN_IZQ));
+            case PAREN_IZQUIERDO:
+                match(new Token(TokenExprReg.PAREN_IZQUIERDO));
                 ExprReg();
-                match(new Token(TokenExprReg.PAREN_DER));
+                match(new Token(TokenExprReg.PAREN_DERECHO));
                 break;
-            case SIM_LEN:
+            case ALFABETO:
                 SimLen();
                 break;
             default:
@@ -196,7 +196,7 @@ public class AnalizadorSintactico {
     private void match(Token entrada) throws Exception {
         if (preanalisis.equals(entrada))
             preanalisis = obtenerToken();
-        else if (entrada.getIdentificador() == TokenExprReg.PAREN_DER)
+        else if (entrada.getIdentificador() == TokenExprReg.PAREN_DERECHO)
             error("Falta paréntesis de cierre");
         else
             error("Carácter inválido");
