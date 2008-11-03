@@ -128,4 +128,8 @@ public class AFN {
     public void agregarEstado(Estado estado) {
         estados.agregar(estado);
     }
+    
+    public Conjunto<Estado> getEstados() {
+        return estados;
+    }
 }
