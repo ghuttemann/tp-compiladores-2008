@@ -13,29 +13,29 @@ package analisis;
  * @see Token
  */
 public enum TokenExprReg {
-    // Paréntesis derecho (grupo)
-    PAREN_DER,
+    // Paréntesis derecho
+    PAREN_DERECHO,
     
-    // Paréntesis izquierdo (grupo)
-    PAREN_IZQ,
+    // Paréntesis izquierdo
+    PAREN_IZQUIERDO,
     
     // Operador de unión, "|"
     UNION,
     
     // Operador de cerradura de Kleene, "*"
-    CERO_MAS,
+    CERRADURA_KLEENE,
     
     // Operador de cerradura positiva, "+"
-    UNO_MAS,
+    CERRADURA_POSITIVA,
     
     // Operador de opción, "?"
-    CERO_UNO,
+    OPCION,
     
     // Operador de concatenación (no tiene dibujo)
-    CONCAT,
+    CONCATENACION,
     
     // Un símbolo del alfabeto
-    SIM_LEN,
+    ALFABETO,
     
     // Finalizador de una expresión regular
     FINAL,
