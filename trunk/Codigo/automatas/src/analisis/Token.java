@@ -30,32 +30,32 @@ public class Token {
      * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
     public Token(TokenExprReg token) throws Exception {
-        if (token == TokenExprReg.CERO_MAS) {
-            ident = TokenExprReg.CERO_MAS;
+        if (token == TokenExprReg.CERRADURA_KLEENE) {
+            ident = TokenExprReg.CERRADURA_KLEENE;
             valor = "*";
         }
-        else if (token == TokenExprReg.CERO_UNO) {
-            ident = TokenExprReg.CERO_UNO;
+        else if (token == TokenExprReg.OPCION) {
+            ident = TokenExprReg.OPCION;
             valor = "?";
         }
-        else if (token == TokenExprReg.UNO_MAS) {
-            ident = TokenExprReg.UNO_MAS;
+        else if (token == TokenExprReg.CERRADURA_POSITIVA) {
+            ident = TokenExprReg.CERRADURA_POSITIVA;
             valor = "+";
         }
-        else if (token == TokenExprReg.CONCAT) {
-            ident = TokenExprReg.CONCAT;
+        else if (token == TokenExprReg.CONCATENACION) {
+            ident = TokenExprReg.CONCATENACION;
             valor = "#";
         }
         else if (token == TokenExprReg.UNION) {
             ident = TokenExprReg.UNION;
             valor = "|";
         }
-        else if (token == TokenExprReg.PAREN_DER) {
-            ident = TokenExprReg.PAREN_DER;
+        else if (token == TokenExprReg.PAREN_DERECHO) {
+            ident = TokenExprReg.PAREN_DERECHO;
             valor = ")";
         }
-        else if (token == TokenExprReg.PAREN_IZQ) {
-            ident = TokenExprReg.PAREN_IZQ;
+        else if (token == TokenExprReg.PAREN_IZQUIERDO) {
+            ident = TokenExprReg.PAREN_IZQUIERDO;
             valor = "(";
         }
         else if (token == TokenExprReg.FINAL) {
@@ -74,8 +74,8 @@ public class Token {
      * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
     public Token(TokenExprReg token, String simbolo) throws Exception {
-        if (token == TokenExprReg.SIM_LEN) {
-            ident = TokenExprReg.SIM_LEN;
+        if (token == TokenExprReg.ALFABETO) {
+            ident = TokenExprReg.ALFABETO;
             valor = simbolo;
         }
         else if (token == TokenExprReg.DESCONOCIDO) {
