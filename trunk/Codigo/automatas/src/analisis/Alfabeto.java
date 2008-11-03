@@ -17,6 +17,11 @@ import java.util.Vector;
 public class Alfabeto {
     
     /**
+     * Cadena que representa el símbolo vacío.
+     */
+    public static final String VACIO = "€";
+    
+    /**
      * Conjunto de símbolos del alfabeto.
      */
     private Vector<String> simbolos;
