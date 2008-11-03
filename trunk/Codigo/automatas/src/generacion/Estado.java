@@ -20,7 +20,7 @@ public class Estado implements Comparable<Estado> {
     /**
      * Conjunto de transiciones del estado.
      */
-    private ConjuntoTransiciones transiciones;
+    private Conjunto<Transicion> transiciones;
     
     /**
      * Constructor por defecto. Construye un Estado sin identificador.
@@ -57,7 +57,7 @@ public class Estado implements Comparable<Estado> {
      * Obtiene el conjunto de transiciones de este estado.
      * @return El conjunto de transiciones del estado.
      */
-    public ConjuntoTransiciones getTransiciones() {
+    public Conjunto<Transicion> getTransiciones() {
         return transiciones;
     }
 
