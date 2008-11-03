@@ -5,6 +5,8 @@
  */
 package analisis;
 
+import java.util.Hashtable;
+
 /**
  * Esta clase implementa el analizador léxico y el método para
  * que el Analizador Sintáctico pueda consumir tokens.<br><br>
@@ -39,6 +41,11 @@ public class AnalizadorLexico {
     private StringBuffer buffer;
     
     /**
+     * Tabla de símbolos válidos esperados por el analizador léxico.
+     */
+    private Hashtable<String, TokenExprReg> tablaSimbolos;
+    
+    /**
      * Constructor de la clase.
      * @param alfabeto El alfabeto de simbolos posibles sobre 
      * la cual se puede definir una expresión regular.
@@ -48,6 +55,7 @@ public class AnalizadorLexico {
        this.alfabeto = alfabeto;
        this.exprReg  = exprReg;
        this.buffer   = new StringBuffer(exprReg);
+       crearTablaSimbolos();
     }
     
     /**
@@ -60,27 +68,18 @@ public class AnalizadorLexico {
         try {
             String lexema = sgteLexema();
 
+            // Omitimos cualquier tipo de espacio en blanco
             if (lexema.matches("\\s"))
-                // Omitimos cualquier tipo de espacio en blanco
                 return sgteToken();
-            else if (lexema.equals("*"))
-                return new Token(TokenExprReg.CERRADURA_KLEENE);
-            else if (lexema.equals("+"))
-                return new Token(TokenExprReg.CERRADURA_POSITIVA);
-            else if (lexema.equals("?"))
-                return new Token(TokenExprReg.OPCION);
-            else if (lexema.equals("|"))
-                return new Token(TokenExprReg.UNION);
-            else if (lexema.equals("("))
-                return new Token(TokenExprReg.PAREN_IZQUIERDO);
-            else if (lexema.equals(")"))
-                return new Token(TokenExprReg.PAREN_DERECHO);
-            else if (lexema.equals(""))
-                return new Token(TokenExprReg.FINAL);
-            else if (alfabeto.contiene(lexema))
+            
+            TokenExprReg tipoToken = tablaSimbolos.get(lexema);
+            
+            if (tipoToken == null)
+                return new Token(TokenExprReg.DESCONOCIDO, lexema);
+            else if (tipoToken == TokenExprReg.ALFABETO)
                 return new Token(TokenExprReg.ALFABETO, lexema);
             else
-                return new Token(TokenExprReg.DESCONOCIDO, lexema);
+                return new Token(tipoToken);
         } 
         catch (Exception ex) {
             System.out.println(ex);
@@ -119,5 +118,22 @@ public class AnalizadorLexico {
         }
         
         return salida;
+    }
+    
+    private void crearTablaSimbolos() {
+        tablaSimbolos = new Hashtable<String, TokenExprReg>();
+
+        tablaSimbolos.put("*", TokenExprReg.CERRADURA_KLEENE);
+        tablaSimbolos.put("+", TokenExprReg.CERRADURA_POSITIVA);
+        tablaSimbolos.put("?", TokenExprReg.OPCION);
+        tablaSimbolos.put("|", TokenExprReg.UNION);
+        tablaSimbolos.put("(", TokenExprReg.PAREN_IZQUIERDO);
+        tablaSimbolos.put(")", TokenExprReg.PAREN_DERECHO);
+        tablaSimbolos.put("", TokenExprReg.FINAL);
+
+        for (int i=0; i < alfabeto.getTamaño(); i++) {
+            String simbolo = alfabeto.getSimbolo(i);
+            tablaSimbolos.put(simbolo, TokenExprReg.ALFABETO);
+        }
     }
 }
