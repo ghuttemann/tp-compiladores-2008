@@ -61,7 +61,7 @@ public class AFN {
      * Obtiene el estado inicial del AFN.
      * @return El estado inicial del AFN.
      */
-    public Estado getInicio() {
+    public Estado getEstadoInicial() {
         return inicio;
     }
 
@@ -69,7 +69,7 @@ public class AFN {
      * Setea el estado inicial del AFN.
      * @param inicio El nuevo estado inicial del AFN.
      */
-    public void setInicio(Estado inicio) {
+    public void setEstadoInicial(Estado inicio) {
         this.inicio = inicio;
     }
     
@@ -77,8 +77,16 @@ public class AFN {
      * Obtiene el estado final del AFN.
      * @return El estado final del AFN.
      */
-    public Estado getFin() {
+    public Estado getEstadoFinal() {
         return fin;
+    }
+    
+    /**
+     * Setea el estado final del AFN.
+     * @param fin El estado final del AFN.
+     */
+    public void setEstadoFinal(Estado fin) {
+        this.fin = fin;
     }
 
     /**
@@ -111,14 +119,6 @@ public class AFN {
      */
     public void setExprReg(String exprReg) {
         this.exprReg = exprReg;
-    }
-
-    /**
-     * Setea el estado final del AFN.
-     * @param fin El estado final del AFN.
-     */
-    public void setFin(Estado fin) {
-        this.fin = fin;
     }
     
     /**
