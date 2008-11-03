@@ -30,40 +30,41 @@ public class Token {
      * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
     public Token(TokenExprReg token) throws Exception {
-        if (token == TokenExprReg.CERRADURA_KLEENE) {
-            ident = TokenExprReg.CERRADURA_KLEENE;
-            valor = "*";
-        }
-        else if (token == TokenExprReg.OPCION) {
-            ident = TokenExprReg.OPCION;
-            valor = "?";
-        }
-        else if (token == TokenExprReg.CERRADURA_POSITIVA) {
-            ident = TokenExprReg.CERRADURA_POSITIVA;
-            valor = "+";
-        }
-        else if (token == TokenExprReg.CONCATENACION) {
-            ident = TokenExprReg.CONCATENACION;
-            valor = "#";
-        }
-        else if (token == TokenExprReg.UNION) {
-            ident = TokenExprReg.UNION;
-            valor = "|";
-        }
-        else if (token == TokenExprReg.PAREN_DERECHO) {
-            ident = TokenExprReg.PAREN_DERECHO;
-            valor = ")";
-        }
-        else if (token == TokenExprReg.PAREN_IZQUIERDO) {
-            ident = TokenExprReg.PAREN_IZQUIERDO;
-            valor = "(";
-        }
-        else if (token == TokenExprReg.FINAL) {
-            ident = TokenExprReg.FINAL;
-            valor = "";
-        }
-        else {
-            throw new Exception("Token inválido");
+        switch (token) {
+            case CERRADURA_KLEENE:
+                ident = TokenExprReg.CERRADURA_KLEENE;
+                valor = "*";
+                break;
+            case CERRADURA_POSITIVA:
+                ident = TokenExprReg.CERRADURA_POSITIVA;
+                valor = "+";
+                break;
+            case OPCION:
+                ident = TokenExprReg.OPCION;
+                valor = "?";
+                break;
+            case CONCATENACION:
+                ident = TokenExprReg.CONCATENACION;
+                valor = "#";
+                break;
+            case UNION:
+                ident = TokenExprReg.UNION;
+                valor = "|";
+                break;
+            case PAREN_IZQUIERDO:
+                ident = TokenExprReg.PAREN_IZQUIERDO;
+                valor = "(";
+                break;
+            case PAREN_DERECHO:
+                ident = TokenExprReg.PAREN_DERECHO;
+                valor = ")";
+                break;
+            case FINAL:
+                ident = TokenExprReg.FINAL;
+                valor = "";
+                break;
+            default:
+                throw new Exception("Token inválido");
         }
     }
     
@@ -74,16 +75,17 @@ public class Token {
      * @throws Exception En caso de que <code>token</code> sea un tipo inválido.
      */
     public Token(TokenExprReg token, String simbolo) throws Exception {
-        if (token == TokenExprReg.ALFABETO) {
-            ident = TokenExprReg.ALFABETO;
-            valor = simbolo;
-        }
-        else if (token == TokenExprReg.DESCONOCIDO) {
-            ident = TokenExprReg.DESCONOCIDO;
-            valor = simbolo;
-        }
-        else {
-            throw new Exception("Token inválido");
+        switch (token) {
+            case ALFABETO:
+                ident = TokenExprReg.ALFABETO;
+                valor = simbolo;
+                break;
+            case DESCONOCIDO:
+                ident = TokenExprReg.DESCONOCIDO;
+                valor = simbolo;
+                break;
+            default:
+                throw new Exception("Token inválido");
         }
     }
     
