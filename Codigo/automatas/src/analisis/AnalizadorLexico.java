@@ -64,21 +64,21 @@ public class AnalizadorLexico {
                 // Omitimos cualquier tipo de espacio en blanco
                 return sgteToken();
             else if (lexema.equals("*"))
-                return new Token(TokenExprReg.CERO_MAS);
+                return new Token(TokenExprReg.CERRADURA_KLEENE);
             else if (lexema.equals("+"))
-                return new Token(TokenExprReg.UNO_MAS);
+                return new Token(TokenExprReg.CERRADURA_POSITIVA);
             else if (lexema.equals("?"))
-                return new Token(TokenExprReg.CERO_UNO);
+                return new Token(TokenExprReg.OPCION);
             else if (lexema.equals("|"))
                 return new Token(TokenExprReg.UNION);
             else if (lexema.equals("("))
-                return new Token(TokenExprReg.PAREN_IZQ);
+                return new Token(TokenExprReg.PAREN_IZQUIERDO);
             else if (lexema.equals(")"))
-                return new Token(TokenExprReg.PAREN_DER);
+                return new Token(TokenExprReg.PAREN_DERECHO);
             else if (lexema.equals(""))
                 return new Token(TokenExprReg.FINAL);
             else if (alfabeto.contiene(lexema))
-                return new Token(TokenExprReg.SIM_LEN, lexema);
+                return new Token(TokenExprReg.ALFABETO, lexema);
             else
                 return new Token(TokenExprReg.DESCONOCIDO, lexema);
         } 
