@@ -5,6 +5,7 @@
  */
 package generacion;
 
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -16,7 +17,7 @@ import java.util.Vector;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Conjunto<T> {
+public class Conjunto<T> implements Iterable<T> {
     
     /**
      * Conjunto de elementos.
@@ -61,5 +62,17 @@ public class Conjunto<T> {
      */
     public int cantidad() {
         return elementos.size();
+    }
+
+    /**
+     * Retorna un iterador sobre los elementos del conjunto.
+     * Es útil para realizar recorridos sobre los elementos
+     * que están contenidos en el conjunto, tales como estados
+     * o transiciones.
+     * @return Un objeto <code>Iterator<code> con los 
+     * elementos de este conjunto.
+     */
+    public Iterator<T> iterator() {
+        return elementos.iterator();
     }
 }
