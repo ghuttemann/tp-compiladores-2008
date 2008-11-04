@@ -110,8 +110,81 @@ public class Thompson {
         return union(afn, basico(Alfabeto.VACIO));
     }
     
+    /**
+     * Aplica el operador de unión a dos AFNs dados.
+     * @param afn1 El primer operando de la unión.
+     * @param afn2 El segundo operando de la unión.
+     * @return El AFN resultante de la unión de 
+     * <code>afn1</code> y <code>afn2</code>.
+     */
     public static AFN union(AFN afn1, AFN afn2) {
-        return null;
+        Transicion trans;
+        AFN afn_salida = new AFN();
+        int contadorEstados = 0;
+        
+        /* Agregamos el estado inicial */
+        Estado nuevoInicio = new Estado(contadorEstados++);
+        afn_salida.agregarEstado(nuevoInicio);
+        afn_salida.setEstadoInicial(nuevoInicio);
+        
+        /* Agregamos los estados de afn1 */
+        for (Estado tmp : afn1.getEstados()) {
+            tmp.setIdentificador(contadorEstados++);
+            afn_salida.agregarEstado(tmp);
+        }
+        
+        /* Agregamos los estados de afn2 */
+        for (Estado tmp : afn2.getEstados()) {
+            tmp.setIdentificador(contadorEstados++);
+            afn_salida.agregarEstado(tmp);
+        }
+        
+        /* Agregamos el estado final */
+        Estado nuevoFin = new Estado(contadorEstados);
+        afn_salida.agregarEstado(nuevoFin);
+        afn_salida.setEstadoFinal(nuevoFin);
+        
+        /* 
+         * Creamos transición vacía desde estado inicial 
+         * de afn_salida hasta estado inicial de afn1.
+         */
+        trans = new Transicion();
+        trans.setOrigen(nuevoInicio);
+        trans.setDestino(afn1.getEstadoInicial());
+        trans.setSimbolo(Alfabeto.VACIO);
+        nuevoInicio.getTransiciones().agregar(trans);
+        
+        /* 
+         * Creamos transición vacía desde estado inicial 
+         * de afn_salida hasta estado inicial de afn2.
+         */
+        trans = new Transicion();
+        trans.setOrigen(nuevoInicio);
+        trans.setDestino(afn2.getEstadoInicial());
+        trans.setSimbolo(Alfabeto.VACIO);
+        nuevoInicio.getTransiciones().agregar(trans);
+        
+        /*
+         * Creamos transición vacía desde el estado final
+         * de afn1 hasta el estado final de afn_salida.
+         */
+        trans = new Transicion();
+        trans.setOrigen(afn1.getEstadoFinal());
+        trans.setDestino(nuevoFin);
+        trans.setSimbolo(Alfabeto.VACIO);
+        afn1.getEstadoFinal().getTransiciones().agregar(trans);
+        
+        /*
+         * Creamos transición vacía desde el estado final
+         * de afn2 hasta el estado final de afn_salida.
+         */
+        trans = new Transicion();
+        trans.setOrigen(afn2.getEstadoFinal());
+        trans.setDestino(nuevoFin);
+        trans.setSimbolo(Alfabeto.VACIO);
+        afn2.getEstadoFinal().getTransiciones().agregar(trans);
+        
+        return afn_salida;
     }
     
     /**
