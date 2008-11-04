@@ -10,7 +10,7 @@ package analisis;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class AnalizadorSintactico {
+public class AnalizadorSintacticoPostfijo {
     
     /**
      * 
@@ -37,7 +37,7 @@ public class AnalizadorSintactico {
      * @param alfabeto
      * @param exprReg
      */
-    public AnalizadorSintactico(Alfabeto alfabeto, String exprReg) {
+    public AnalizadorSintacticoPostfijo(Alfabeto alfabeto, String exprReg) {
         analizadorLexico = new AnalizadorLexico(alfabeto, exprReg);
         salida = new StringBuffer();
         contadorTokens = 0;

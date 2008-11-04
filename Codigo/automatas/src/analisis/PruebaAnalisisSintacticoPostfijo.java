@@ -10,7 +10,7 @@ package analisis;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class PruebaAnalisisSintactico {
+public class PruebaAnalisisSintacticoPostfijo {
 
     /**
      * @param args the command line arguments
@@ -18,7 +18,7 @@ public class PruebaAnalisisSintactico {
     public static void main(String[] args) {
         Alfabeto alfa = new Alfabeto("ab");
         String er = "(a|b)*ax";
-        AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
+        AnalizadorSintacticoPostfijo as = new AnalizadorSintacticoPostfijo(alfa, er);
         
         String salida;        
         try {
