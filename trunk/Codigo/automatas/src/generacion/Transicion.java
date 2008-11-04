@@ -31,7 +31,8 @@ public class Transicion {
     private String simbolo;
 
     /**
-     * Constructor de la clase.
+     * Constructor de la clase que especifíca los tres
+     * atributos de la misma.
      *
      * @param origen El estado origen para esta transición.
      * @param destino El estado destino para esta transición.
@@ -41,6 +42,13 @@ public class Transicion {
         this.origen  = origen;
         this.destino = destino;
         this.simbolo = simbolo;
+    }
+
+    /**
+     * Contructor por defecto.
+     */
+    public Transicion() {
+        this(null, null, null);
     }
 
     /**
