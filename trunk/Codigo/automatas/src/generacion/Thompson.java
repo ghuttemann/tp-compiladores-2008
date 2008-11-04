@@ -114,6 +114,13 @@ public class Thompson {
         return null;
     }
     
+    /**
+     * Aplica el operador de concatenación a dos AFNs dados.
+     * @param afn1 El primer operando de la concatenación.
+     * @param afn2 El segundo operando de la concatenación.
+     * @return El AFN resultante de la concatenación de 
+     * <code>afn1</code> y <code>afn2</code>.
+     */
     public static AFN concatenacion(AFN afn1, AFN afn2) {
         AFN afn_salida = new AFN();
         int contadorEstados = afn1.getEstadoFinal().getIdentificador() + 1;
