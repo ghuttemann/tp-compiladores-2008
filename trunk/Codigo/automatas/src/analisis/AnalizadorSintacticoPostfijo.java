@@ -6,36 +6,42 @@
 package analisis;
 
 /**
- *
+ * Clase que implementa un analizador sintáctico predictivo
+ * para una expresión regular, realizando una traducción de 
+ * la misma a su versión postfija.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
 public class AnalizadorSintacticoPostfijo {
     
     /**
-     * 
+     * El analizador léxico para este analizador
+     * sintáctico. Se hará uso del mismo para 
+     * obtener tokens.
      */
     private AnalizadorLexico analizadorLexico;
     
     /**
-     * 
+     * Buffer en el que se va escribiendo la salida
+     * de la traducción.
      */
     private StringBuffer salida;
     
     /**
-     * 
+     * Variable para el token actual.
      */
     private Token preanalisis;
     
     /**
-     * 
+     * Contador de tokens recibidos. Útil para
+     * indicar dónde ocurren los errores.
      */
     private int contadorTokens;
     
     /**
-     * 
-     * @param alfabeto
-     * @param exprReg
+     * Constructor de la clase.
+     * @param alfabeto El alfabeto sobre el cual está definido <code>exprReg</code>.
+     * @param exprReg La expresión regular a evaluar.
      */
     public AnalizadorSintacticoPostfijo(Alfabeto alfabeto, String exprReg) {
         analizadorLexico = new AnalizadorLexico(alfabeto, exprReg);
@@ -43,6 +49,13 @@ public class AnalizadorSintacticoPostfijo {
         contadorTokens = 0;
     }
 
+    /**
+     * Inicia el análisis sintáctico (traducción).
+     * @return Una cadena que representa la versión postfija de la 
+     * expresión regular de entrada.
+     * @throws java.lang.Exception En caso de encontrar algún error
+     * de sintáxis en la expresión regular de entrada.
+     */
     public String analizar() throws Exception {
         preanalisis = obtenerToken();
         
