@@ -64,27 +64,21 @@ public class AnalizadorLexico {
      * Sintáctico.
      * @return El siguiente token recuperado de la entrada.
      */
-    public Token sgteToken() {
-        try {
-            String lexema = sgteLexema();
+    public Token sgteToken() throws Exception {
+        String lexema = sgteLexema();
 
-            // Omitimos cualquier tipo de espacio en blanco
-            if (lexema.matches("\\s"))
-                return sgteToken();
-            
-            TokenExprReg tipoToken = tablaSimbolos.get(lexema);
-            
-            if (tipoToken == null)
-                return new Token(TokenExprReg.DESCONOCIDO, lexema);
-            else if (tipoToken == TokenExprReg.ALFABETO)
-                return new Token(TokenExprReg.ALFABETO, lexema);
-            else
-                return new Token(tipoToken);
-        } 
-        catch (Exception ex) {
-            System.out.println(ex);
-            return null;
-        }
+        // Omitimos cualquier tipo de espacio en blanco
+        if (lexema.matches("\\s"))
+            return sgteToken();
+
+        TokenExprReg tipoToken = tablaSimbolos.get(lexema);
+
+        if (tipoToken == null)
+            return new Token(TokenExprReg.DESCONOCIDO, lexema);
+        else if (tipoToken == TokenExprReg.ALFABETO)
+            return new Token(TokenExprReg.ALFABETO, lexema);
+        else
+            return new Token(tipoToken);
     }
     
     /**
