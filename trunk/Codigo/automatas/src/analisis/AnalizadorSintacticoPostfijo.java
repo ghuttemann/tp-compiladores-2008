@@ -234,7 +234,7 @@ public class AnalizadorSintacticoPostfijo {
         throw new Exception(mensajeCompleto);
     }
     
-    private Token obtenerToken() {
+    private Token obtenerToken() throws Exception {
         ++contadorTokens;
         return analizadorLexico.sgteToken();
     }
