@@ -26,7 +26,7 @@ public class Estado implements Comparable<Estado> {
      * Constructor por defecto. Construye un Estado sin identificador.
      */
     public Estado() {
-        setIdentificador(-1);
+        this(-1);
     }
     
     /**
@@ -35,6 +35,7 @@ public class Estado implements Comparable<Estado> {
      */
     public Estado(int id) {
         setIdentificador(id);
+        transiciones = new Conjunto<Transicion>();
     }
     
     /**
