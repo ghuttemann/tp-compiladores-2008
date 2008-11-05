@@ -5,10 +5,13 @@
  */
 package analisis;
 
+import generacion.AFN;
+import generacion.Thompson;
+
 /**
  * Clase que implementa un analizador sintáctico predictivo
  * para una expresión regular, realizando una traducción de 
- * la misma a su versión postfija.
+ * la misma a su correspondiente AFN.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
@@ -20,12 +23,6 @@ public class AnalizadorSintactico {
      * obtener tokens.
      */
     private AnalizadorLexico analizadorLexico;
-    
-    /**
-     * Buffer en el que se va escribiendo la salida
-     * de la traducción.
-     */
-    private StringBuffer salida;
     
     /**
      * Variable para el token actual.
@@ -45,55 +42,64 @@ public class AnalizadorSintactico {
      */
     public AnalizadorSintactico(Alfabeto alfabeto, String exprReg) {
         analizadorLexico = new AnalizadorLexico(alfabeto, exprReg);
-        salida = new StringBuffer();
         contadorTokens = 0;
     }
 
     /**
      * Inicia el análisis sintáctico (traducción).
-     * @return Una cadena que representa la versión postfija de la 
-     * expresión regular de entrada.
+     * @return Una AFN que representa a la expresión regular de entrada.
      * @throws java.lang.Exception En caso de encontrar algún error
      * de sintáxis en la expresión regular de entrada.
      */
-    public String analizar() throws Exception {
+    public AFN analizar() throws Exception {
         preanalisis = obtenerToken();
         
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
         
-        ExprReg();
+        AFN afn = ExprReg();
+        afn.setAlfabeto(analizadorLexico.getAlfabeto());
+        afn.setExprReg(analizadorLexico.getExpresionRegular());
         
         if (preanalisis.getIdentificador() != TokenExprReg.FINAL)
             error("Carácter inválido");
         
-        return salida.toString();
+        return afn;
     }
     
     /**
      * Método que procesa las uniones de la expresión regular.
      * @throws java.lang.Exception Propaga la excepción de Concat() y R1().
      */
-    private void ExprReg() throws Exception {
-        Concat();
-        R1();
+    private AFN ExprReg() throws Exception {
+        AFN afn1 = Concat();
+        AFN afn2 = R1();
+        
+        if (afn2 == null)
+            return afn1;
+        else
+            return Thompson.union(afn1, afn2);
     }
     
     /**
      * Método que procesa las uniones en forma de lista.
-     * @throws java.lang.Exception Propaga la excepción de Concat().
+     * @throws java.lang.Exception Propaga la excepción de ExprReg().
      */
-    private void R1() throws Exception {
-        while (true) {
-            if (preanalisis.getIdentificador() == TokenExprReg.UNION) {
-                match(preanalisis);
-                Concat();
-                escribir(new Token(TokenExprReg.UNION));
-            }
-            else {
-                // Derivar en vacío
-                return;
-            }
+    private AFN R1() throws Exception {
+        if (preanalisis.getIdentificador() == TokenExprReg.UNION) {
+            match(preanalisis);
+            /*
+             * Como el lado derecho de la producción 
+             * 'R1 -> "|" Concat R1' es igual al de 
+             * 'ExpReg -> Concat R1', en terminos de
+             * ejecución de métodos, hacemos una llamada
+             * al método ExpReg().
+             */
+            return ExprReg();
+        }
+        else {
+            // Derivar en vacío
+            return null;
         }
     }
 
@@ -101,55 +107,78 @@ public class AnalizadorSintactico {
      * Método que procesa una concatenación en la expresión regular.
      * @throws java.lang.Exception Propaga la excepción de Grupo() y R2().
      */
-    private void Concat() throws Exception {
-        Grupo();
-        R2();
+    private AFN Concat() throws Exception {
+        AFN afn1 = Grupo();
+        AFN afn2 = R2();
+        
+        if (afn2 == null)
+            return afn1;
+        else
+            return Thompson.concatenacion(afn1, afn2);
     }
     
     /**
      * Método que procesa una concatenación en forma de lista.
-     * @throws java.lang.Exception Propaga la excepción de Grupo().
+     * @throws java.lang.Exception Propaga la excepción de Concat().
      */
-    private void R2() throws Exception {
-        while (true) {
-            switch (preanalisis.getIdentificador()) {
-                case PAREN_IZQUIERDO:
-                case ALFABETO:
-                    Grupo();
-                    escribir(new Token(TokenExprReg.CONCATENACION));
-                    break;
-                default:
-                    // Derivar en vacío
-                    return;
-            }
+    private AFN R2() throws Exception {
+        switch (preanalisis.getIdentificador()) {
+            case PAREN_IZQUIERDO:
+            case ALFABETO:
+                /*
+                 * Como el lado derecho de la producción 
+                 * 'R2 -> Grupo R2' es igual al de 
+                 * 'Concat -> Grupo R2' hacemos una llamada
+                 * al método Concat().
+                 */
+                return Concat();
+            default:
+                // Derivar en vacío
+                return null;
         }
     }
     
     /**
-     * Se elimina a R3 trasladando el vacío a Oper. De esta manera,
-     * Oper deriva en vacío en caso de no existir un operador.
+     * Método que procesa un elemento unitario, posiblemente aplicando un
+     * operador unario.
      * @throws java.lang.Exception Propaga las excepciones de Elem() y Oper().
      */
-    private void Grupo() throws Exception {
-        Elem();
-        R3();
+    private AFN Grupo() throws Exception {
+        AFN afn = Elem();
+        TokenExprReg operador = Oper();
+        
+        switch (operador) {
+            case CERRADURA_KLEENE:
+                return Thompson.cerraduraKleene(afn);
+            case CERRADURA_POSITIVA:
+                return Thompson.cerraduraPositiva(afn);
+            case OPCION:
+                return Thompson.opcion(afn);
+            default:
+                return afn;
+        }
     }
     
     /**
-     * 
-     * @throws java.lang.Exception
+     * Método que procesa un operador en la expresión regular.
+     * @throws java.lang.Exception Propaga la excepción de match().
      */
-    private void R3() throws Exception {
+    private TokenExprReg Oper() throws Exception {
+        TokenExprReg operador;
+        
         switch (preanalisis.getIdentificador()) {
             case CERRADURA_KLEENE:
             case CERRADURA_POSITIVA:
             case OPCION:
-                Oper();
+                operador = preanalisis.getIdentificador();
+                match(preanalisis);
                 break;
             default:
                 // Derivar en vacío
-                return;
+                operador = TokenExprReg.DESCONOCIDO;
         }
+        
+        return operador;
     }
   
     /**
@@ -161,50 +190,50 @@ public class AnalizadorSintactico {
      * del alfabeto ni un paréntesis de apertura (inicio de una nueva expresión
      * regular).
      */
-    private void Elem() throws Exception {
+    private AFN Elem() throws Exception {
+        AFN afn = null;
+        
         switch (preanalisis.getIdentificador()) {
             case PAREN_IZQUIERDO:
                 match(new Token(TokenExprReg.PAREN_IZQUIERDO));
-                ExprReg();
+                afn = ExprReg();
                 match(new Token(TokenExprReg.PAREN_DERECHO));
                 break;
             case ALFABETO:
-                SimLen();
+                afn = SimLen();
                 break;
             default:
                 error("Se espera paréntesis de apertura o símbolo de alfabeto. " +
                     "Se encontró \"" + preanalisis.getValor() + "\"");
         }
-    }
-    
-    /**
-     * Método que procesa un operador en la expresión regular.
-     * @throws java.lang.Exception Propaga la excepción de match().
-     */
-    private void Oper() throws Exception {
-        escribir(preanalisis);
-        match(preanalisis);
+        
+        return afn;
     }
     
     /**
      * Método que procesa un símbolo del alfabeto en la expresión regular.
      * @throws java.lang.Exception Si el caracter actual no es un símbolo del alfabeto.
      */
-    private void SimLen() throws Exception {
-        if (analizadorLexico.getAlfabeto().contiene(preanalisis.getValor())) {
-            escribir(preanalisis);
-            match(preanalisis);
-        }
-        else {
-            error("El símbolo \"" + preanalisis.getValor() + 
+    private AFN SimLen() throws Exception {
+        String simbolo = preanalisis.getValor();
+        
+        if (!analizadorLexico.getAlfabeto().contiene(simbolo)) {
+            error("El símbolo \"" + simbolo + 
                 "\" no pertenece al alfabeto definido.");
         }
+        
+        AFN afn = Thompson.basico(simbolo);
+        match(preanalisis);
+        return afn;
     }
 
     /**
-     * 
-     * @param entrada
-     * @throws java.lang.Exception
+     * Método que se encarga de corroborar que la
+     * entrada es la correcta para consumir el siguiente
+     * token.
+     * @param entrada Token esperado, debe ser igual al token actual.
+     * @throws java.lang.Exception En caso de que el token actual no
+     * sea igual al esperado.
      */
     private void match(Token entrada) throws Exception {
         if (preanalisis.equals(entrada))
@@ -216,13 +245,12 @@ public class AnalizadorSintactico {
     }
     
     /**
-     * Método que escribe la cadena de salida de la traducción.
-     * @param entrada Token a escribir.
+     * Método que se encarga de lanzar excepciones
+     * para los distintos casos de error posibles.
+     * @param mensaje El mensaje de error.
+     * @throws java.lang.Exception Siempre se lanza una excepción,
+     * producto del error ocurrido.
      */
-    private void escribir(Token entrada) {
-        salida.append(entrada.getValor());
-    }
-    
     private void error(String mensaje) throws Exception {
         String mensajeCompleto = "";
         
@@ -234,6 +262,12 @@ public class AnalizadorSintactico {
         throw new Exception(mensajeCompleto);
     }
     
+    /**
+     * Método que obtiene el siguiente token y registra
+     * la cantidad de tokens leídos.
+     * @return El siguiente token del Analizador Léxico.
+     * @throws java.lang.Exception
+     */
     private Token obtenerToken() throws Exception {
         ++contadorTokens;
         return analizadorLexico.sgteToken();
