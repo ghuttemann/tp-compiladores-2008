@@ -2,8 +2,8 @@
 Gramática Inicial
 =======================================
 
-ExpReg -> ExpReg "|" Concat
-ExpReg -> Concat
+ExprReg -> ExprReg "|" Concat
+ExprReg -> Concat
 
 Concat -> Concat Grupo
 Concat -> Grupo
@@ -11,7 +11,7 @@ Concat -> Grupo
 Grupo  -> Elem Oper
 Grupo  -> Elem
 
-Elem   -> "(" ExpReg ")"
+Elem   -> "(" ExprReg ")"
 Elem   -> SimLen
 
 Oper   -> "*"
@@ -24,7 +24,7 @@ SimLen -> simbolos_del_alfabeto
 Eliminación de Recursividad
 =======================================
 
-ExpReg -> Concat R1
+ExprReg -> Concat R1
 R1     -> "|" Concat R1 | €
 
 Concat -> Grupo R2
@@ -33,7 +33,7 @@ R2     -> Grupo R2 | €
 Grupo  -> Elem Oper
 Grupo  -> Elem
 
-Elem   -> "(" ExpReg ")"
+Elem   -> "(" ExprReg ")"
 Elem   -> SimLen
 
 Oper   -> "*"
@@ -46,7 +46,7 @@ SimLen -> simbolos_del_alfabeto
 Factorización
 =======================================
 
-ExpReg -> Concat R1
+ExprReg -> Concat R1
 R1     -> "|" Concat R1 | €
 
 Concat -> Grupo R2
@@ -55,7 +55,7 @@ R2     -> Grupo R2 | €
 Grupo  -> Elem R3
 R3     -> Oper | €
 
-Elem   -> "(" ExpReg ")"
+Elem   -> "(" ExprReg ")"
 Elem   -> SimLen
 
 Oper   -> "*"
@@ -65,10 +65,10 @@ Oper   -> "?"
 SimLen -> simbolos_del_alfabeto
 
 =======================================
-Esquema de traducción
+Esquema de traducción a postfijo
 =======================================
 
-ExpReg -> Concat R1
+ExprReg -> Concat R1
 R1     -> "|" Concat {print "|"} R1
 R1     -> €
 
@@ -80,7 +80,7 @@ Grupo  -> Elem R3
 R3     -> Oper
 R3     -> €
 
-Elem   -> "(" ExpReg ")"
+Elem   -> "(" ExprReg ")"
 Elem   -> SimLen
 
 Oper   -> "*" {print "*"}
@@ -88,3 +88,50 @@ Oper   -> "+" {print "+"}
 Oper   -> "?" {print "?"}
 
 SimLen -> simbolos_del_alfabeto {print "simbolo"}
+
+=======================================
+Esquema de traducción a AFN
+=======================================
+
+ExprReg -> Concat R1    {
+                            if (R1.afn == null) ExprReg.afn = Concat.afn
+                            else ExprReg.afn = Thompson_union(Concat.afn, R1.afn)
+                        }
+R1     -> "|" Concat R1'{
+                            if (R1'.afn == null) ExprReg.afn = Concat.afn
+                            else ExprReg.afn = Thompson_union(Concat.afn, R1'.afn)
+                        }
+R1     -> € {R1.afn = null}
+
+
+Concat -> Grupo R2  {
+                        if (R2.afn == null) Concat.afn = Grupo.afn
+                        else Concat.afn = Thompson_concatenacion(Grupo.afn, R2.afn)
+                    }
+R2     -> Grupo R2' {
+                        if (R2'.afn == null) R2.afn = Grupo.afn
+                        else R2.afn = Thompson_concatenacion(Grupo.afn, R2'.afn)
+                    }
+R2     -> € {R2.afn = null}
+
+
+Grupo  -> Elem Oper {
+                        case (Oper.operador)
+                            '*': Grupo.afn = Thompson_cerraduraKleene(Elem.afn)
+                            '+': Grupo.afn = Thompson_cerraduraPositiva(Elem.afn)
+                            '?': Grupo.afn = Thompson_opcion(Elem.afn)
+                            '' : Grupo.afn = Elem.afn
+                        end
+                    }
+
+
+Elem   -> "(" ExprReg ")"   {Elem.afn = ExprReg.afn}
+Elem   -> SimLen            {Elem.afn = SimLen.afn}
+
+
+Oper   -> "*" {Oper.operador = '*'}
+Oper   -> "+" {Oper.operador = '+'}
+Oper   -> "?" {Oper.operador = '?'}
+Oper   -> €   {Oper.operador = ''}
+
+SimLen -> simbolos_del_alfabeto {SimLen.afn = Thompson_basico("simbolo")}
