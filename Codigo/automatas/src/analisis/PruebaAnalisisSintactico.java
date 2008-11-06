@@ -19,13 +19,13 @@ public class PruebaAnalisisSintactico {
      */
     public static void main(String[] args) {
         Alfabeto alfa = new Alfabeto("ab");
-        String er = "(a|b)*ax";
+        String er = "(a|b)*a";
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
         AFN salida;        
         try {
             salida = as.analizar();
-            System.out.printf("\"%s\"", salida);
+            System.out.printf("%s", salida);
         }
         catch (Exception ex) {
             System.out.println(ex);
