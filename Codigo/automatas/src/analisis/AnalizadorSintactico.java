@@ -62,7 +62,7 @@ public class AnalizadorSintactico {
         afn.setExprReg(analizadorLexico.getExpresionRegular());
         
         if (preanalisis.getIdentificador() != TokenExprReg.FINAL)
-            error("Carácter inválido");
+            error("Carácter de finalización inválido");
         
         return afn;
     }
