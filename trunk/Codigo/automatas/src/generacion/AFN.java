@@ -132,4 +132,20 @@ public class AFN {
     public Conjunto<Estado> getEstados() {
         return estados;
     }
+    
+    @Override
+    public String toString() {
+        String afnStr = "";
+        
+        for (Estado tmp : getEstados()) {
+            afnStr += tmp.toString();
+            
+            for (Transicion trans : tmp.getTransiciones())
+                afnStr += " --> " + trans.getDestino() + "(" + trans.getSimbolo() + ")";
+            
+            afnStr += "\n";
+        }
+        
+        return afnStr;
+    }   
 }

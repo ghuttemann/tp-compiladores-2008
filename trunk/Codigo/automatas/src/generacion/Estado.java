@@ -90,4 +90,9 @@ public class Estado implements Comparable<Estado> {
     public int compareTo(Estado obj) {
         return this.ident - obj.ident;
     }
+    
+    @Override
+    public String toString() {
+        return String.valueOf(ident);
+    }
 }
