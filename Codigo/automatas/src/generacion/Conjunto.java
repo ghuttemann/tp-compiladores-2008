@@ -57,6 +57,21 @@ public class Conjunto<T> implements Iterable<T> {
     }
     
     /**
+     * Retorna el primer elemento del conjunto.
+     * @return El primer elemento del conjunto.
+     */
+    public T obtenerPrimero() {
+        return elementos.firstElement();
+    }
+    
+    /**
+     * Retorna el último elemento del conjunto.
+     * @return El último elemento del conjunto.
+     */
+    public T obtenerUltimo() {
+        return elementos.lastElement();
+    }    
+    /**
      * Retorna la cantidad de transiciones del conjunto.
      * @return Cantidad de transiciones del conjunto.
      */
