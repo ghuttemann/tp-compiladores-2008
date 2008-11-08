@@ -5,7 +5,7 @@
  */
 package analisis;
 
-import generacion.AFN;
+import generacion.Automata;
 
 /**
  *
@@ -22,7 +22,7 @@ public class PruebaAnalisisSintactico {
         String er = "(a|b)*a";
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
-        AFN salida;        
+        Automata salida;        
         try {
             salida = as.analizar();
             System.out.printf("%s", salida);
