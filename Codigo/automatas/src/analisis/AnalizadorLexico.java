@@ -63,6 +63,7 @@ public class AnalizadorLexico {
      * de entrada, convertirlos a tokens y retornarlos al Analizador
      * Sintáctico.
      * @return El siguiente token recuperado de la entrada.
+     * @throws Exception Si se intenta construir un token inválido.
      */
     public Token sgteToken() throws Exception {
         String lexema = sgteLexema();
@@ -82,16 +83,20 @@ public class AnalizadorLexico {
     }
     
     /**
-     * 
-     * @return
+     * Obtiene el <code>Alfabeto</code> asociado a este
+     * <code>AnalizadorLexico</code>.
+     * @return El <code>Alfabeto</code> asociado a este
+     * <code>AnalizadorLexico</code>.
      */
     public Alfabeto getAlfabeto() {
         return alfabeto;
     }
     
     /**
-     * 
-     * @return
+     * Obtiene la expresión regular asociada a este
+     * <code>AnalizadorLexico</code>.
+     * @return La expresión regular asociada a este
+     * <code>AnalizadorLexico</code>.
      */
     public String getExpresionRegular() {
         return exprReg;
