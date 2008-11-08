@@ -5,7 +5,7 @@
  */
 package analisis;
 
-import generacion.AFN;
+import generacion.Automata;
 import generacion.Thompson;
 
 /**
@@ -47,17 +47,17 @@ public class AnalizadorSintactico {
 
     /**
      * Inicia el análisis sintáctico (traducción).
-     * @return Una AFN que representa a la expresión regular de entrada.
+     * @return Un AFN que representa a la expresión regular de entrada.
      * @throws java.lang.Exception En caso de encontrar algún error
      * de sintáxis en la expresión regular de entrada.
      */
-    public AFN analizar() throws Exception {
+    public Automata analizar() throws Exception {
         preanalisis = obtenerToken();
         
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
         
-        AFN afn = ExprReg();
+        Automata afn = ExprReg();
         afn.setAlfabeto(analizadorLexico.getAlfabeto());
         afn.setExprReg(analizadorLexico.getExpresionRegular());
         
@@ -71,9 +71,9 @@ public class AnalizadorSintactico {
      * Método que procesa las uniones de la expresión regular.
      * @throws java.lang.Exception Propaga la excepción de Concat() y R1().
      */
-    private AFN ExprReg() throws Exception {
-        AFN afn1 = Concat();
-        AFN afn2 = R1();
+    private Automata ExprReg() throws Exception {
+        Automata afn1 = Concat();
+        Automata afn2 = R1();
         
         if (afn2 == null)
             return afn1;
@@ -85,7 +85,7 @@ public class AnalizadorSintactico {
      * Método que procesa las uniones en forma de lista.
      * @throws java.lang.Exception Propaga la excepción de ExprReg().
      */
-    private AFN R1() throws Exception {
+    private Automata R1() throws Exception {
         if (preanalisis.getIdentificador() == TokenExprReg.UNION) {
             match(preanalisis);
             /*
@@ -107,9 +107,9 @@ public class AnalizadorSintactico {
      * Método que procesa una concatenación en la expresión regular.
      * @throws java.lang.Exception Propaga la excepción de Grupo() y R2().
      */
-    private AFN Concat() throws Exception {
-        AFN afn1 = Grupo();
-        AFN afn2 = R2();
+    private Automata Concat() throws Exception {
+        Automata afn1 = Grupo();
+        Automata afn2 = R2();
         
         if (afn2 == null)
             return afn1;
@@ -121,7 +121,7 @@ public class AnalizadorSintactico {
      * Método que procesa una concatenación en forma de lista.
      * @throws java.lang.Exception Propaga la excepción de Concat().
      */
-    private AFN R2() throws Exception {
+    private Automata R2() throws Exception {
         switch (preanalisis.getIdentificador()) {
             case PAREN_IZQUIERDO:
             case ALFABETO:
@@ -143,8 +143,8 @@ public class AnalizadorSintactico {
      * operador unario.
      * @throws java.lang.Exception Propaga las excepciones de Elem() y Oper().
      */
-    private AFN Grupo() throws Exception {
-        AFN afn = Elem();
+    private Automata Grupo() throws Exception {
+        Automata afn = Elem();
         TokenExprReg operador = Oper();
         
         switch (operador) {
@@ -190,8 +190,8 @@ public class AnalizadorSintactico {
      * del alfabeto ni un paréntesis de apertura (inicio de una nueva expresión
      * regular).
      */
-    private AFN Elem() throws Exception {
-        AFN afn = null;
+    private Automata Elem() throws Exception {
+        Automata afn = null;
         
         switch (preanalisis.getIdentificador()) {
             case PAREN_IZQUIERDO:
@@ -214,7 +214,7 @@ public class AnalizadorSintactico {
      * Método que procesa un símbolo del alfabeto en la expresión regular.
      * @throws java.lang.Exception Si el caracter actual no es un símbolo del alfabeto.
      */
-    private AFN SimLen() throws Exception {
+    private Automata SimLen() throws Exception {
         String simbolo = preanalisis.getValor();
         
         if (!analizadorLexico.getAlfabeto().contiene(simbolo)) {
@@ -222,7 +222,7 @@ public class AnalizadorSintactico {
                 "\" no pertenece al alfabeto definido.");
         }
         
-        AFN afn = Thompson.basico(simbolo);
+        Automata afn = Thompson.basico(simbolo);
         match(preanalisis);
         return afn;
     }
