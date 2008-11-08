@@ -99,7 +99,7 @@ public class Token {
     
     /**
      * Devuelve el atributo <i>valor</i> del token.
-     * @return
+     * @return El atributo <i>valor</i> del token.
      */
     public String getValor() {
         return valor;
