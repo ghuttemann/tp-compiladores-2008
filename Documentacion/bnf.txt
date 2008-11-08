@@ -135,3 +135,16 @@ Oper   -> "?" {Oper.operador = '?'}
 Oper   -> €   {Oper.operador = ''}
 
 SimLen -> simbolos_del_alfabeto {SimLen.afn = Thompson_basico("simbolo")}
+
+=======================================
+Conjunto PRIMERO de cada producción
+=======================================
+
+PRIMERO(ExprReg) = {"(", simbolos_del_alfabeto}
+PRIMERO(R1)      = {€, "|"}
+PRIMERO(Concat)  = {"(", simbolos_del_alfabeto}
+PRIMERO(R2)      = {€, "(", simbolos_del_alfabeto}
+PRIMERO(Grupo)   = {"(", simbolos_del_alfabeto}
+PRIMERO(Elem)    = {"(", simbolos_del_alfabeto}
+PRIMERO(Oper)    = {€, "*", "+", "?"}
+PRIMERO(SimLen)  = {simbolos_del_alfabeto}
