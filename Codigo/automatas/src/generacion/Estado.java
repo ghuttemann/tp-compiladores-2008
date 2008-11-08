@@ -132,11 +132,11 @@ public class Estado implements Comparable<Estado> {
         String valor = String.valueOf(identificador);
         
         if (getIdentificador() == 0)
-            valor += "(i)";
+            valor += "i";
         else if (getEsFinal())
-            valor += "(f)";
+            valor += "f";
         else
-            valor += "   ";
+            valor += " ";
         
         return valor;
     }
