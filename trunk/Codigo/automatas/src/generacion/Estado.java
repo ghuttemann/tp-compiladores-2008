@@ -28,6 +28,13 @@ public class Estado implements Comparable<Estado> {
     private Conjunto<Transicion> transiciones;
     
     /**
+     * Indica si este Estado ya fue visitado
+     * durante algún recorrido realizado sobre
+     * el Automata que contiene a este Estado.
+     */
+    private Boolean visitado;
+    
+    /**
      * Crea un <code>Estado</code> no final sin identificador.
      */
     public Estado() {
@@ -96,6 +103,23 @@ public class Estado implements Comparable<Estado> {
      */
     public Conjunto<Transicion> getTransiciones() {
         return transiciones;
+    }
+    
+    /**
+     * Obtiene es estado de visitado de este <code>Estado</code>.
+     * @return <code>true</code> si este <code>Estado</code> ya 
+     * ha sido visitado, <code>false</code> en caso contrario.
+     */
+    public Boolean getVisitado() {
+        return visitado;
+    }
+    
+    /**
+     * Establece el nuevo estado de visitado de este <code>Estado</code>.
+     * @param visitado Nuevo estado de visitado de este <code>Estado</code>.
+     */
+    public void setVisitado(Boolean visitado) {
+        this.visitado = visitado;
     }
 
     @Override
