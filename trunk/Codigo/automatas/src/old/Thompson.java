@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion_old;
+package old;
 
 import analisis.Alfabeto;
 
