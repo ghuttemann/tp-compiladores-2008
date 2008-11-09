@@ -98,6 +98,15 @@ public class Estado implements Comparable<Estado> {
     }
     
     /**
+     * Obtiene el estado de inicio del <code>Estado</code>.
+     * @return <code>true</code> si el <code>Estado</code> es inicial, 
+     * <code>false</code> en caso contrario.
+     */
+    public Boolean getEsInicial() {
+        return identificador == 0;
+    }
+    
+    /**
      * Obtiene el conjunto de transiciones de este <code>Estado</code>.
      * @return El conjunto de transiciones del <code>Estado</code>.
      */
