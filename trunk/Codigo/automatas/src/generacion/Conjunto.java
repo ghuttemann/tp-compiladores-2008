@@ -90,4 +90,33 @@ public class Conjunto<T> implements Iterable<T> {
     public Iterator<T> iterator() {
         return elementos.iterator();
     }
+    
+    /**
+     * Comprueba si un elemento está contenido en este <code>Conjunto</code>.
+     * @param elemento Objeto a buscar en el <code>Conjunto</code>.
+     * @return <code>true</code> si <code>elemento</code> está en el 
+     * <code>Conjunto</code>, <code>false</code> en caso contrario.
+     */
+    public boolean contiene(T elemento) {
+        return elementos.contains(elemento);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null)
+            return false;
+        
+        if (getClass() != obj.getClass())
+            return false;
+        
+        final Conjunto<T> other = (Conjunto<T>) obj;
+        return this.elementos.equals(other.elementos);
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 79 * hash + (this.elementos != null ? this.elementos.hashCode() : 0);
+        return hash;
+    }
 }
