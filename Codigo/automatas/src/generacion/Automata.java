@@ -143,6 +143,17 @@ public class Automata {
         return estados.cantidad();
     }
     
+    /**
+     * Establece a <code>false</code> el estado de visitado de todos los 
+     * <code>Estado</code>s de este <code>Automata</code>. Útil para
+     * iniciar un recorrido nuevo sobre los <code>Estado</code>s de este
+     * <code>Automata</code>.
+     */
+    public void iniciarRecorrido() {
+        for (Estado tmp : estados)
+            tmp.setVisitado(false);
+    }
+    
     @Override
     public String toString() {
         String afnStr = "";
@@ -151,7 +162,7 @@ public class Automata {
             afnStr += tmp.toString();
             
             for (Transicion trans : tmp.getTransiciones())
-                afnStr += " --> " + trans.getIdentificadorEstado() + "(" + trans.getSimbolo() + ")";
+                afnStr += " --> " + trans.getEstado() + "(" + trans.getSimbolo() + ")";
             
             afnStr += "\n";
         }
