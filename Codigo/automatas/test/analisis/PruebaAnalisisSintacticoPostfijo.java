@@ -5,6 +5,8 @@
  */
 package analisis;
 
+import old.AnalizadorSintacticoPostfijo;
+
 /**
  *
  * @author Germán Hüttemann
