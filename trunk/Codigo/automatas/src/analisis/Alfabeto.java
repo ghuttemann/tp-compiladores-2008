@@ -6,6 +6,7 @@
 package analisis;
 
 import java.util.Arrays;
+import java.util.Iterator;
 import java.util.Vector;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Vector;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Alfabeto {
+public class Alfabeto implements Iterable<String> {
     
     /**
      * Cadena que representa el símbolo vacío.
@@ -120,5 +121,9 @@ public class Alfabeto {
         int hash = 3;
         hash = 41 * hash + (this.simbolos != null ? this.simbolos.hashCode() : 0);
         return hash;
+    }
+
+    public Iterator<String> iterator() {
+        return simbolos.iterator();
     }
 }
