@@ -3,7 +3,9 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package analisis;
+package old;
+
+import analisis.*;
 
 /**
  * Clase que implementa un analizador sintáctico predictivo
