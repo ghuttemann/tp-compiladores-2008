@@ -18,9 +18,9 @@ package generacion;
 public class Transicion {
     
     /**
-     * Identificador del Estado destino de esta <code>Transicion</code>.
+     * <code>Estado</code> destino de esta <code>Transicion</code>.
      */
-    private Integer identificadorEstado;
+    private Estado estado;
     
     /**
      * Simbolo del alfabeto para esta <code>Transicion</code>.
@@ -31,12 +31,11 @@ public class Transicion {
      * Construye una <code>Transicion</code> especificando los dos
      * atributos de la misma.
      *
-     * @param identificadorEstado El identificador del <code>Estado</code> 
-     * destino para esta <code>Transicion</code>.
+     * @param estado El <code>Estado</code> destino para esta <code>Transicion</code>.
      * @param simbolo El símbolo para esta <code>Transicion</code>.
      */
-    public Transicion(Integer identificadorEstado, String simbolo) {
-        this.identificadorEstado = identificadorEstado;
+    public Transicion(Estado estado, String simbolo) {
+        this.estado  = estado;
         this.simbolo = simbolo;
     }
 
@@ -49,19 +48,19 @@ public class Transicion {
     }
 
     /**
-     * Obtiene el identificador del <code>Estado</code> destino de esta <code>Transicion</code>.
-     * @return El identificador del <code>Estado</code> destino de esta <code>Transicion</code>.
+     * Obtiene el <code>Estado</code> destino de esta <code>Transicion</code>.
+     * @return El <code>Estado</code> destino de esta <code>Transicion</code>.
      */
-    public Integer getIdentificadorEstado() {
-        return identificadorEstado;
+    public Estado getEstado() {
+        return estado;
     }
 
     /**
      * Establece el <code>Estado</code> destino de esta <code>Transicion</code>.
-     * @param identificadorEstado El nuevo <code>Estado</code> destino de esta <code>Transicion</code>.
+     * @param estado El nuevo <code>Estado</code> destino de esta <code>Transicion</code>.
      */
-    public void setIdentificadorEstado(Integer identificadorEstado) {
-        this.identificadorEstado = identificadorEstado;
+    public void setEstado(Estado estado) {
+        this.estado = estado;
     }
     
     /**
