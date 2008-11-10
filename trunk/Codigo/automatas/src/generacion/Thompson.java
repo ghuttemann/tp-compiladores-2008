@@ -30,8 +30,8 @@ public class Thompson {
      * @param simbolo El símbolo a partir del cual construir el AFN.
      * @return El AFN para <code>simbolo</code>.
      */
-    public static Automata basico(String simbolo) {
-        Automata afn = new Automata();
+    public static AFN basico(String simbolo) {
+        AFN afn = new AFN();
         
         /* Estados inicial y final */
         Estado ini = new Estado(0);
@@ -53,8 +53,8 @@ public class Thompson {
      * @param afn El AFN sobre el cual aplicar la cerradura de Kleene.
      * @return El AFN resultante de aplicar cerradura de Kleene a <code>afn</code>.
      */
-    public static Automata cerraduraKleene(Automata afn) {
-        Automata afn_salida = new Automata();
+    public static AFN cerraduraKleene(AFN afn) {
+        AFN afn_salida = new AFN();
                 
         /* Agregamos el estado inicial */
         Estado nuevoInicio = new Estado(afn_salida.cantidadEstados());
@@ -89,7 +89,7 @@ public class Thompson {
      * @param afn El AFN sobre el cual aplicar la cerradura positiva.
      * @return El AFN resultante de aplicar cerradura positiva a <code>afn</code>.
      */
-    public static Automata cerraduraPositiva(Automata afn) {
+    public static AFN cerraduraPositiva(AFN afn) {
         return concatenacion(afn, cerraduraKleene(afn));
     }
     
@@ -98,7 +98,7 @@ public class Thompson {
      * @param afn El AFN sobre el cual aplicar el operador de opción.
      * @return El AFN resultante de aplicar el operador de opción a <code>afn</code>.
      */
-    public static Automata opcion(Automata afn) {
+    public static AFN opcion(AFN afn) {
         return union(afn, basico(Alfabeto.VACIO));
     }
     
@@ -109,9 +109,9 @@ public class Thompson {
      * @return El AFN resultante de la unión de 
      * <code>afn1</code> y <code>afn2</code>.
      */
-    public static Automata union(Automata afn1, Automata afn2) {
+    public static AFN union(AFN afn1, AFN afn2) {
         Transicion trans;
-        Automata afn = new Automata();
+        AFN afn = new AFN();
         
         /* Agregamos el estado inicial */
         Estado nuevoInicio = new Estado(afn.cantidadEstados());
@@ -179,8 +179,8 @@ public class Thompson {
      * @return El AFN resultante de la concatenación de 
      * <code>afn1</code> y <code>afn2</code>.
      */
-    public static Automata concatenacion(Automata afn1, Automata afn2) {
-        Automata afn = new Automata();
+    public static AFN concatenacion(AFN afn1, AFN afn2) {
+        AFN afn = new AFN();
         
         /* 
          * Agregamos los estados de afn1, el incremento es igual
@@ -224,7 +224,7 @@ public class Thompson {
      * de los estados finales de las transiciones.
      * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
      */
-    private static void copiarEstados(Automata afnOrigen, Automata afnDestino, 
+    private static void copiarEstados(AFN afnOrigen, AFN afnDestino, 
                     int incrementoTrans, int omitidos) {
         
         /* 
@@ -262,7 +262,7 @@ public class Thompson {
      * @param incremento Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
      */
-    private static void copiarEstados(Automata afnOrigen, Automata afnDestino, int incremento) {
+    private static void copiarEstados(AFN afnOrigen, AFN afnDestino, int incremento) {
         copiarEstados(afnOrigen, afnDestino, incremento, 0);
     }
     
@@ -273,7 +273,7 @@ public class Thompson {
      * @param objetivo
      * @param incremento
      */
-    private static void copiarTransiciones(Automata afnDestino, Conjunto<Transicion> transiciones, 
+    private static void copiarTransiciones(AFN afnDestino, Conjunto<Transicion> transiciones, 
                         Estado objetivo, int incrementoTrans) {
         
         for (Transicion trans : transiciones) {
