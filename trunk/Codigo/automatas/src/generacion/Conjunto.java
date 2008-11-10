@@ -5,6 +5,7 @@
  */
 package generacion;
 
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -120,6 +121,18 @@ public class Conjunto<T> implements Iterable<T> {
      */
     public boolean contiene(T elemento) {
         return elementos.contains(elemento);
+    }
+    
+    /**
+     * Ordena los elementos del conjunto.
+     */
+    public void ordenar() {
+        Object[] arregloTemp = elementos.toArray();
+        Arrays.sort(arregloTemp);
+        
+        elementos.clear();
+        for (Object e : arregloTemp)
+            elementos.add((T) e);
     }
 
     @Override
