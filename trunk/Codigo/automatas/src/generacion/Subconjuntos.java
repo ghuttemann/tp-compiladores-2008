@@ -46,7 +46,6 @@ public class Subconjuntos {
         int estadosProcesados = 0;
         
         /* Calculamos la Cerradura Epsilon del estado inicial */
-        afn.iniciarRecorrido();
         Conjunto<Estado> resultado = cerraduraEpsilon(afn.getEstadoInicial());
         
          /* 
@@ -73,9 +72,7 @@ public class Subconjuntos {
             /* Buscar transiciones por cada simbolo */
             for (String simbolo : afn.getAlfabeto()) {
                 /* Aplicar cerraduraEpsilon(mueve(T, simbolo)) */
-                afn.iniciarRecorrido();
                 Conjunto<Estado> M = mueve(T, simbolo);
-                afn.iniciarRecorrido();
                 Conjunto<Estado> U = cerraduraEpsilon(M);
                 
                 if (estadosD.contiene(U)) {
@@ -146,7 +143,7 @@ public class Subconjuntos {
     }
     
     /**
-     * Implementa la operación Mover.
+     * Implementa la operación Mueve.
      * @param estados <code>Estado</code>s sobre los cuales aplicar la operación.
      * @param simbolo Símbolo que debe seguirse en las <code>Transicion</code>s.
      * @return
@@ -162,7 +159,9 @@ public class Subconjuntos {
      * inicial y pasando por todas las <code>Transicion</code>s que coincidan
      * con determinado símbolo.<br>
      * Este algoritmo corresponde al una generalización del algoritmo de la
-     * Figura 3.33 del libro Compiladores de Aho (2da. edicion).
+     * Figura 3.33 del libro Compiladores de Aho (2da. edicion), de manera a
+     * que el mismo pueda utilizarse para las dos operaciones de Cerradura
+     * Epsilon y también para la operación Mueve.
      * @param actual El <code>Estado</code> a partir del cual se realiza el recorrido.
      * @param alcanzados <code>Conjunto</code> donde se guardan los <code>Estado</code>s alcanzados.
      * @param simboloBuscado Simbolo que debe seguirse en las <code>Transicion</code>s.
@@ -191,7 +190,15 @@ public class Subconjuntos {
                 
                 if (s.equals(simboloBuscado) && !alcanzados.contiene(e)) {
                     alcanzados.agregar(e);
-                    pila.push(e);
+                    
+                    /*
+                     * Debido a que sólo cuando el símbolo buscado
+                     * es igual a vacío se debe recorrer recursivamente
+                     * los estados alcanzados, agregamos dichos estados
+                     * a la pila solo si se da esa condición.
+                     */
+                    if (simboloBuscado.equals(Alfabeto.VACIO))
+                        pila.push(e);
                 }
             }
         }
