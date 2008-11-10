@@ -26,12 +26,12 @@ public class SubconjuntosTest {
         String er = "a*b?(ab|ba)b?a*";
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
-        Automata afn = as.analizar();
+        AFN afn = as.analizar();
         System.out.printf("AFN:\n%s", afn);
         
         System.out.println();
         
-        Automata afd = Subconjuntos.getAFD(afn);
+        AFD afd = Subconjuntos.getAFD(afn);
         System.out.printf("AFD:\n%s", afd);
     }
 }
