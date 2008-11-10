@@ -8,7 +8,9 @@ package Vista;
 
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
+import generacion.AFD;
 import generacion.AFN;
+import generacion.Subconjuntos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -150,18 +152,22 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         Procesos.setName("Procesos"); // NOI18N
 
         BAFN.setAction(actionMap.get("procesarAFN")); // NOI18N
+        BAFN.setEnabled(false);
         BAFN.setName("BAFN"); // NOI18N
 
         BAFD.setAction(actionMap.get("procesarAFD")); // NOI18N
         BAFD.setFont(resourceMap.getFont("BAFD.font")); // NOI18N
         BAFD.setText(resourceMap.getString("BAFD.text")); // NOI18N
+        BAFD.setEnabled(false);
         BAFD.setName("BAFD"); // NOI18N
 
         BAFDmin.setAction(actionMap.get("procesarAFDmin")); // NOI18N
         BAFDmin.setText(resourceMap.getString("BAFDmin.text")); // NOI18N
+        BAFDmin.setEnabled(false);
         BAFDmin.setName("BAFDmin"); // NOI18N
 
         BSimulacion.setAction(actionMap.get("procesarSimulacion")); // NOI18N
+        BSimulacion.setEnabled(false);
         BSimulacion.setName("BSimulacion"); // NOI18N
 
         javax.swing.GroupLayout ProcesosLayout = new javax.swing.GroupLayout(Procesos);
@@ -222,7 +228,7 @@ public class VPrincipal extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -279,11 +285,19 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             Alfabeto abecedario = new Alfabeto(Abc);
             AnalizadorSintactico ASintactico = new AnalizadorSintactico(abecedario, ERegular);
             try {
-
                 // Se procesa el AFN.
-                AFN miAFN = ASintactico.analizar();
+                miAFN = ASintactico.analizar();
             } catch (Exception ex) {
                 Logger.getLogger(VPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+                String mensajeError = ex.getMessage();                
+                JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n"+mensajeError);
+                error = true;
+            }
+            // Si hay error terminar
+            if (error){
+                return;
+            } else {
+                miAFD = Subconjuntos.getAFD(miAFN);
             }
             
             // Habilitamos los Botones para mostrar los Procesos.
@@ -300,12 +314,13 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFN() {
-        VAutomatas miAFN = new VAutomatas();
+        VAutomatas VAFN = new VAutomatas();
+        VAFN.setAF(miAFN);
         String titulo = new String("AFN para Proyecto: \"".concat(this.getTitle().concat("\"")));
-        miAFN.setTitle(titulo);
-        miAFN.setVisible(true);
-        this.getDesktopPane().add(miAFN, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        this.getDesktopPane().moveToFront(miAFN);
+        VAFN.setTitle(titulo);
+        VAFN.setVisible(true);
+        this.getDesktopPane().add(VAFN, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        this.getDesktopPane().moveToFront(VAFN);
     }
 
     /**
@@ -314,12 +329,13 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFD() {
-        VAutomatas miAFD = new VAutomatas();
+        VAutomatas VAFD = new VAutomatas();
+        VAFD.setAF(miAFD);
         String titulo = new String("AFD para Proyecto: \"".concat(this.getTitle().concat("\"")));
-        miAFD.setTitle(titulo);
-        miAFD.setVisible(true);
-        this.getDesktopPane().add(miAFD, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        this.getDesktopPane().moveToFront(miAFD);
+        VAFD.setTitle(titulo);
+        VAFD.setVisible(true);
+        this.getDesktopPane().add(VAFD, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        this.getDesktopPane().moveToFront(VAFD);
         
     }
 
@@ -329,12 +345,12 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFDmin() {
-        VAutomatas miAFDmin = new VAutomatas();
+        VAutomatas VAFDmin = new VAutomatas();
         String titulo = new String("AFD Mínimo para Proyecto: \"".concat(this.getTitle().concat("\"")));
-        miAFDmin.setTitle(titulo);
-        miAFDmin.setVisible(true);
-        this.getDesktopPane().add(miAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        this.getDesktopPane().moveToFront(miAFDmin);
+        VAFDmin.setTitle(titulo);
+        VAFDmin.setVisible(true);
+        this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        this.getDesktopPane().moveToFront(VAFDmin);
     }
     
     /**
@@ -343,12 +359,12 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarSimulacion() {
-        VAutomatas miAFDmin = new VAutomatas();
+        VAutomatas VAFDmin = new VAutomatas();
         String titulo = new String("AFD Mínimo Simulado para Proyecto: \"".concat(this.getTitle().concat("\"")));
-        miAFDmin.setTitle(titulo);
-        miAFDmin.setVisible(true);
-        this.getDesktopPane().add(miAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
-        this.getDesktopPane().moveToFront(miAFDmin);
+        VAFDmin.setTitle(titulo);
+        VAFDmin.setVisible(true);
+        this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        this.getDesktopPane().moveToFront(VAFDmin);
 
     }
     
@@ -356,6 +372,9 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     /*
      * Sección de Variables del Programa.
      */
+    private AFN miAFN;
+    private AFD miAFD;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BAFD;
     private javax.swing.JButton BAFDmin;

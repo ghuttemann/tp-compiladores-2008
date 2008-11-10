@@ -31,7 +31,7 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
               <Component id="Principal" min="-2" max="-2" attributes="0"/>
-              <EmptySpace pref="15" max="32767" attributes="0"/>
+              <EmptySpace pref="20" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -270,6 +270,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="Vista.VPrincipal" id="procesarAFN" methodName="procesarAFN"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="BAFN" noResource="true"/>
               </Properties>
             </Component>
@@ -280,6 +281,7 @@
                 </Property>
                 <Property name="font" type="java.awt.Font" resourceKey="BAFD.font"/>
                 <Property name="text" type="java.lang.String" resourceKey="BAFD.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="BAFD" noResource="true"/>
               </Properties>
             </Component>
@@ -289,6 +291,7 @@
                   <action class="Vista.VPrincipal" id="procesarAFDmin" methodName="procesarAFDmin"/>
                 </Property>
                 <Property name="text" type="java.lang.String" resourceKey="BAFDmin.text"/>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="BAFDmin" noResource="true"/>
               </Properties>
             </Component>
@@ -297,6 +300,7 @@
                 <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
                   <action class="Vista.VPrincipal" id="procesarSimulacion" methodName="procesarSimulacion"/>
                 </Property>
+                <Property name="enabled" type="boolean" value="false"/>
                 <Property name="name" type="java.lang.String" value="BSimulacion" noResource="true"/>
               </Properties>
             </Component>
