@@ -27,11 +27,11 @@ public class SubconjuntosTest {
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
         Automata afn = as.analizar();
-        System.out.printf("%s", afn);
+        System.out.printf("AFN:\n%s", afn);
         
         System.out.println();
         
         Automata afd = Subconjuntos.getAFD(afn);
-        System.out.printf("%s", afd);
+        System.out.printf("AFD:\n%s", afd);
     }
 }
