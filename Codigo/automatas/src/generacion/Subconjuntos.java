@@ -24,11 +24,11 @@ public class Subconjuntos {
      * @param afn
      * @return
      */
-    public static Automata getAFD(Automata afn) {
+    public static AFD getAFD(Automata afn) {
         Estado estadoOrigen, estadoDestino;
         
         /* AFD resultante */
-        Automata afd = new Automata(afn.getAlfabeto(), afn.getExprReg());
+        AFD afd = new AFD(afn.getAlfabeto(), afn.getExprReg());
         
         /* Conjunto de estados finales del AFD */
         Conjunto<Conjunto<Estado>> estadosD = new Conjunto<Conjunto<Estado>>();
@@ -115,6 +115,7 @@ public class Subconjuntos {
             }
         }
         
+        afd.setEstadosD(estadosD);
         return afd;
     }
     
@@ -126,6 +127,7 @@ public class Subconjuntos {
     private static Conjunto<Estado> cerraduraEpsilon(Estado estado) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estado, resultado, Alfabeto.VACIO);
+        resultado.ordenar();
         return resultado;
     }
     
@@ -139,6 +141,7 @@ public class Subconjuntos {
     private static Conjunto<Estado> cerraduraEpsilon(Conjunto<Estado> estados) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estados, resultado, Alfabeto.VACIO);
+        resultado.ordenar();
         return resultado;
     }
     
@@ -151,6 +154,7 @@ public class Subconjuntos {
     private static Conjunto<Estado> mueve(Conjunto<Estado> estados, String simbolo) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estados, resultado, simbolo);
+        resultado.ordenar();
         return resultado;
     }
     
