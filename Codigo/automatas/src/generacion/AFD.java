@@ -65,4 +65,17 @@ public class AFD extends Automata {
     public void setEstadosD(Conjunto<Conjunto<Estado>> estadosD) {
         this.estadosD = estadosD;
     }
+    
+    public String estadosDtoString() {
+        String str = "";
+        
+        for (int i=0; i < estadosD.cantidad(); i++) {
+            Conjunto<Estado> conj = estadosD.obtener(i);
+            Estado actual = getEstado(i);
+            
+            str += actual + " --> " + conj + "\n";
+        }
+        
+        return str;
+    }
 }
