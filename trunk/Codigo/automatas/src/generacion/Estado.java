@@ -163,11 +163,10 @@ public class Estado implements Comparable<Estado> {
         
         if (getIdentificador() == 0)
             valor += "i";
-        else if (getEsFinal())
-            valor += "f";
-        else
-            valor += " ";
         
+        if (getEsFinal())
+            valor += "f";
+                
         return valor;
     }
 }
