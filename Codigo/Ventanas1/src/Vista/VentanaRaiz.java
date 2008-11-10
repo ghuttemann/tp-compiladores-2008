@@ -1,5 +1,7 @@
 /*
- * Ventanas1View.java
+ * Trabajo Práctico de Compiladores 2008.
+ * Analizador Léxico.
+ * Archivo: VentanaRaiz.java
  */
 
 package Vista;
@@ -18,10 +20,14 @@ import javax.swing.JDialog;
 import javax.swing.JFrame;
 
 /**
- * The application's main frame.
+ * La Ventana Principal de la Aplicación.
+ * @author mrodas
  */
 public class VentanaRaiz extends FrameView {
 
+    /*
+     * Constructor Principal
+     */
     public VentanaRaiz(SingleFrameApplication app) {
         super(app);
 
@@ -81,17 +87,7 @@ public class VentanaRaiz extends FrameView {
             }
         });
     }
-
-    @Action
-    public void showAboutBox() {
-        if (aboutBox == null) {
-            JFrame mainFrame = AplicacionAnalizadorLexico.getApplication().getMainFrame();
-            aboutBox = new AcercaDe(mainFrame);
-            aboutBox.setLocationRelativeTo(mainFrame);
-        }
-        AplicacionAnalizadorLexico.getApplication().show(aboutBox);
-    }
-
+    
     /** This method is called from within the constructor to
      * initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is
@@ -178,6 +174,7 @@ public class VentanaRaiz extends FrameView {
                 .addGap(3, 3, 3))
         );
 
+        Desktop.setBackground(resourceMap.getColor("Desktop.background")); // NOI18N
         Desktop.setBorder(new javax.swing.border.MatteBorder(null));
         Desktop.setInheritsPopupMenu(true);
         Desktop.setName("Desktop"); // NOI18N
@@ -186,6 +183,20 @@ public class VentanaRaiz extends FrameView {
         setMenuBar(menuBar);
     }// </editor-fold>//GEN-END:initComponents
     
+    
+    /**
+     * Función Para Mostrar la Ventana "Acerca de".
+     */
+    @Action
+    public void showAboutBox() {
+        if (aboutBox == null) {
+            JFrame mainFrame = AplicacionAnalizadorLexico.getApplication().getMainFrame();
+            aboutBox = new AcercaDe(mainFrame);
+            aboutBox.setLocationRelativeTo(mainFrame);
+        }
+        AplicacionAnalizadorLexico.getApplication().show(aboutBox);
+    }
+    
     /**
      * Función que controla la creación de un Nuevo Proyecto.
      * Un Proyecto consiste en la Página principal para ejecutar el Analizador
@@ -193,24 +204,35 @@ public class VentanaRaiz extends FrameView {
      */
     @Action
     public void nuevoProyecto() {
-        JOptionPane nuevoProyectox = new JOptionPane();
+        // Se construye y muestra la Ventana para nombrar nuevo Proyecto.
         String mensaje = new String("Ingrese el Nombre del Proyecto.");
-        String nombre = nuevoProyectox.showInputDialog(mensaje);
-        nombre.concat("-");
+        String nombre = JOptionPane.showInputDialog(mensaje);
         
+        // Se controla si se cancela (null)
         if (nombre != null) {
+            
+            //Se controla nombre vacio y nombre repetido.
             if (!nombre.isEmpty() && !hayNombreRepetido(nombre)) {
+                
+                // Se crea el nuevo proyecto con el nombre ingresado.
                 VPrincipal miVentana = new VPrincipal();
                 miVentana.setTitle(nombre);
                 miVentana.setVisible(true);
                 Desktop.add(miVentana, javax.swing.JLayeredPane.DEFAULT_LAYER);
-                Desktop.updateUI();
+                Desktop.moveToFront(miVentana);
+                
             } else {
-                nuevoProyectox.showMessageDialog(Desktop, "No se pudo crear el Proyecto con ese Nombre.");
+                
+                // El nombre ingresado como nombre de Proyecto no es Correcto.
+                JOptionPane.showMessageDialog(Desktop, "No se pudo crear el Proyecto con ese Nombre.");
             }
         }
     }
     
+    /*
+     * Función para controlar los titulos de las Ventanas Internas del Programa
+     * y verificar si coinciden con el parametro proveido.
+     */
     private boolean hayNombreRepetido(String nombre){
         Component [] lista = Desktop.getComponents();
         if (lista.length<=0){
@@ -224,7 +246,9 @@ public class VentanaRaiz extends FrameView {
         return false;
     }
     
-    
+    /*
+     * Sección de Variables del Programa.
+     */
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane Desktop;
     private javax.swing.JMenuItem Nuevo;
