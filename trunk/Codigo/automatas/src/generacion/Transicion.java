@@ -78,4 +78,9 @@ public class Transicion {
     public void setSimbolo(String simbolo) {
         this.simbolo = simbolo;
     }
+    
+    @Override
+    public String toString() {
+        return "(" + getEstado() + ", " + getSimbolo() + ")";
+    }
 }
