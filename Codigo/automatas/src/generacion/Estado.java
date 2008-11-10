@@ -133,20 +133,17 @@ public class Estado implements Comparable<Estado> {
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null) {
+        if (obj == null)
             return false;
-        }
         
-        if (getClass() != obj.getClass()) {
+        if (getClass() != obj.getClass())
             return false;
-        }
         
         final Estado other = (Estado) obj;
-        if (this.identificador.equals(other.identificador)) {
-            return false;
-        }
+        if (this.identificador.equals(other.identificador))
+            return true;
         
-        return true;
+        return false;
     }
 
     @Override
