@@ -20,7 +20,7 @@ import analisis.Alfabeto;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Automata {
+public abstract class Automata {
     
     /**
      * Conjunto de estados del autómata.
@@ -40,7 +40,7 @@ public class Automata {
     /**
      * Constructor por defecto.
      */
-    public Automata() {
+    protected Automata() {
        this(null, "");
     }
     
@@ -50,7 +50,7 @@ public class Automata {
      * @param alfabeto El <code>Alfabeto</code> de este <code>Automata</code>.
      * @param exprReg La expresión regular para este <code>Automata</code>.
      */
-    public Automata(Alfabeto alfabeto, String exprReg) {
+    protected Automata(Alfabeto alfabeto, String exprReg) {
         estados = new Conjunto<Estado>();
         setAlfabeto(alfabeto);
         setExprReg(exprReg);
