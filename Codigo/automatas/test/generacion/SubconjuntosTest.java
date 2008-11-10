@@ -33,5 +33,6 @@ public class SubconjuntosTest {
         
         AFD afd = Subconjuntos.getAFD(afn);
         System.out.printf("AFD:\n%s", afd);
+        System.out.printf("\nEstadosD:\n%s", afd.estadosDtoString());
     }
 }
