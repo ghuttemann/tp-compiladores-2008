@@ -57,6 +57,18 @@ public class Conjunto<T> implements Iterable<T> {
     }
     
     /**
+     * Retorna la posición de la primera ocurrencia
+     * de un elemento en este <code>Conjunto</code>.
+     * @param elemento El elemento a buscar.
+     * @return La posición de la primera ocurrencia
+     * de un elemento en este <code>Conjunto</code>,
+     * o -1 si el elemento no está contenido.
+     */
+    public int obtenerPosicion(T elemento) {
+        return elementos.indexOf(elemento);
+    }
+    
+    /**
      * Retorna el primer elemento del conjunto.
      * @return El primer elemento del conjunto.
      */
@@ -77,6 +89,15 @@ public class Conjunto<T> implements Iterable<T> {
      */
     public int cantidad() {
         return elementos.size();
+    }
+    
+    /**
+     * Determina si este <code>Conjunto</code> está vacío
+     * @return <code>true</code> si este <code>Conjunto</code>
+     * está vacío, <code>false</code> en caso contrario.
+     */
+    public boolean estaVacio() {
+        return cantidad() == 0;
     }
 
     /**
@@ -118,5 +139,10 @@ public class Conjunto<T> implements Iterable<T> {
         int hash = 7;
         hash = 79 * hash + (this.elementos != null ? this.elementos.hashCode() : 0);
         return hash;
+    }
+    
+    @Override
+    public String toString() {
+        return elementos.toString();
     }
 }
