@@ -64,7 +64,7 @@ public class Thompson {
          * Agregamos los demás estados, el incremento es igual
          * a la cantidad de estado en el AFN destino.
          */
-        copiarEstados(afn, afn_salida, afn_salida.cantidadEstados());
+        Automata.copiarEstados(afn, afn_salida, afn_salida.cantidadEstados());
         
         /* Agregamos el estado final */
         Estado nuevoFin = new Estado(afn_salida.cantidadEstados(), true);
@@ -121,13 +121,13 @@ public class Thompson {
          * Agregamos los estados de afn1, el incremento es igual
          * a la cantidad de estado en el AFN destino.
          */
-        copiarEstados(afn1, afn, afn.cantidadEstados());
+        Automata.copiarEstados(afn1, afn, afn.cantidadEstados());
         
         /* 
          * Agregamos los estados de afn2, el incremento es igual
          * a la cantidad de estado en el AFN destino.
          */
-        copiarEstados(afn2, afn, afn.cantidadEstados());
+        Automata.copiarEstados(afn2, afn, afn.cantidadEstados());
         
         /* Agregamos el estado final */
         Estado nuevoFin = new Estado(afn.cantidadEstados(), true);
@@ -187,7 +187,7 @@ public class Thompson {
          * a la cantidad de estado en el AFN destino, que en este
          * caso es igual a cero.
          */
-        copiarEstados(afn1, afn, afn.cantidadEstados());
+        Automata.copiarEstados(afn1, afn, afn.cantidadEstados());
         
         /* Último estado actual del autómata que estamos generando */
         Estado ultimoActual = afn.getEstado(afn.cantidadEstados() - 1);
@@ -198,7 +198,7 @@ public class Thompson {
          * identificador de estados en el AFN destino y no a
          * la cantidad de estados ya que aquí se omite un estado.
          */
-        copiarEstados(afn2, afn, afn.cantidadEstados() - 1, 1);
+        Automata.copiarEstados(afn2, afn, afn.cantidadEstados() - 1, 1);
         
         /* Estado inicial de afn2 */
         Estado inicioAfn2 = afn2.getEstadoInicial();
@@ -207,83 +207,12 @@ public class Thompson {
          * Agregamos las transiciones del estado inicial de afn2
          * (ahora en afn) al estado final de afn1 (ahora en afn).
          */
-        copiarTransiciones(afn, inicioAfn2.getTransiciones(), ultimoActual, ultimoActual.getIdentificador());
+        Automata.copiarTransiciones(afn, inicioAfn2.getTransiciones(), 
+                            ultimoActual, ultimoActual.getIdentificador());
         
         /* Establecer estado final */
         afn.getEstado(afn.cantidadEstados() - 1).setEsFinal(true);
         
         return afn;
-    }
-    
-    /**
-     * Copia los estados de un autómata a otro, omitiendo una cantidad
-     * determinada del autómata de origen.
-     * @param afnOrigen AFN desde el cual copiar estados.
-     * @param afnDestino AFN hacia el cual copiar estados.
-     * @param incremento Cantidad en la cual deben incrementarse los identificadores
-     * de los estados finales de las transiciones.
-     * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
-     */
-    private static void copiarEstados(AFN afnOrigen, AFN afnDestino, 
-                    int incrementoTrans, int omitidos) {
-        
-        /* 
-         * Cantidad que hay que incrementar al identificador
-         * de un estado de afnOrigen para convertirlo en el
-         * correspondiente estado de afnDestino.
-         */
-        int incrementoEst = incrementoTrans; //afnDestino.cantidadEstados(); TODO
-        
-        /* Agregamos los nuevos estados para afnDestino */
-        for (int i=omitidos; i < afnOrigen.cantidadEstados(); i++)
-            afnDestino.agregarEstado(new Estado(afnDestino.cantidadEstados()));
-        
-        /* Contador de omitidos */
-        int contador = 0;
-        
-        /* Agregamos las transiciones de cada estado */
-        for (Estado tmp : afnOrigen.getEstados()) {
-            
-            if (omitidos > contador++)
-                continue;
-            
-            /* Estado de afnDestino al cual se agregarán las transiciones */
-            Estado objetivo = afnDestino.getEstado(tmp.getIdentificador() + incrementoEst);
-            
-            /* Para cada estado, agregamos las transiciones */
-            copiarTransiciones(afnDestino, tmp.getTransiciones(), objetivo, incrementoTrans);
-        }
-    }
-    
-    /**
-     * Copia los estados de un autómata a otro.
-     * @param afnOrigen Autómata desde el cual copiar estados.
-     * @param afnDestino Autómata hacia el cual copiar estados.
-     * @param incremento Cantidad en la cual deben incrementarse los identificadores
-     * de los estados finales de las transiciones.
-     */
-    private static void copiarEstados(AFN afnOrigen, AFN afnDestino, int incremento) {
-        copiarEstados(afnOrigen, afnDestino, incremento, 0);
-    }
-    
-    /**
-     * 
-     * @param afnDestino
-     * @param transiciones
-     * @param objetivo
-     * @param incremento
-     */
-    private static void copiarTransiciones(AFN afnDestino, Conjunto<Transicion> transiciones, 
-                        Estado objetivo, int incrementoTrans) {
-        
-        for (Transicion trans : transiciones) {
-            Integer idDestino = trans.getEstado().getIdentificador();
-            String simbolo = trans.getSimbolo();
-
-            Estado estadoDestino = afnDestino.getEstado(idDestino + incrementoTrans);
-            Transicion nuevaTrans = new Transicion(estadoDestino, simbolo);
-
-            objetivo.getTransiciones().agregar(nuevaTrans);
-        }
     }
 }
