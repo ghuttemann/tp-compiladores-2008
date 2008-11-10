@@ -7,6 +7,10 @@
 
 package Vista;
 
+import generacion.Automata;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
+
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
  * @author  mrodas
@@ -29,11 +33,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTabbedPane1 = new javax.swing.JTabbedPane();
-        jPanel1 = new javax.swing.JPanel();
-        jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
-        jScrollPane2 = new javax.swing.JScrollPane();
+        CPestañas = new javax.swing.JTabbedPane();
+        Pestaña1 = new javax.swing.JPanel();
+        Contenedor1 = new javax.swing.JScrollPane();
+        TTransicion = new javax.swing.JTable();
+        Contenedor2 = new javax.swing.JScrollPane();
 
         setClosable(true);
         setIconifiable(true);
@@ -43,13 +47,13 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         setFrameIcon(resourceMap.getIcon("Form.frameIcon")); // NOI18N
         setName("Form"); // NOI18N
 
-        jTabbedPane1.setName("jTabbedPane1"); // NOI18N
+        CPestañas.setName("CPestañas"); // NOI18N
 
-        jPanel1.setName("jPanel1"); // NOI18N
+        Pestaña1.setName("Pestaña1"); // NOI18N
 
-        jScrollPane1.setName("jScrollPane1"); // NOI18N
+        Contenedor1.setName("Contenedor1"); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        TTransicion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -58,60 +62,102 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             new String [] {
                 "Estados", "Title 2", "Title 3"
             }
-        ));
-        jTable1.setName("jTable1"); // NOI18N
-        jScrollPane1.setViewportView(jTable1);
-        jTable1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("jTable1.columnModel.title0")); // NOI18N
-        jTable1.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("jTable1.columnModel.title1")); // NOI18N
-        jTable1.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("jTable1.columnModel.title2")); // NOI18N
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false
+            };
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TTransicion.setName("TTransicion"); // NOI18N
+        TTransicion.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                TTransicionFocusGained(evt);
+            }
+        });
+        Contenedor1.setViewportView(TTransicion);
+        TTransicion.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
+        TTransicion.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title1")); // NOI18N
+        TTransicion.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title2")); // NOI18N
+
+        javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
+        Pestaña1.setLayout(Pestaña1Layout);
+        Pestaña1Layout.setHorizontalGroup(
+            Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 585, Short.MAX_VALUE)
+                .addGap(10, 10, 10))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 353, Short.MAX_VALUE)
-                .addGap(1, 1, 1))
+        Pestaña1Layout.setVerticalGroup(
+            Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pestaña1Layout.createSequentialGroup()
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addGap(11, 11, 11))
         );
 
-        jTabbedPane1.addTab(resourceMap.getString("jPanel1.TabConstraints.tabTitle"), jPanel1); // NOI18N
+        CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
-        jScrollPane2.setName("jScrollPane2"); // NOI18N
-        jTabbedPane1.addTab(resourceMap.getString("jScrollPane2.TabConstraints.tabTitle"), jScrollPane2); // NOI18N
+        Contenedor2.setName("Contenedor2"); // NOI18N
+        CPestañas.addTab(resourceMap.getString("Contenedor2.TabConstraints.tabTitle"), Contenedor2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 601, Short.MAX_VALUE)
+            .addComponent(CPestañas)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 372, Short.MAX_VALUE)
-                .addGap(15, 15, 15))
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+private void TTransicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TTransicionFocusGained
+    TablaDeDatos Datos = new TablaDeDatos();
+    int totalEstados = AF.cantidadEstados();
+    int totalSimbolos = AF.getAlfabeto().getTamaño();
+    // Se cargan Los Estados
+    for (int i=0; i < totalEstados; i++) {
+        String valor = AF.getEstado(i).toString();
+        Datos.setValueAt(valor, i+1, 0);
+    }
+    
+    
+    // Se cargan los Simbolos
+    for (int j=0; j < totalSimbolos; j++){
+        String valor2 = AF.getAlfabeto().getSimbolo(j);
+        Datos.setValueAt(valor2, 0, j+1);
+    }
+    
+    //TTransicion.setModel(Datos);
+}//GEN-LAST:event_TTransicionFocusGained
+
 
     /**
      * Sección de Variables del Programa.
      */
+    private Automata AF;
+
+    public Automata getAF() {
+        return AF;
+    }
+
+    public void setAF(Automata AF) {
+        this.AF = AF;
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JTabbedPane CPestañas;
+    private javax.swing.JScrollPane Contenedor1;
+    private javax.swing.JScrollPane Contenedor2;
+    private javax.swing.JPanel Pestaña1;
+    private javax.swing.JTable TTransicion;
     // End of variables declaration//GEN-END:variables
 
 }
