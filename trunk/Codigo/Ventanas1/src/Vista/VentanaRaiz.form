@@ -135,6 +135,7 @@
     </Container>
     <Container class="javax.swing.JDesktopPane" name="Desktop">
       <Properties>
+        <Property name="background" type="java.awt.Color" resourceKey="Desktop.background"/>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.MatteColorBorderInfo">
             <MatteColorBorder/>
