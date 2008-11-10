@@ -6,6 +6,11 @@
  */
 package Vista;
 
+import analisis.Alfabeto;
+import analisis.AnalizadorSintactico;
+import generacion.AFN;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import org.jdesktop.application.Action;
 
@@ -266,8 +271,22 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             }
         }
 
-        // Habilitamos los Botones para mostrar los Procesos.
         if (!error) {
+            // Se Inicializa el Analizador Sintactico.
+            String Abc = this.FPersonalizado.getText();
+            String ERegular = this.FERegular.getText();
+            
+            Alfabeto abecedario = new Alfabeto(Abc);
+            AnalizadorSintactico ASintactico = new AnalizadorSintactico(abecedario, ERegular);
+            try {
+
+                // Se procesa el AFN.
+                AFN miAFN = ASintactico.analizar();
+            } catch (Exception ex) {
+                Logger.getLogger(VPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            // Habilitamos los Botones para mostrar los Procesos.
             this.BAFN.setEnabled(true);
             this.BAFD.setEnabled(true);
             this.BAFDmin.setEnabled(true);
