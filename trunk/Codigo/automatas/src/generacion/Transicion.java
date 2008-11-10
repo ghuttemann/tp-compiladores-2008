@@ -15,7 +15,7 @@ package generacion;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Transicion {
+public class Transicion implements Comparable<Transicion> {
     
     /**
      * <code>Estado</code> destino de esta <code>Transicion</code>.
@@ -82,5 +82,20 @@ public class Transicion {
     @Override
     public String toString() {
         return "(" + getEstado() + ", " + getSimbolo() + ")";
+    }
+
+    public int compareTo(Transicion obj) {
+        Estado e1 = this.getEstado();
+        Estado e2 = obj.getEstado();
+        
+        int diferencia = e1.getIdentificador() - e2.getIdentificador();
+        
+        if (diferencia != 0)
+            return diferencia;
+        
+        String s1 = this.getSimbolo();
+        String s2 = obj.getSimbolo();
+        
+        return s1.compareTo(s2);
     }
 }
