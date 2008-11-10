@@ -3,8 +3,9 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package analisis;
+package old;
 
+import analisis.*;
 import old.AnalizadorSintacticoPostfijo;
 
 /**
