@@ -25,17 +25,17 @@ public class Automata {
     /**
      * Conjunto de estados del autómata.
      */
-    private Conjunto<Estado> estados;
+    protected Conjunto<Estado> estados;
     
     /**
      * Expresión regular para este autómata.
      */
-    private String exprReg;
+    protected String exprReg;
     
     /**
      * Alfabeto para este autómata.
      */
-    private Alfabeto alfabeto;
+    protected Alfabeto alfabeto;
     
     /**
      * Constructor por defecto.
@@ -156,17 +156,17 @@ public class Automata {
     
     @Override
     public String toString() {
-        String afnStr = "";
+        String str = "";
         
         for (Estado tmp : getEstados()) {
-            afnStr += tmp.toString();
+            str += tmp.toString();
             
             for (Transicion trans : tmp.getTransiciones())
-                afnStr += " --> " + trans.getEstado() + "(" + trans.getSimbolo() + ")";
+                str += " --> " + trans.getEstado() + "(" + trans.getSimbolo() + ")";
             
-            afnStr += "\n";
+            str += "\n";
         }
         
-        return afnStr;
+        return str;
     }
 }
