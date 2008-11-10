@@ -169,4 +169,76 @@ public abstract class Automata {
         
         return str;
     }
+    
+    /**
+     * Copia los estados de un autómata a otro.
+     * @param afOrigen Automata desde el cual copiar estados.
+     * @param afDestino Automata hacia el cual copiar estados.
+     * @param incremento Cantidad en la cual deben incrementarse los identificadores
+     * de los estados finales de las transiciones.
+     */
+    public static void copiarEstados(Automata afOrigen, Automata afDestino, int incremento) {
+        copiarEstados(afOrigen, afDestino, incremento, 0);
+    }
+    
+    /**
+     * Copia los estados de un autómata a otro, omitiendo una cantidad
+     * determinada del autómata de origen.
+     * @param afOrigen Automata desde el cual copiar estados.
+     * @param afDestino Automata hacia el cual copiar estados.
+     * @param incremento Cantidad en la cual deben incrementarse los identificadores
+     * de los estados finales de las transiciones.
+     * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
+     */
+    public static void copiarEstados(Automata afOrigen, Automata afDestino, 
+                    int incrementoTrans, int omitidos) {
+        
+        /* 
+         * Cantidad que hay que incrementar al identificador
+         * de un estado de afnOrigen para convertirlo en el
+         * correspondiente estado de afnDestino.
+         */
+        int incrementoEst = incrementoTrans; //afnDestino.cantidadEstados(); TODO
+        
+        /* Agregamos los nuevos estados para afnDestino */
+        for (int i=omitidos; i < afOrigen.cantidadEstados(); i++)
+            afDestino.agregarEstado(new Estado(afDestino.cantidadEstados()));
+        
+        /* Contador de omitidos */
+        int contador = 0;
+        
+        /* Agregamos las transiciones de cada estado */
+        for (Estado tmp : afOrigen.getEstados()) {
+            
+            if (omitidos > contador++)
+                continue;
+            
+            /* Estado de afnDestino al cual se agregarán las transiciones */
+            Estado objetivo = afDestino.getEstado(tmp.getIdentificador() + incrementoEst);
+            
+            /* Para cada estado, agregamos las transiciones */
+            copiarTransiciones(afDestino, tmp.getTransiciones(), objetivo, incrementoTrans);
+        }
+    }
+    
+    /**
+     * 
+     * @param afDestino
+     * @param transiciones
+     * @param objetivo
+     * @param incremento
+     */
+    public static void copiarTransiciones(Automata afDestino, Conjunto<Transicion> transiciones, 
+                        Estado objetivo, int incrementoTrans) {
+        
+        for (Transicion trans : transiciones) {
+            Integer idDestino = trans.getEstado().getIdentificador();
+            String simbolo = trans.getSimbolo();
+
+            Estado estadoDestino = afDestino.getEstado(idDestino + incrementoTrans);
+            Transicion nuevaTrans = new Transicion(estadoDestino, simbolo);
+
+            objetivo.getTransiciones().agregar(nuevaTrans);
+        }
+    }
 }
