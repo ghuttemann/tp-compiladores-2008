@@ -26,6 +26,6 @@ public class AnalizadorSintacticoTest {
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
         Automata salida = as.analizar();
-        System.out.printf("%s", salida);
+        System.out.printf("AFN:\n%s", salida);
     }
 }
