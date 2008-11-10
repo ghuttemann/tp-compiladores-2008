@@ -6,9 +6,9 @@
 package generacion;
 
 import analisis.Alfabeto;
-import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.Queue;
+import java.util.Stack;
 
 /**
  * Esta clase implementa los algoritmos para realizar
@@ -25,15 +25,12 @@ public class Subconjuntos {
      * @return
      */
     public static Automata getAFD(Automata afn) {
-        /*
-         * TransD
-         */
-        Hashtable<Conjunto<Estado>, Hashtable<String, Conjunto<Estado>>> transD =
-                    new Hashtable<Conjunto<Estado>, Hashtable<String, Conjunto<Estado>>>();
+        Estado estadoOrigen, estadoDestino;
         
-        /*
-         * Conjunto de estados finales del AFD.
-         */
+        /* AFD resultante */
+        Automata afd = new Automata(afn.getAlfabeto(), afn.getExprReg());
+        
+        /* Conjunto de estados finales del AFD */
         Conjunto<Conjunto<Estado>> estadosD = new Conjunto<Conjunto<Estado>>();
         
         /*
@@ -45,47 +42,81 @@ public class Subconjuntos {
          */
         Queue<Conjunto<Estado>> colaTemp = new LinkedList<Conjunto<Estado>>();
         
-        /*
-         * Debemos agregar la Cerradura Epsilon del estado inicial
-         * del AFN a colaTmp.
-         */
+        /* Contador de estados procesados del AFD */
+        int estadosProcesados = 0;
+        
+        /* Calculamos la Cerradura Epsilon del estado inicial */
         afn.iniciarRecorrido();
         Conjunto<Estado> resultado = cerraduraEpsilon(afn.getEstadoInicial());
+        
+         /* 
+          * Agregamos la Cerradura Epsilon del estado 
+          * inicial del AFN a estadosD sin marcar
+          */
+        estadosD.agregar(resultado);
         colaTemp.add(resultado);
         
         /*
          * Iniciamos el ciclo principal del algoritmo
          */
         while (!colaTemp.isEmpty()) {
-            // Marcar T
+            /* Marcar T */
             Conjunto<Estado> T = colaTemp.remove();
-            estadosD.agregar(T);
             
+            /* Agregamos el correspondiente estado al AFD */
+            if (afd.cantidadEstados() < estadosD.cantidad())
+                afd.agregarEstado(new Estado(afd.cantidadEstados()));
+            
+            /* Estado del AFD a procesar */
+            estadoOrigen = afd.getEstado(estadosProcesados++);
+            
+            /* Buscar transiciones por cada simbolo */
             for (String simbolo : afn.getAlfabeto()) {
-                // Aplicar cerraduraEpsilon(mueve(T, simbolo))
+                /* Aplicar cerraduraEpsilon(mueve(T, simbolo)) */
                 afn.iniciarRecorrido();
-                Conjunto<Estado> M = mover(T, simbolo);
+                Conjunto<Estado> M = mueve(T, simbolo);
                 afn.iniciarRecorrido();
                 Conjunto<Estado> U = cerraduraEpsilon(M);
                 
-                // Agregar U a estadosD si no está y sin marcar
-                if (!estadosD.contiene(U))
-                    colaTemp.add(U);
-                
-                // Agregar a transD
-                if (transD.containsKey(T))
-                    transD.get(T).put(simbolo, U);
-                else {
-                    Hashtable<String, Conjunto<Estado>> hash = new Hashtable<String, Conjunto<Estado>>();
-                    hash.put(simbolo, U);
-                    transD.put(T, hash);
+                if (estadosD.contiene(U)) {
+                    int posicion  = estadosD.obtenerPosicion(U);
+                    estadoDestino = afd.getEstado(posicion);
                 }
+                else if (!U.estaVacio()) {
+                    estadoDestino = new Estado(afd.cantidadEstados());
+                    afd.agregarEstado(estadoDestino);
+                    
+                    /* Agregar U a estadosD (sin marcar) si no está aún */
+                    estadosD.agregar(U);
+                    colaTemp.add(U);
+                }
+                else {
+                    /*
+                     * Encontramos un conjunto vacío, por tanto,
+                     * no debemos agregar ninguna transición y
+                     * debemos saltar directamente a evaluar el
+                     * siguiente simbolo del alfabeto.
+                     */
+                    continue;
+                }
+                
+                // Agregamos la transición al AFD
+                Transicion trans = new Transicion(estadoDestino, simbolo);
+                estadoOrigen.getTransiciones().agregar(trans);
             }
         }
         
-        Automata afd = new Automata(afn.getAlfabeto(), afn.getExprReg());
-        
-        //TODO: construir el nuevo AFD.
+        /* Establecemos los estados finales del AFD */
+        for (int i=0; i < estadosD.cantidad(); i++) {
+            Estado estadoAFD = afd.getEstado(i);
+            
+            for (Estado e : estadosD.obtener(i)) {
+                if (e.getEsFinal()) {
+                    estadoAFD.setEsFinal(true);
+                    break;
+                }
+            }
+        }
         
         return afd;
     }
@@ -120,7 +151,7 @@ public class Subconjuntos {
      * @param simbolo Símbolo que debe seguirse en las <code>Transicion</code>s.
      * @return
      */
-    private static Conjunto<Estado> mover(Conjunto<Estado> estados, String simbolo) {
+    private static Conjunto<Estado> mueve(Conjunto<Estado> estados, String simbolo) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estados, resultado, simbolo);
         return resultado;
@@ -129,31 +160,41 @@ public class Subconjuntos {
     /**
      * Realiza un recorrido del autómata a partir de un <code>Estado</code>
      * inicial y pasando por todas las <code>Transicion</code>s que coincidan
-     * con determinado símbolo.
+     * con determinado símbolo.<br>
+     * Este algoritmo corresponde al una generalización del algoritmo de la
+     * Figura 3.33 del libro Compiladores de Aho (2da. edicion).
      * @param actual El <code>Estado</code> a partir del cual se realiza el recorrido.
      * @param alcanzados <code>Conjunto</code> donde se guardan los <code>Estado</code>s alcanzados.
-     * @param simbolo Simbolo que debe seguirse en las <code>Transicion</code>s.
+     * @param simboloBuscado Simbolo que debe seguirse en las <code>Transicion</code>s.
      */
-    private static void recorrido(Estado actual, Conjunto<Estado> alcanzados, String simbolo) {
-        /* 
-         * El estado actual es agregado al conjunto
-         * de alcanzados y luego se recorren sus
-         * transiciones.
-         */
-        alcanzados.agregar(actual);
-        
-        /* Marcamos el estado actual como visitado */
-        actual.setVisitado(true);
+    private static void recorrido(Estado actual, Conjunto<Estado> alcanzados, String simboloBuscado) {
+        /* Pila para almacenar los estados pendientes */
+        Stack<Estado> pila = new Stack();
         
         /*
-         * Debemos comenzar a recorrer las transiciones
-         * a través del símbolo indicado como parámetro,
-         * a partir del estado inicial y seguir, recursivamente,
-         * con los estados alcanzados.
+         * Cuando el símbolo buscado es igual al símbolo
+         * vacío, el estado desde donde se empieza el 
+         * recorrido debe incluirse entre los estados
+         * alcanzados.
          */
-        for (Transicion tmp : actual.getTransiciones())
-            if (tmp.getSimbolo().equals(simbolo) && !tmp.getEstado().getVisitado())
-                recorrido(tmp.getEstado(), alcanzados, simbolo);
+        if (simboloBuscado.equals(Alfabeto.VACIO))
+            alcanzados.agregar(actual);
+        
+        /* Meter el estado actual como el estado inicial */
+        pila.push(actual);
+        
+        while (!pila.isEmpty()) {
+            actual = pila.pop();
+            for (Transicion t : actual.getTransiciones()) {
+                Estado e = t.getEstado();
+                String s = t.getSimbolo();
+                
+                if (s.equals(simboloBuscado) && !alcanzados.contiene(e)) {
+                    alcanzados.agregar(e);
+                    pila.push(e);
+                }
+            }
+        }
     }
     
     /**
@@ -163,10 +204,10 @@ public class Subconjuntos {
      * @param inicios El <code>Conjunto</code> <code>Estado</code>s a partir de los cuales
      * se realiza el recorrido.
      * @param alcanzados <code>Conjunto</code> donde se guardan los <code>Estado</code>s alcanzados.
-     * @param simbolo Simbolo que debe seguirse en las <code>Transicion</code>s.
+     * @param simboloBuscado Simbolo que debe seguirse en las <code>Transicion</code>s.
      */
-    private static void recorrido(Conjunto<Estado> inicios, Conjunto<Estado> alcanzados, String simbolo) {
-        for (Estado tmp : inicios)
-            recorrido(tmp, alcanzados, simbolo);
+    private static void recorrido(Conjunto<Estado> inicios, Conjunto<Estado> alcanzados, String simboloBuscado) {
+        for (Estado e : inicios)
+            recorrido(e, alcanzados, simboloBuscado);
     }
 }
