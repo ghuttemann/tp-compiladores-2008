@@ -9,7 +9,10 @@ package Vista;
 
 import generacion.Automata;
 import javax.swing.event.TableModelListener;
-import javax.swing.table.TableModel;
+import javax.swing.JTable;
+import javax.swing.table.JTableHeader;
+import javax.swing.table.TableColumn;
+import javax.swing.text.TableView.TableRow;
 
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
@@ -46,6 +49,24 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VAutomatas.class);
         setFrameIcon(resourceMap.getIcon("Form.frameIcon")); // NOI18N
         setName("Form"); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameOpened(evt);
+            }
+        });
 
         CPestañas.setName("CPestañas"); // NOI18N
 
@@ -55,16 +76,14 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         TTransicion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null, null},
-                {null, null, null},
-                {null, null, null}
+                {null}
             },
             new String [] {
-                "Estados", "Title 2", "Title 3"
+                "Estados"
             }
         ) {
             boolean[] canEdit = new boolean [] {
-                false, false, false
+                false
             };
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
@@ -79,8 +98,6 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         });
         Contenedor1.setViewportView(TTransicion);
         TTransicion.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
-        TTransicion.getColumnModel().getColumn(1).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title1")); // NOI18N
-        TTransicion.getColumnModel().getColumn(2).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title2")); // NOI18N
 
         javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
         Pestaña1.setLayout(Pestaña1Layout);
@@ -94,7 +111,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 347, Short.MAX_VALUE)
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
                 .addGap(11, 11, 11))
         );
 
@@ -112,7 +129,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 376, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
@@ -120,24 +137,34 @@ public class VAutomatas extends javax.swing.JInternalFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 private void TTransicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TTransicionFocusGained
-    TablaDeDatos Datos = new TablaDeDatos();
-    int totalEstados = AF.cantidadEstados();
+
+}//GEN-LAST:event_TTransicionFocusGained
+
+private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
+    
+}//GEN-LAST:event_formInternalFrameOpened
+
+private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+int totalEstados = AF.cantidadEstados();
     int totalSimbolos = AF.getAlfabeto().getTamaño();
-    // Se cargan Los Estados
-    for (int i=0; i < totalEstados; i++) {
-        String valor = AF.getEstado(i).toString();
-        Datos.setValueAt(valor, i+1, 0);
-    }
+    JTableHeader tabla = new JTableHeader();
     
-    
+    //TTransicion.setTableHeader(tabla);
     // Se cargan los Simbolos
     for (int j=0; j < totalSimbolos; j++){
         String valor2 = AF.getAlfabeto().getSimbolo(j);
-        Datos.setValueAt(valor2, 0, j+1);
+        TableColumn aColumn = new TableColumn();
+        aColumn.setHeaderValue(valor2);
+        TTransicion.getColumnModel().addColumn(aColumn);
     }
     
-    //TTransicion.setModel(Datos);
-}//GEN-LAST:event_TTransicionFocusGained
+    // Se cargan Los Estados
+    //TTransicion.
+    for (int i=0; i < totalEstados; i++) {
+        String valor = AF.getEstado(i).toString();
+        TTransicion.setValueAt(valor, i, 0);
+    }
+}//GEN-LAST:event_formInternalFrameActivated
 
 
     /**
