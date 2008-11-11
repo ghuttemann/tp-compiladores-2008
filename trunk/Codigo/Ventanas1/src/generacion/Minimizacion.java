@@ -18,7 +18,7 @@ public class Minimizacion {
      * @param afd
      * @return
      */
-    public AFD getAFDminimo(AFD afd) {
+    public static AFD getAFDminimo(AFD afd) {
         AFD afdMinimo = new AFD(afd.getAlfabeto(), afd.getExprReg());
         
         /* 
@@ -27,8 +27,28 @@ public class Minimizacion {
          */
         Automata.copiarEstados(afd, afdMinimo, 0);
         
+        /* Además, debemos copiar los estados finales */
+        for (int i=0; i < afd.cantidadEstados(); i++) {
+            Estado tmp = afd.getEstado(i);
+            afdMinimo.getEstado(i).setEsFinal(tmp.getEsFinal());
+        }
         
+        /* Eliminamos los estados inalcanzables */
+        eliminarInalcanzables(afdMinimo);
+        
+        /* TODO: Proceso de minimización */
+        
+        /* Eliminamos estados identidad */
+        eliminarIdentidades(afdMinimo);
         
         return afdMinimo;
+    }
+    
+    private static void eliminarInalcanzables(AFD afd) {
+        
+    }
+    
+    private static void eliminarIdentidades(AFD afd) {
+        
     }
 }
