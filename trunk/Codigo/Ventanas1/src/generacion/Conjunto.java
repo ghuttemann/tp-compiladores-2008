@@ -124,6 +124,20 @@ public class Conjunto<T> implements Iterable<T> {
     }
     
     /**
+     * Retiene en este <code>Conjunto</code> solo aquellos elementos
+     * que estén contenidos en un subconjunto dado.
+     * @param subconjunto <code>Conjunto</code> de elementos que deben
+     * ser retenidos en este <code>Conjunto</code> (los demás serán
+     * eliminados).
+     * @return <code>true</code> si este <code>Conjunto</code> ha
+     * cambiado como consecuencia de esta llamada, <code>false</code>
+     * en caso contrario.
+     */
+    public boolean retener(Conjunto<T> subconjunto) {
+        return elementos.retainAll(subconjunto.elementos);
+    }
+    
+    /**
      * Ordena los elementos del conjunto.
      */
     public void ordenar() {
