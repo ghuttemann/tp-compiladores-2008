@@ -16,20 +16,22 @@ import java.util.Stack;
 public class Minimizacion {
 
     /**
-     * 
-     * @param afd
-     * @return
+     * Obtiene un <code>AFD</code> mínimo a partir de un 
+     * <code>AFD</code> determinado.
+     * @param afd El <code>AFD</code> a minimizar.
+     * @return Un <code>AFD</code> equivalente a <code>afd</code> 
+     * pero con la menor cantidad de estados posibles.
      */
     public static AFD getAFDminimo(AFD afd) {
+        /* AFD Mínimo */
         AFD afdMinimo = new AFD(afd.getAlfabeto(), afd.getExprReg());
         
         /* 
          * Copiamos el AFD a minimizar y realizamos
-         * la minimización sobre el nuevo AFD.
+         * la minimización sobre el nuevo AFD. Además,
+         * debemos copiar los estados finales.
          */
         Automata.copiarEstados(afd, afdMinimo, 0);
-        
-        /* Además, debemos copiar los estados finales */
         for (int i=0; i < afd.cantidadEstados(); i++) {
             Estado tmp = afd.getEstado(i);
             afdMinimo.getEstado(i).setEsFinal(tmp.getEsFinal());
@@ -38,7 +40,8 @@ public class Minimizacion {
         /* Eliminamos los estados inalcanzables */
         eliminarInalcanzables(afdMinimo);
         
-        /* TODO: Proceso de minimización */
+        /* Proceso de minimización */
+        minimizar(afdMinimo);
         
         /* Eliminamos estados identidad */
         eliminarIdentidades(afdMinimo);
@@ -46,6 +49,10 @@ public class Minimizacion {
         return afdMinimo;
     }
     
+    /**
+     * Elimina los estados inalcanzables de un AFD.
+     * @param afd El AFD sobre el cual se eliminan estados inalcanzables.
+     */
     private static void eliminarInalcanzables(AFD afd) {
         /* Conjunto de estados alcanzados desde el estado inicial */
         Conjunto<Estado> alcanzados = recuperarAlcanzados(afd);
@@ -57,6 +64,14 @@ public class Minimizacion {
         // TODO
     }
     
+    /**
+     * A partir del estado inicial de un AFD recupera los
+     * estados alcanzados, realizando un recorrido DFS
+     * no recursivo (utiliza una pila).
+     * @param afd El AFD cuyos estados alcanzados deben ser
+     * recuperados.
+     * @return El conjunto de estados recuperados.
+     */
     private static Conjunto<Estado> recuperarAlcanzados(AFD afd) {
         /* Estado inicial del recorrido */
         Estado actual = afd.getEstadoInicial();
@@ -89,7 +104,40 @@ public class Minimizacion {
         return alcanzados;
     }
     
-    private static void eliminarIdentidades(AFD afd) {
+    private static void minimizar(AFD afdMinimo) {
+        /* Conjunto de las particiones del AFD */
+        Conjunto<Conjunto<Estado>> particion = new Conjunto<Conjunto<Estado>>();
         
+        /* 
+         * Paso 1:
+         * =======
+         * Separar el AFD en dos grupos, los estados finales y
+         * los estados no finales.
+         */
+        particion.agregar(afdMinimo.getEstadosFinales());
+        particion.agregar(afdMinimo.getEstadosNoFinales());
+        
+        /*
+         * Paso 2:
+         * =======
+         * Construcción de nuevas particiones
+         */
+        Conjunto<Conjunto<Estado>> nuevaParticion = new Conjunto<Conjunto<Estado>>();
+        
+        do {
+            for (Conjunto<Estado> grupo : particion) {
+                /* 
+                 * Los grupos unitarios son ignorados debido
+                 * a que ya no pueden ser particionados.
+                 */
+                if (grupo.cantidad() > 1) {
+                    // TODO
+                }
+            }
+        } while (!nuevaParticion.estaVacio());
+    }
+    
+    private static void eliminarIdentidades(AFD afd) {
+        // TODO
     }
 }
