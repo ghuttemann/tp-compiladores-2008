@@ -29,10 +29,30 @@ public class SubconjuntosTest {
         AFN afn = as.analizar();
         System.out.printf("AFN:\n%s", afn);
         
+        /* Tabla transicion del AFN */
         System.out.println();
+        Object[][] tabla1 = afn.getTablaTransicion();
+        for (int i=0; i < tabla1.length; i++) {
+            for (int j=0; j < tabla1[0].length; j++)
+                System.out.printf("%s\t", tabla1[i][j]);
+            
+            System.out.println();
+        }
         
+        /* AFD + estadosD */
+        System.out.println();
         AFD afd = Subconjuntos.getAFD(afn);
         System.out.printf("AFD:\n%s", afd);
         System.out.printf("\nEstadosD:\n%s", afd.estadosDtoString());
+        
+        /* Tabla transicion del AFD */
+        System.out.println();
+        Object[][] tabla2 = afd.getTablaTransicion();
+        for (int i=0; i < tabla2.length; i++) {
+            for (int j=0; j < tabla2[0].length; j++)
+                System.out.printf("%s\t", tabla2[i][j]);
+            
+            System.out.println();
+        }
     }
 }

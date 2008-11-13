@@ -27,5 +27,15 @@ public class AnalizadorSintacticoTest {
         
         AFN salida = as.analizar();
         System.out.printf("AFN:\n%s", salida);
+        
+        /* Tabla transicion del AFN */
+        System.out.println();
+        Object[][] tabla = salida.getTablaTransicion();
+        for (int i=0; i < tabla.length; i++) {
+            for (int j=0; j < tabla[0].length; j++)
+                System.out.printf("%s\t", tabla[i][j]);
+            
+            System.out.println();
+        }
     }
 }
