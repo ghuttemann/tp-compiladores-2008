@@ -168,6 +168,53 @@ public abstract class Automata {
             tmp.setVisitado(false);
     }
     
+    protected Object[][] cargarTablaTransiciones(int cantFil, int cantCol) {
+        /* Tabla de transiciones */
+        Object[][] tabla = new Object[cantFil][cantCol];
+        
+        /* Titulo para los Estados */
+        tabla[0][0] = "Estados";
+        
+        /* Cargamos la primera columna con Estados */
+        for (int i=1; i < cantFil; i++)
+            tabla[i][0] = getEstado(i - 1);
+        
+        /* Cargamos la primera fila con simbolos del Alfabeto */
+        for (int i=1; i < cantCol; i++)
+            tabla[0][i] = getAlfabeto().getSimbolo(i - 1);
+        
+        /* Cargamos las transiciones */
+        for (Estado e : getEstados()) {
+            int fil = e.getIdentificador();
+            
+            for (Transicion t : e.getTransiciones()) {
+                int col = getAlfabeto().obtenerPosicion(t.getSimbolo());
+                
+                if (tabla[fil + 1][col + 1] == null)
+                    tabla[fil + 1][col + 1] = new Conjunto<Integer>();
+                
+                Integer id = t.getEstado().getIdentificador();
+                ((Conjunto<Integer>) tabla[fil + 1][col + 1]).agregar(id);
+            }
+        }
+        
+        /* Cambiamos las celdas "null" por cadenas vacías */
+        String vacio = "";
+        for (int i=1; i < cantFil; i++) {
+            for (int j=1; j < cantCol; j++) {
+                if (tabla[i][j] == null)
+                    tabla[i][j] = vacio;
+                else {
+                    Conjunto c = (Conjunto) tabla[i][j];
+                    if (c.cantidad() == 1)
+                        tabla[i][j] = c.obtenerPrimero();
+                }
+            }
+        }
+        
+        return tabla;
+    }
+    
     @Override
     public String toString() {
         String str = "";
