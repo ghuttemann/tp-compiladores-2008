@@ -168,6 +168,18 @@ public abstract class Automata {
             tmp.setVisitado(false);
     }
     
+    /**
+     * Retorna la tabla de transición de estados.
+     * @return La tabla de transición de estados.
+     */
+    public abstract Object[][] getTablaTransicion();
+    
+    /**
+     * Genera y carga la tabla de transición de estados del Autómata.
+     * @param cantFil Cantidad de filas de la tabla.
+     * @param cantCol Cantidad de columnas de la tabla.
+     * @return Tabla de transición de estados del Autómata.
+     */
     protected Object[][] cargarTablaTransiciones(int cantFil, int cantCol) {
         /* Tabla de transiciones */
         Object[][] tabla = new Object[cantFil][cantCol];
