@@ -78,4 +78,15 @@ public class AFD extends Automata {
         
         return str;
     }
+    
+    /**
+     * Retorna la tabla de transición de estados.
+     * @return La tabla de transición de estados.
+     */
+    public Object[][] getTablaTransicion() {
+        int cantFil = getEstados().cantidad() + 1;
+        int cantCol = getAlfabeto().getTamaño() + 1;
+        
+        return cargarTablaTransiciones(cantFil, cantCol);
+    }
 }
