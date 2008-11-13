@@ -61,7 +61,10 @@ public class Alfabeto implements Iterable<String> {
      * @return El símbolo del alfabeto ubicado en la posición <code>pos</code>.
      */
     public String getSimbolo(int pos) {
-        return simbolos.get(pos);
+        if (pos == getTamaño())
+            return Alfabeto.VACIO;
+        else
+            return simbolos.get(pos);
     }
     
     /**
@@ -72,6 +75,21 @@ public class Alfabeto implements Iterable<String> {
      */
     public boolean contiene(String caracter) {
         return simbolos.contains(caracter);
+    }
+    
+    /**
+     * Retorna la posición de la primera ocurrencia
+     * de un caracter en este <code>Alfabeto</code>.
+     * @param caracter El caracter a buscar.
+     * @return La posición de la primera ocurrencia
+     * de un caracter en este <code>Alfabeto</code>,
+     * o -1 si el caracter no está contenido.
+     */
+    public int obtenerPosicion(String caracter) {
+        if (caracter.equals(Alfabeto.VACIO))
+            return getTamaño();
+        else
+            return simbolos.indexOf(caracter);
     }
     
     @Override
