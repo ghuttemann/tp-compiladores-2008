@@ -1,8 +1,8 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
+ * Trabajo Práctico de Compiladores 2008.
+ * 10mo Semestre Ingeniería Infomática.
+ * Facultad Politécnica - UNA.
  */
-
 package generacion;
 
 import analisis.Alfabeto;
@@ -11,13 +11,15 @@ import org.junit.Test;
 import static org.junit.Assert.*;
 
 /**
- *
- * @author ghuttemann
+ * Clase de prueba para la clase <code>Minimizacion</code>.
+ * @author Germán Hüttemann
+ * @author Marcelo Rodas
  */
 public class MinimizacionTest {
 
     /**
      * Test of getAFDminimo method, of class Minimizacion.
+     * @throws Exception 
      */
     @Test
     public void testGetAFDminimo() throws Exception {
