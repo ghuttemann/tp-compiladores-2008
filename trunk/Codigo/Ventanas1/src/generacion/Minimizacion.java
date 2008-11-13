@@ -5,6 +5,7 @@
  */
 package generacion;
 
+import java.util.Hashtable;
 import java.util.Stack;
 
 /**
@@ -61,7 +62,7 @@ public class Minimizacion {
         afd.getEstados().retener(alcanzados);
         
         /* Actualizamos los identificadores de los estados */
-        // TODO
+        // TODO: Actualizar identificadores de los estados
     }
     
     /**
@@ -105,6 +106,10 @@ public class Minimizacion {
     }
     
     private static void minimizar(AFD afdMinimo) {
+        /* Tablas Hash auxiliares */
+        Hashtable<Estado, Conjunto<Integer>> tabla1;
+        Hashtable<Conjunto<Integer>, Conjunto<Estado>> tabla2;
+        
         /* Conjunto de las particiones del AFD */
         Conjunto<Conjunto<Estado>> particion = new Conjunto<Conjunto<Estado>>();
         
@@ -114,30 +119,105 @@ public class Minimizacion {
          * Separar el AFD en dos grupos, los estados finales y
          * los estados no finales.
          */
-        particion.agregar(afdMinimo.getEstadosFinales());
         particion.agregar(afdMinimo.getEstadosNoFinales());
+        particion.agregar(afdMinimo.getEstadosFinales());
         
         /*
          * Paso 2:
          * =======
          * Construcción de nuevas particiones
-         */
-        Conjunto<Conjunto<Estado>> nuevaParticion = new Conjunto<Conjunto<Estado>>();
+         */ 
+        Conjunto<Conjunto<Estado>> nuevaParticion;
         
-        do {
+        while (true) {
+            /* Conjunto de nuevas particiones en cada pasada */
+            nuevaParticion = new Conjunto<Conjunto<Estado>>();
+            
             for (Conjunto<Estado> grupo : particion) {
                 /* 
                  * Los grupos unitarios son ignorados debido
                  * a que ya no pueden ser particionados.
                  */
-                if (grupo.cantidad() > 1) {
-                    // TODO
+                if (grupo.cantidad() <= 1) {
+                    nuevaParticion.agregar(grupo);
+                }
+                else {
+                    /*
+                     * Paso 2.1:
+                     * =========
+                     * Hallamos los grupos alcanzados por
+                     * cada estado del grupo actual.
+                     */
+                    tabla1 = new Hashtable<Estado, Conjunto<Integer>>();
+                    for (Estado e : grupo)
+                        tabla1.put(e, getGruposAlcanzados(e, particion));
+                    
+                    /*
+                     * Paso 2.2:
+                     * =========
+                     * Calculamos las nuevas particiones
+                     */
+                    tabla2 = new Hashtable<Conjunto<Integer>, Conjunto<Estado>>();
+                    for (Estado e : grupo) {
+                        Conjunto<Integer> alcanzados = tabla1.get(e);
+                        if (tabla2.containsKey(alcanzados))
+                            tabla2.get(alcanzados).agregar(e);
+                        else {
+                            Conjunto<Estado> tmp = new Conjunto<Estado>();
+                            tmp.agregar(e);
+                            tabla2.put(alcanzados, tmp);
+                        }
+                    }
+                    
+                    /*
+                     * Paso 2.3:
+                     * =========
+                     * Copiar las nuevas particiones al conjunto de
+                     * nuevas particiones.
+                     */
+                    for (Conjunto<Estado> c : tabla2.values())
+                        nuevaParticion.agregar(c);
                 }
             }
-        } while (!nuevaParticion.estaVacio());
+            
+            /* 
+             * Paso 2.4:
+             * =========
+             * Si las particiones son iguales, significa que no
+             * hubo cambios y debemos terminar. En caso contrario,
+             * seguimos particionando.
+             */
+            if (nuevaParticion.equals(particion))
+                break;
+            else
+                particion = nuevaParticion;
+        }
+        
+        // TODO: Crear nuevo AFD
+    }
+    
+    private static Conjunto<Integer> getGruposAlcanzados(Estado estado, Conjunto<Conjunto<Estado>> particion) {
+        /* Grupos alcanzados por el estado */
+        Conjunto<Integer> gruposAlcanzados = new Conjunto<Integer>();
+        
+        /* Obtener grupo alcanzado por cada transición */
+        for (Transicion t : estado.getTransiciones()) {
+            Estado destino = t.getEstado();
+            
+            /* Buscar grupo alcanzado */
+            for (Conjunto<Estado> grupo : particion) {
+                Integer idGrupo = particion.obtenerPosicion(grupo);
+                if (grupo.contiene(destino) && !gruposAlcanzados.contiene(idGrupo)) {
+                    gruposAlcanzados.agregar(idGrupo);
+                    break;
+                }
+            }
+        }
+        
+        return gruposAlcanzados;
     }
     
     private static void eliminarIdentidades(AFD afd) {
-        // TODO
+        // TODO: Implementar
     }
 }
