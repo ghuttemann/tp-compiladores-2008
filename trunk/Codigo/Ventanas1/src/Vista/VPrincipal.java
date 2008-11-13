@@ -318,9 +318,10 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         VAFN.setAF(miAFN);
         String titulo = new String("AFN para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFN.setTitle(titulo);
-        VAFN.setVisible(true);
+        
         this.getDesktopPane().add(VAFN, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFN);
+        VAFN.setVisible(true);
     }
 
     /**

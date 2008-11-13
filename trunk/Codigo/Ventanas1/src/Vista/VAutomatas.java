@@ -8,11 +8,12 @@
 package Vista;
 
 import generacion.Automata;
-import javax.swing.event.TableModelListener;
+import generacion.Conjunto;
+import generacion.Transicion;
+import java.util.Vector;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
-import javax.swing.table.TableColumn;
-import javax.swing.text.TableView.TableRow;
 
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
@@ -76,7 +77,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         TTransicion.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null}
+
             },
             new String [] {
                 "Estados"
@@ -111,7 +112,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 341, Short.MAX_VALUE)
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addGap(11, 11, 11))
         );
 
@@ -129,7 +130,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 380, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
@@ -141,29 +142,28 @@ private void TTransicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:
 }//GEN-LAST:event_TTransicionFocusGained
 
 private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-    
+
 }//GEN-LAST:event_formInternalFrameOpened
 
 private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-int totalEstados = AF.cantidadEstados();
+    int totalEstados = AF.cantidadEstados();
     int totalSimbolos = AF.getAlfabeto().getTamaño();
-    JTableHeader tabla = new JTableHeader();
     
-    //TTransicion.setTableHeader(tabla);
+    String [] cabecera = new String [totalSimbolos+2];
+    cabecera[0] = new String ("Estados");
+    cabecera[totalSimbolos+1] = new String ("€");
+    
     // Se cargan los Simbolos
-    for (int j=0; j < totalSimbolos; j++){
+    for (int j=0; j < totalSimbolos+1; j++){
         String valor2 = AF.getAlfabeto().getSimbolo(j);
-        TableColumn aColumn = new TableColumn();
-        aColumn.setHeaderValue(valor2);
-        TTransicion.getColumnModel().addColumn(aColumn);
+        cabecera[j+1] = valor2;
     }
     
-    // Se cargan Los Estados
-    //TTransicion.
-    for (int i=0; i < totalEstados; i++) {
-        String valor = AF.getEstado(i).toString();
-        TTransicion.setValueAt(valor, i, 0);
-    }
+    Object[][] tabla = AF.getTablaTransicion();
+    TTransicion = new JTable(tabla, cabecera);
+    //TTransicion..removeRowSelectionInterval(0, 1);
+    Contenedor1.setViewportView(TTransicion);
+    TTransicion.updateUI();
 }//GEN-LAST:event_formInternalFrameActivated
 
 
@@ -171,6 +171,7 @@ int totalEstados = AF.cantidadEstados();
      * Sección de Variables del Programa.
      */
     private Automata AF;
+    DefaultTableModel modelo;
 
     public Automata getAF() {
         return AF;
