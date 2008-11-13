@@ -18,7 +18,7 @@ import java.util.Vector;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Conjunto<T> implements Iterable<T> {
+public class Conjunto<T> implements Iterable<T>, Comparable<T> {
     
     /**
      * Conjunto de elementos.
@@ -171,5 +171,9 @@ public class Conjunto<T> implements Iterable<T> {
     @Override
     public String toString() {
         return elementos.toString();
+    }
+
+    public int compareTo(T obj) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
