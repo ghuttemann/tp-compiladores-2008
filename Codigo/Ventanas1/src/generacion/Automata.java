@@ -111,6 +111,20 @@ public abstract class Automata {
     }
     
     /**
+     * Obtiene los <code>Estado</code>s no finales del <code>Automata</code>.
+     * @return El conjunto de <code>Estado</code>s no finales del <code>Automata</code>.
+     */
+    public Conjunto<Estado> getEstadosNoFinales() {
+        Conjunto<Estado> noFinales = new Conjunto<Estado>();
+        
+        for (Estado tmp : estados)
+            if (!tmp.getEsFinal())
+                noFinales.agregar(tmp);
+        
+        return noFinales;
+    }
+    
+    /**
      * Agrega un <code>Estado</code> al <code>Automata</code>.
      * @param estado Nuevo <code>Estado</code> para el <code>Automata</code>.
      */
@@ -186,7 +200,7 @@ public abstract class Automata {
      * determinada del autómata de origen.
      * @param afOrigen Automata desde el cual copiar estados.
      * @param afDestino Automata hacia el cual copiar estados.
-     * @param incremento Cantidad en la cual deben incrementarse los identificadores
+     * @param incrementoTrans Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
      * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
      */
@@ -226,7 +240,7 @@ public abstract class Automata {
      * @param afDestino
      * @param transiciones
      * @param objetivo
-     * @param incremento
+     * @param incrementoTrans
      */
     public static void copiarTransiciones(Automata afDestino, Conjunto<Transicion> transiciones, 
                         Estado objetivo, int incrementoTrans) {
