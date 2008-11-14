@@ -37,10 +37,10 @@ public class AFN extends Automata {
      * Retorna la tabla de transición de estados.
      * @return La tabla de transición de estados.
      */
-    public Object[][] getTablaTransicion() {
-        int cantFil = getEstados().cantidad() + 1;
+    public TablaTransicion getTablaTransicion() {
+        int cantFil = getEstados().cantidad();
         int cantCol = getAlfabeto().getTamaño() + 2;
         
-        return cargarTablaTransiciones(cantFil, cantCol);
+        return cargarTablaTransiciones(cantFil, cantCol, 0);
     }
 }
