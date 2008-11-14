@@ -23,6 +23,11 @@ public class Estado implements Comparable<Estado> {
     private Boolean esFinal;
     
     /**
+     * Etiqueta de este estado.
+     */
+    private String etiqueta;
+    
+    /**
      * Conjunto de transiciones del Estado.
      */
     private Conjunto<Transicion> transiciones;
@@ -58,6 +63,7 @@ public class Estado implements Comparable<Estado> {
     public Estado(Integer identificador, Boolean esFinal) {
         setIdentificador(identificador);
         setEsFinal(esFinal);
+        setEtiqueta(identificador.toString());
         transiciones = new Conjunto<Transicion>();
     }
     
@@ -75,6 +81,23 @@ public class Estado implements Comparable<Estado> {
      */
     public Integer getIdentificador() {
         return identificador;
+    }
+    
+    /**
+     * Obtiene la etiqueta de este <code>Estado</code>.
+     * @return Un objeto <code>String</code> representando
+     * la etiqueta de este <code>Estado</code>.
+     */
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    /**
+     * Establece una nueva etiqueta para este <code>Estado</code>.
+     * @param etiqueta La nueva etiqueta para este <code>Estado</code>.
+     */
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
     }
     
     /**
