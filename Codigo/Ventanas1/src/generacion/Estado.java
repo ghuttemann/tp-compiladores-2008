@@ -154,6 +154,11 @@ public class Estado implements Comparable<Estado> {
         this.visitado = visitado;
     }
     
+    /**
+     * Verifica si el <code>Estado</code> es un estado identidad.
+     * @return <code>true</code> si este <code>Estado</code> es un 
+     * estado identidad, <code>false</code> en caso contrario.
+     */
     public boolean getEsIdentidad() {
         for (Transicion trans : getTransiciones())
             if (!this.equals(trans.getEstado()))
