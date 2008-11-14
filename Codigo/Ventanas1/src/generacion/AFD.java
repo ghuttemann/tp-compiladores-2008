@@ -83,10 +83,16 @@ public class AFD extends Automata {
      * Retorna la tabla de transición de estados.
      * @return La tabla de transición de estados.
      */
-    public Object[][] getTablaTransicion() {
-        int cantFil = getEstados().cantidad() + 1;
-        int cantCol = getAlfabeto().getTamaño() + 1;
+    public TablaTransicion getTablaTransicion() {
+        int cantFil = getEstados().cantidad();
+        int cantCol = getAlfabeto().getTamaño() + 2;
         
-        return cargarTablaTransiciones(cantFil, cantCol);
+        TablaTransicion tabla = cargarTablaTransiciones(cantFil, cantCol, 1);
+        tabla.setHeaderAt("Estados del AFN", 0);
+        
+        for (int i=0; i < estadosD.cantidad(); i++)
+            tabla.setValueAt(estadosD.obtener(i), i, 0);
+        
+        return tabla;
     }
 }
