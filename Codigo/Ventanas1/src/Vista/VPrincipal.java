@@ -334,10 +334,10 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         VAFD.setAF(miAFD);
         String titulo = new String("AFD para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFD.setTitle(titulo);
-        VAFD.setVisible(true);
+        
         this.getDesktopPane().add(VAFD, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFD);
-        
+        VAFD.setVisible(true);
     }
 
     /**
