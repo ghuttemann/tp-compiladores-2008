@@ -172,28 +172,32 @@ public abstract class Automata {
      * Retorna la tabla de transición de estados.
      * @return La tabla de transición de estados.
      */
-    public abstract Object[][] getTablaTransicion();
+    public abstract TablaTransicion getTablaTransicion();
     
     /**
      * Genera y carga la tabla de transición de estados del Autómata.
      * @param cantFil Cantidad de filas de la tabla.
      * @param cantCol Cantidad de columnas de la tabla.
+     * @param colDesde 
      * @return Tabla de transición de estados del Autómata.
      */
-    protected Object[][] cargarTablaTransiciones(int cantFil, int cantCol) {
-        /* Tabla de transiciones */
-        Object[][] tabla = new Object[cantFil][cantCol];
+    protected TablaTransicion cargarTablaTransiciones(int cantFil, int cantCol, int colDesde) {
+        /* Cabeceras de las columnas de la tabla de transiciones */
+        String[] cabecera = new String[cantCol];
+        
+        /* Datos de la tabla de transiciones */
+        Object[][] datos = new Object[cantFil][cantCol];
         
         /* Titulo para los Estados */
-        tabla[0][0] = "Estados";
+        cabecera[colDesde] = "Estados";
         
-        /* Cargamos la primera columna con Estados */
-        for (int i=1; i < cantFil; i++)
-            tabla[i][0] = getEstado(i - 1);
+        /* Cargamos la cabecera con simbolos del Alfabeto */
+        for (int i=colDesde + 1; i < cantCol; i++)
+            cabecera[i] = getAlfabeto().getSimbolo(i - colDesde - 1);
         
-        /* Cargamos la primera fila con simbolos del Alfabeto */
-        for (int i=1; i < cantCol; i++)
-            tabla[0][i] = getAlfabeto().getSimbolo(i - 1);
+        /* Cargamos la primera columna de datos con Estados */
+        for (int i=0; i < cantFil; i++)
+            datos[i][colDesde] = getEstado(i);
         
         /* Cargamos las transiciones */
         for (Estado e : getEstados()) {
@@ -202,29 +206,29 @@ public abstract class Automata {
             for (Transicion t : e.getTransiciones()) {
                 int col = getAlfabeto().obtenerPosicion(t.getSimbolo());
                 
-                if (tabla[fil + 1][col + 1] == null)
-                    tabla[fil + 1][col + 1] = new Conjunto<Integer>();
+                if (datos[fil][col + colDesde + 1] == null)
+                    datos[fil][col + colDesde + 1] = new Conjunto<Integer>();
                 
                 Integer id = t.getEstado().getIdentificador();
-                ((Conjunto<Integer>) tabla[fil + 1][col + 1]).agregar(id);
+                ((Conjunto<Integer>) datos[fil][col + colDesde + 1]).agregar(id);
             }
         }
         
         /* Cambiamos las celdas "null" por cadenas vacías */
         String vacio = "";
-        for (int i=1; i < cantFil; i++) {
-            for (int j=1; j < cantCol; j++) {
-                if (tabla[i][j] == null)
-                    tabla[i][j] = vacio;
+        for (int i=0; i < cantFil; i++) {
+            for (int j=colDesde + 1; j < cantCol; j++) {
+                if (datos[i][j] == null)
+                    datos[i][j] = vacio;
                 else {
-                    Conjunto c = (Conjunto) tabla[i][j];
+                    Conjunto c = (Conjunto) datos[i][j];
                     if (c.cantidad() == 1)
-                        tabla[i][j] = c.obtenerPrimero();
+                        datos[i][j] = c.obtenerPrimero();
                 }
             }
         }
         
-        return tabla;
+        return new TablaTransicion(cabecera, datos);
     }
     
     @Override
