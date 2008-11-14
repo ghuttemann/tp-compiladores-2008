@@ -153,6 +153,14 @@ public class Estado implements Comparable<Estado> {
     public void setVisitado(Boolean visitado) {
         this.visitado = visitado;
     }
+    
+    public boolean getEsIdentidad() {
+        for (Transicion trans : getTransiciones())
+            if (!this.equals(trans.getEstado()))
+                return false;
+        
+        return true;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -182,6 +190,7 @@ public class Estado implements Comparable<Estado> {
     
     @Override
     public String toString() {
+        // TODO: Usar Etiqueta
         String valor = String.valueOf(identificador);
         
         if (getIdentificador() == 0)
