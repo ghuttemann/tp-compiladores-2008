@@ -63,7 +63,16 @@ public class TablaTransicion implements TableModel {
     }
 
     public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
-        return;
+        datos[rowIndex][columnIndex] = aValue;
+    }
+    
+    /**
+     * Modifica el valor de la cabecera de una columna.
+     * @param aValue El nuevo valor de la cabecera.
+     * @param columnIndex La cabecera a modificar.
+     */
+    public void setHeaderAt(String aValue, int columnIndex) {
+        cabecera[columnIndex] = aValue;
     }
 
     public void addTableModelListener(TableModelListener listener) {
