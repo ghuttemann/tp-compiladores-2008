@@ -8,11 +8,9 @@ package generacion;
 import analisis.Alfabeto;
 
 /**
- * Clase que representa la abstracción para un Autómata Finito,
+ * Clase que representa la abstracción para un Autómata Finito
  * Determinístico (AFD). Un AFD es generado a partir de un AFN 
- * a través del algoritmo de Subconjuntos.Adicionalmente, un AFD 
- * puede ser reducido (en cuanto a cantidad de estados se refiere)
- * a través del algoritmo de Minimización de Estados.
+ * a través del algoritmo de Subconjuntos.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
