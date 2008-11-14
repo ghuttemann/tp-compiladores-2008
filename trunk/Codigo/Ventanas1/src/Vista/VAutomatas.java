@@ -61,7 +61,6 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
             }
             public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
-                formInternalFrameOpened(evt);
             }
         });
 
@@ -108,7 +107,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
                 .addGap(11, 11, 11))
         );
 
@@ -126,7 +125,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 384, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
                 .addGap(19, 19, 19))
         );
 
@@ -136,10 +135,6 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 private void TTransicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TTransicionFocusGained
 
 }//GEN-LAST:event_TTransicionFocusGained
-
-private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameOpened
-
-}//GEN-LAST:event_formInternalFrameOpened
 
 private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
     TablaTransicion tabla = AF.getTablaTransicion();
