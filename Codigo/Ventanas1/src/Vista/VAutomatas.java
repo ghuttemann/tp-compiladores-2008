@@ -8,12 +8,8 @@
 package Vista;
 
 import generacion.Automata;
-import generacion.Conjunto;
-import generacion.Transicion;
-import java.util.Vector;
+import generacion.TablaTransicion;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
 
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
@@ -146,22 +142,8 @@ private void formInternalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
 }//GEN-LAST:event_formInternalFrameOpened
 
 private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-    int totalEstados = AF.cantidadEstados();
-    int totalSimbolos = AF.getAlfabeto().getTamaño();
-    
-    String [] cabecera = new String [totalSimbolos+2];
-    cabecera[0] = new String ("Estados");
-    cabecera[totalSimbolos+1] = new String ("€");
-    
-    // Se cargan los Simbolos
-    for (int j=0; j < totalSimbolos+1; j++){
-        String valor2 = AF.getAlfabeto().getSimbolo(j);
-        cabecera[j+1] = valor2;
-    }
-    
-    Object[][] tabla = AF.getTablaTransicion();
-    TTransicion = new JTable(tabla, cabecera);
-    //TTransicion..removeRowSelectionInterval(0, 1);
+    TablaTransicion tabla = AF.getTablaTransicion();
+    TTransicion = new JTable(tabla);
     Contenedor1.setViewportView(TTransicion);
     TTransicion.updateUI();
 }//GEN-LAST:event_formInternalFrameActivated
@@ -171,15 +153,23 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
      * Sección de Variables del Programa.
      */
     private Automata AF;
-    DefaultTableModel modelo;
 
+    /**
+     * Getter del autómata.
+     * @return El autómata asociado.
+     */
     public Automata getAF() {
         return AF;
     }
 
+    /**
+     * Setter del autómata.
+     * @param AF El nuevo autómata asociado.
+     */
     public void setAF(Automata AF) {
         this.AF = AF;
     }
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTabbedPane CPestañas;
     private javax.swing.JScrollPane Contenedor1;
@@ -187,5 +177,4 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private javax.swing.JPanel Pestaña1;
     private javax.swing.JTable TTransicion;
     // End of variables declaration//GEN-END:variables
-
 }
