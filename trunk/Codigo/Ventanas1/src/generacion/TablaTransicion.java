@@ -5,7 +5,8 @@
  */
 package generacion;
 
-import javax.swing.table.AbstractTableModel;
+import javax.swing.event.TableModelListener;
+import javax.swing.table.TableModel;
 
 /**
  * Esta clase representa la tabla de transición
@@ -14,12 +15,12 @@ import javax.swing.table.AbstractTableModel;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class TablaTransicion extends AbstractTableModel {
+public class TablaTransicion implements TableModel {
     
     /**
      * Valores de la tabla de transiciones
      */
-    private Object[][] valores;
+    private Object[][] datos;
     
     /**
      * Cabecera de la tabla de transiciones
@@ -27,24 +28,49 @@ public class TablaTransicion extends AbstractTableModel {
     private String[] cabecera;
     
     /**
-     * 
-     * @param cantFil
-     * @param cantCol
+     * Construye una <code>TablaTransicion</code> con
+     * la cabecera y datos especificados.
+     * @param cabecera Las cabeceras para cada columna de la tabla.
+     * @param datos Los datos de la tabla.
      */
-    public TablaTransicion(int cantFil, int cantCol) {
-        valores  = new Object[cantFil][cantCol + 1];
-        cabecera = new String[cantCol + 1];
+    public TablaTransicion(String[] cabecera, Object[][] datos) {
+        this.cabecera = cabecera;
+        this.datos    = datos;
     }
 
     public int getRowCount() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return datos.length;
     }
 
     public int getColumnCount() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return cabecera.length;
+    }
+
+    public String getColumnName(int columnIndex) {
+        return cabecera[columnIndex];
+    }
+
+    public Class<?> getColumnClass(int columnIndex) {
+        return getValueAt(0, columnIndex).getClass();
+    }
+
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        return false;
     }
 
     public Object getValueAt(int rowIndex, int columnIndex) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return datos[rowIndex][columnIndex];
+    }
+
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        return;
+    }
+
+    public void addTableModelListener(TableModelListener listener) {
+        return;
+    }
+
+    public void removeTableModelListener(TableModelListener listener) {
+        return;
     }
 }
