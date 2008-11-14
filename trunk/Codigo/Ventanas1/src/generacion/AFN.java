@@ -8,7 +8,7 @@ package generacion;
 import analisis.Alfabeto;
 
 /**
- * Clase que representa la abstracción para un Autómata Finito,
+ * Clase que representa la abstracción para un Autómata Finito
  * No determinístico (AFN). Un AFN es contruído a partir de una 
  * expresión regular a través de las construcciones de Thompson.
  * @author Germán Hüttemann
