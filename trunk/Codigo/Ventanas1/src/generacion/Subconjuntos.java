@@ -172,7 +172,7 @@ public class Subconjuntos {
      */
     private static void recorrido(Estado actual, Conjunto<Estado> alcanzados, String simboloBuscado) {
         /* Pila para almacenar los estados pendientes */
-        Stack<Estado> pila = new Stack();
+        Stack<Estado> pila = new Stack<Estado>();
         
         /*
          * Cuando el símbolo buscado es igual al símbolo
