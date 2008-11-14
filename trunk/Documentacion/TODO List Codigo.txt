@@ -1,6 +1,18 @@
+---------------
 TODO List de UI
 ---------------
+
 - Controlar Errores.
 - Guardar Proyecto.
 - Abrir Proyecto.
 - Controlar que 2 proyectos no tengan el mismo Nombre. --> OK
+
+-------------------------
+TODO List de Otras Clases
+-------------------------
+
+- El AFD minimo debe tener sus "estados" intermedios.
+- Imprimir procedimientos de transformación.
+- Renumeración de estados post minimización.
+- Validación de cadenas.
+- Dibujar autómatas.
