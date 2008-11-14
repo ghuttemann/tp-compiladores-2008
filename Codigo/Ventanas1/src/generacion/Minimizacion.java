@@ -61,8 +61,11 @@ public class Minimizacion {
         /* Eliminamos los estados no alcanzados */
         afd.getEstados().retener(alcanzados);
         
-        /* Actualizamos los identificadores de los estados */
-        // TODO: Actualizar identificadores de los estados
+        /* 
+         * No se actualizan los identificadores de 
+         * para que pueda notarse cuales fueron
+         * eliminados, si los hay.
+         */
     }
     
     /**
@@ -80,7 +83,7 @@ public class Minimizacion {
         /* Conjunto de estados alcanzados */
         Conjunto<Estado> alcanzados = new Conjunto<Estado>();
         
-        /* Agregamos el estad actual */
+        /* Agregamos el estado actual */
         alcanzados.agregar(actual);
         
         /* Pila para almacenar los estados pendientes */
@@ -105,6 +108,12 @@ public class Minimizacion {
         return alcanzados;
     }
     
+    /**
+     * Implementación del algoritmo de minimización de
+     * estados. Algoritmo 3.39, libro de Compiladores
+     * de Aho.
+     * @param afdMinimo
+     */
     private static void minimizar(AFD afdMinimo) {
         /* Tablas Hash auxiliares */
         Hashtable<Estado, Conjunto<Integer>> tabla1;
@@ -220,7 +229,26 @@ public class Minimizacion {
         return gruposAlcanzados;
     }
     
+    /**
+     * Elimina los estados identidad, aquellos que para todos
+     * los símbolos del alfabeto tienen transiciones a sí mismos.
+     * Este tipo de estados sólo deben ser eliminados si no son
+     * estados de aceptación.
+     * @param afd El AFD sobre el cual eliminar estados identidad.
+     */
     private static void eliminarIdentidades(AFD afd) {
-        // TODO: Implementar
+        /* Conjunto de estados a eliminar */
+        Conjunto<Estado> estadoEliminados = new Conjunto<Estado>();
+        
+        /* Seleccionamos los estados identidad no finales */
+        for (Estado e : afd.getEstados())
+            if (e.getEsIdentidad() && !e.getEsFinal())
+                estadoEliminados.agregar(e);
+        
+        /* Eliminamos los estados identidad no finales */
+        for (Estado e : estadoEliminados)
+            afd.getEstados().eliminar(e);
+        
+        // TODO: Eliminar transiciones colgadas
     }
 }
