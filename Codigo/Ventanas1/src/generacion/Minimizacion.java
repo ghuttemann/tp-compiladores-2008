@@ -84,7 +84,7 @@ public class Minimizacion {
         alcanzados.agregar(actual);
         
         /* Pila para almacenar los estados pendientes */
-        Stack<Estado> pila = new Stack();
+        Stack<Estado> pila = new Stack<Estado>();
         
         /* Meter el estado actual como el estado inicial */
         pila.push(actual);
@@ -192,6 +192,9 @@ public class Minimizacion {
             else
                 particion = nuevaParticion;
         }
+        
+        /* Ordenar la partición final */
+        particion.ordenar();
         
         // TODO: Crear nuevo AFD
     }
