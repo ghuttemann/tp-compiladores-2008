@@ -18,7 +18,8 @@ import java.util.Vector;
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class Conjunto<T> implements Iterable<T>, Comparable<T> {
+public class Conjunto<T extends Comparable<T>> 
+    implements Iterable<T>, Comparable<Conjunto<T>> {
     
     /**
      * Conjunto de elementos.
@@ -26,10 +27,21 @@ public class Conjunto<T> implements Iterable<T>, Comparable<T> {
     private Vector<T> elementos;
     
     /**
+     * Indica si el conjunto está ordenado.
+     */
+    private boolean estaOrdenado;
+    
+    /**
      * Constructor de la clase.
      */
     public Conjunto() {
         elementos = new Vector<T>();
+        
+        /*
+         * Inicialmente, el conjunto
+         * está ordenado.
+         */
+        estaOrdenado = true;
     }
     
     /**
@@ -37,6 +49,14 @@ public class Conjunto<T> implements Iterable<T>, Comparable<T> {
      * @param elemento El nuevo elemento a agregar.
      */
     public void agregar(T elemento) {
+        /*
+         * Si el conjunto está ordenado y elemento a 
+         * agregar es mayor que el último, entonces
+         * se pierde el orden.
+         */
+        if (!estaVacio() && obtenerUltimo().compareTo(elemento) > 0)
+            estaOrdenado = false;
+        
         elementos.add(elemento);
     }
     
@@ -45,7 +65,15 @@ public class Conjunto<T> implements Iterable<T>, Comparable<T> {
      * @param elemento El elemento a ser eliminado.
      */
     public void eliminar(T elemento) {
-        elementos.remove(elemento);
+        boolean eliminado = elementos.remove(elemento);
+        
+        /*
+         * Si se ha eliminado un elemento, podría
+         * quedar en orden. Por ejemplo en [1, 3, 2],
+         * al eliminar el 3, queda ordenado [1, 2].
+         */
+        if (eliminado && !getEstaOrdenado())
+            estaOrdenado = verificarOrden();
     }
     
     /**
@@ -148,6 +176,39 @@ public class Conjunto<T> implements Iterable<T>, Comparable<T> {
         for (Object e : arregloTemp)
             elementos.add((T) e);
     }
+    
+    /**
+     * Verifica si el conjunto está ordenado o no.
+     * @return <code>true</code> si el conjunto está 
+     * ordenado, <code>false</code> en caso contrario.
+     */
+    public boolean getEstaOrdenado() {
+        return estaOrdenado;
+    }
+    
+    /**
+     * Verifica si el conjunto está ordenado, realizando
+     * una comparación entre pares de elementos.
+     * @return <code>true</code> si el conjunto está 
+     * ordenado, <code>false</code> en caso contrario.
+     */
+    private boolean verificarOrden() {
+        if (estaVacio())
+            return true;
+        
+        T actual = obtenerPrimero();
+        
+        for (int i=1; i < cantidad(); i++) {
+            T sgte = obtener(i);
+            
+            if (actual.compareTo(sgte) > 0)
+                return false;
+            
+            actual = sgte;
+        }
+        
+        return true;
+    }
 
     @Override
     public boolean equals(Object obj) {
@@ -173,7 +234,30 @@ public class Conjunto<T> implements Iterable<T>, Comparable<T> {
         return elementos.toString();
     }
 
-    public int compareTo(T obj) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public int compareTo(Conjunto<T> obj) {
+        if (!getEstaOrdenado())
+            ordenar();
+        
+        if (!obj.getEstaOrdenado())
+            obj.ordenar();
+        
+        for (int i=0; /* sin condición */; i++) {
+            /* Si ambos Conjuntos tienen más elementos */
+            if (cantidad() > i && obj.cantidad() > i) {
+                T a = obtener(i);
+                T b = obj.obtener(i);
+                int cmp = a.compareTo(b);
+                
+                /* Si hay diferencias, basta para comparar */
+                if (cmp != 0)
+                    return cmp;
+            }
+            else if (cantidad() > i) /* Si este Conjunto tiene más elementos, será el mayor */
+                return 1;
+            else if (obj.cantidad() > i) /* Si este Conjunto tiene menos elementos, será el menor */
+                return -1;
+            else /* Si ninguno tiene más elementos, son iguales */
+                return 0;
+        }
     }
 }
