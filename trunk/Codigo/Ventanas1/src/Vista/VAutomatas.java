@@ -9,7 +9,13 @@ package Vista;
 
 import generacion.Automata;
 import generacion.TablaTransicion;
+import java.awt.event.AdjustmentEvent;
+import java.awt.event.AdjustmentListener;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableColumnModel;
 
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
@@ -32,6 +38,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
+        bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
         CPestañas = new javax.swing.JTabbedPane();
         Pestaña1 = new javax.swing.JPanel();
@@ -43,6 +50,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
+        setAutoscrolls(true);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VAutomatas.class);
         setFrameIcon(resourceMap.getIcon("Form.frameIcon")); // NOI18N
         setName("Form"); // NOI18N
@@ -64,10 +72,14 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             }
         });
 
+        CPestañas.setAutoscrolls(true);
         CPestañas.setName("CPestañas"); // NOI18N
 
         Pestaña1.setName("Pestaña1"); // NOI18N
 
+        Contenedor1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
+        Contenedor1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        Contenedor1.setAutoscrolls(true);
         Contenedor1.setName("Contenedor1"); // NOI18N
 
         TTransicion.setModel(new javax.swing.table.DefaultTableModel(
@@ -86,13 +98,19 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        TTransicion.setMaximumSize(new java.awt.Dimension(50, 100));
+        TTransicion.setMinimumSize(new java.awt.Dimension(15, 10));
         TTransicion.setName("TTransicion"); // NOI18N
-        TTransicion.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                TTransicionFocusGained(evt);
-            }
-        });
+        TTransicion.setPreferredSize(new java.awt.Dimension(55, 30));
+        TTransicion.setRowSelectionAllowed(false);
+        TTransicion.getTableHeader().setReorderingAllowed(false);
+
+        org.jdesktop.beansbinding.Binding binding = org.jdesktop.beansbinding.Bindings.createAutoBinding(org.jdesktop.beansbinding.AutoBinding.UpdateStrategy.READ_WRITE, Contenedor1, org.jdesktop.beansbinding.ELProperty.create("0"), TTransicion, org.jdesktop.beansbinding.BeanProperty.create("autoResizeMode"), "R");
+        bindingGroup.addBinding(binding);
+
         Contenedor1.setViewportView(TTransicion);
+        TTransicion.getColumnModel().getColumn(0).setResizable(false);
+        TTransicion.getColumnModel().getColumn(0).setPreferredWidth(57);
         TTransicion.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
 
         javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
@@ -107,8 +125,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 361, Short.MAX_VALUE)
-                .addGap(11, 11, 11))
+                .addComponent(Contenedor1, javax.swing.GroupLayout.DEFAULT_SIZE, 365, Short.MAX_VALUE)
+                .addGap(19, 19, 19))
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
@@ -125,21 +143,33 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 400, Short.MAX_VALUE)
-                .addGap(19, 19, 19))
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addGap(23, 23, 23))
         );
+
+        bindingGroup.bind();
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void TTransicionFocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_TTransicionFocusGained
-
-}//GEN-LAST:event_TTransicionFocusGained
-
+/*
+ * Función para Completar la tabla de Transición cada vez que la ventana
+ * correspondiente se Active.
+ * @param evt
+ */
 private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
     TablaTransicion tabla = AF.getTablaTransicion();
     TTransicion = new JTable(tabla);
+    /* Configuración Necesaria para el Contenedor de la Tabla de Transicion */
+    Contenedor1.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    Contenedor1.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    Contenedor1.setAutoscrolls(true);
     Contenedor1.setViewportView(TTransicion);
+    
+    /* Configuración necesario para la Tabla de Transición */
+    TTransicion.setRowHeight(15);
+    TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    TTransicion.getColumnModel().getColumn(0).setWidth(100);
     TTransicion.updateUI();
 }//GEN-LAST:event_formInternalFrameActivated
 
@@ -171,5 +201,6 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private javax.swing.JScrollPane Contenedor2;
     private javax.swing.JPanel Pestaña1;
     private javax.swing.JTable TTransicion;
+    private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }
