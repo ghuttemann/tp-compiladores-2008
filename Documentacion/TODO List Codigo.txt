@@ -16,3 +16,10 @@ TODO List de Otras Clases
 - Renumeración de estados post minimización.
 - Validación de cadenas.
 - Dibujar autómatas.
+
+----------------------------
+Pasos para dibujar automatas
+----------------------------
+1. Generar archivo DOT.
+2. Generar imagen desde archivo DOT con el programa "dot.exe".
+3. Mostrar la imagen en la aplicación.
