@@ -195,10 +195,14 @@ public class Estado implements Comparable<Estado> {
     
     @Override
     public String toString() {
-        // TODO: Usar Etiqueta
-        String valor = String.valueOf(identificador);
+        String valor;
         
-        if (getIdentificador() == 0)
+        if (getEtiqueta().equals(""))
+            valor = String.valueOf(identificador);
+        else
+            valor = getEtiqueta();
+        
+        if (getEsInicial())
             valor += "i";
         
         if (getEsFinal())
