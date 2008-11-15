@@ -247,7 +247,16 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     /* Configuración necesario para la Tabla de Transición */
     TTransicion.setRowHeight(15);
     TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    TTransicion.getColumnModel().getColumn(0).setWidth(100);
+    
+    /* Se calcula la longitud maxima en la primera columna para que muestre lindo */
+    int max =18; // Tamaño correspondiente al header
+    for (int i=0; i <AF.cantidadEstados();i++) {
+        Object val = TTransicion.getModel().getValueAt(i, 0);
+        max = max<val.toString().length()? val.toString().length(): max;
+    }   
+    
+    TTransicion.getColumnModel().getColumn(0).setMaxWidth(max*20);
+    TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max*5);
     TTransicion.updateUI();
 }//GEN-LAST:event_formInternalFrameActivated
 
