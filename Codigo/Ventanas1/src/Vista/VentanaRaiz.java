@@ -217,9 +217,10 @@ public class VentanaRaiz extends FrameView {
                 // Se crea el nuevo proyecto con el nombre ingresado.
                 VPrincipal miVentana = new VPrincipal();
                 miVentana.setTitle(nombre);
-                miVentana.setVisible(true);
+                
                 Desktop.add(miVentana, javax.swing.JLayeredPane.DEFAULT_LAYER);
                 Desktop.moveToFront(miVentana);
+                miVentana.setVisible(true);
                 
             } else {
                 

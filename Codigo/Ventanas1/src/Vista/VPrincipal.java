@@ -59,6 +59,7 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VPrincipal.class);
         setFrameIcon(resourceMap.getIcon("Form.frameIcon")); // NOI18N
         setName("Form"); // NOI18N
+        setNextFocusableComponent(Clases);
 
         Principal.setBorder(javax.swing.BorderFactory.createBevelBorder(javax.swing.border.BevelBorder.LOWERED));
         Principal.setName("Principal"); // NOI18N
@@ -152,22 +153,18 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         Procesos.setName("Procesos"); // NOI18N
 
         BAFN.setAction(actionMap.get("procesarAFN")); // NOI18N
-        BAFN.setEnabled(false);
         BAFN.setName("BAFN"); // NOI18N
 
         BAFD.setAction(actionMap.get("procesarAFD")); // NOI18N
         BAFD.setFont(resourceMap.getFont("BAFD.font")); // NOI18N
         BAFD.setText(resourceMap.getString("BAFD.text")); // NOI18N
-        BAFD.setEnabled(false);
         BAFD.setName("BAFD"); // NOI18N
 
         BAFDmin.setAction(actionMap.get("procesarAFDmin")); // NOI18N
         BAFDmin.setText(resourceMap.getString("BAFDmin.text")); // NOI18N
-        BAFDmin.setEnabled(false);
         BAFDmin.setName("BAFDmin"); // NOI18N
 
         BSimulacion.setAction(actionMap.get("procesarSimulacion")); // NOI18N
-        BSimulacion.setEnabled(false);
         BSimulacion.setName("BSimulacion"); // NOI18N
 
         javax.swing.GroupLayout ProcesosLayout = new javax.swing.GroupLayout(Procesos);
@@ -228,7 +225,7 @@ public class VPrincipal extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addContainerGap(28, Short.MAX_VALUE))
         );
 
         pack();
@@ -321,6 +318,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         
         this.getDesktopPane().add(VAFN, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFN);
+        this.transferFocus();
         VAFN.setVisible(true);
     }
 
