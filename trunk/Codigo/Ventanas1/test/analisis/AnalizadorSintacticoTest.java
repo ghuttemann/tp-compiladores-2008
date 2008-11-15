@@ -6,6 +6,7 @@
 package analisis;
 
 import generacion.AFN;
+import generacion.TablaTransicion;
 import org.junit.Test;
 
 /**
@@ -30,10 +31,15 @@ public class AnalizadorSintacticoTest {
         
         /* Tabla transicion del AFN */
         System.out.println();
-        Object[][] tabla = salida.getTablaTransicion();
-        for (int i=0; i < tabla.length; i++) {
-            for (int j=0; j < tabla[0].length; j++)
-                System.out.printf("%s\t", tabla[i][j]);
+        TablaTransicion tabla = salida.getTablaTransicion();
+        
+        for (int i=0; i < tabla.getColumnCount(); i++)
+            System.out.printf("%s\t", tabla.getColumnName(i));
+        
+        System.out.println();
+        for (int i=0; i < tabla.getRowCount(); i++) {
+            for (int j=0; j < tabla.getColumnCount(); j++)
+                System.out.printf("%s\t", tabla.getValueAt(i, j));
             
             System.out.println();
         }
