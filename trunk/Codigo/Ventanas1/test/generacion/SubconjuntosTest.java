@@ -23,18 +23,24 @@ public class SubconjuntosTest {
     @Test
     public void testGetAFD() throws Exception {
         Alfabeto alfa = new Alfabeto("ab");
-        String er = "a*b?(ab|ba)b?a*";
+        String er = "(a|b)*abb";
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
         AFN afn = as.analizar();
         System.out.printf("AFN:\n%s", afn);
         
-        /* Tabla transicion del AFN */
+        /* Cabecera de la Tabla transicion del AFN */
         System.out.println();
-        Object[][] tabla1 = afn.getTablaTransicion();
-        for (int i=0; i < tabla1.length; i++) {
-            for (int j=0; j < tabla1[0].length; j++)
-                System.out.printf("%s\t", tabla1[i][j]);
+        TablaTransicion tabla1 = afn.getTablaTransicion();
+        
+        for (int i=0; i < tabla1.getColumnCount(); i++)
+            System.out.printf("%s\t", tabla1.getColumnName(i));
+        
+        /* Datos de la Tabla transicion del AFN */
+        System.out.println();
+        for (int i=0; i < tabla1.getRowCount(); i++) {
+            for (int j=0; j < tabla1.getColumnCount(); j++)
+                System.out.printf("%s\t", tabla1.getValueAt(i, j));
             
             System.out.println();
         }
@@ -47,10 +53,15 @@ public class SubconjuntosTest {
         
         /* Tabla transicion del AFD */
         System.out.println();
-        Object[][] tabla2 = afd.getTablaTransicion();
-        for (int i=0; i < tabla2.length; i++) {
-            for (int j=0; j < tabla2[0].length; j++)
-                System.out.printf("%s\t", tabla2[i][j]);
+        TablaTransicion tabla2 = afd.getTablaTransicion();
+        
+        for (int i=0; i < tabla2.getColumnCount(); i++)
+            System.out.printf("%s\t\t", tabla2.getColumnName(i));
+        
+        System.out.println();
+        for (int i=0; i < tabla2.getRowCount(); i++) {
+            for (int j=0; j < tabla2.getColumnCount(); j++)
+                System.out.printf("%s\t\t", tabla2.getValueAt(i, j));
             
             System.out.println();
         }
