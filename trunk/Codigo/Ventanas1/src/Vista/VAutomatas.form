@@ -30,7 +30,7 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="CPestañas" max="32767" attributes="0"/>
+          <Component id="CPestañas" pref="610" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
@@ -66,29 +66,36 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <EmptySpace min="-2" max="-2" attributes="0"/>
-                      <Component id="Contenedor1" pref="585" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="10" max="-2" attributes="1"/>
+                  <Group type="102" alignment="0" attributes="0">
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Group type="102" alignment="0" attributes="0">
+                              <Component id="CVerificación" max="32767" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
+                          </Group>
+                          <Component id="CTTransicion" alignment="0" pref="595" max="32767" attributes="0"/>
+                      </Group>
                   </Group>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="Contenedor1" pref="365" max="32767" attributes="0"/>
-                      <EmptySpace min="-2" pref="19" max="-2" attributes="1"/>
+                      <Component id="CTTransicion" pref="250" max="32767" attributes="0"/>
+                      <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
+                      <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace min="-2" max="-2" attributes="1"/>
                   </Group>
               </Group>
             </DimensionLayout>
           </Layout>
           <SubComponents>
-            <Container class="javax.swing.JScrollPane" name="Contenedor1">
+            <Container class="javax.swing.JScrollPane" name="CTTransicion">
               <Properties>
                 <Property name="horizontalScrollBarPolicy" type="int" value="32"/>
                 <Property name="verticalScrollBarPolicy" type="int" value="22"/>
                 <Property name="autoscrolls" type="boolean" value="true"/>
-                <Property name="name" type="java.lang.String" value="Contenedor1" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="CTTransicion" noResource="true"/>
               </Properties>
               <AuxValues>
                 <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
@@ -128,23 +135,129 @@
                     </Property>
                   </Properties>
                   <BindingProperties>
-                    <BindingProperty name="autoResizeMode" source="Contenedor1" sourcePath="0" target="TTransicion" targetPath="autoResizeMode" updateStrategy="0" immediately="false">
+                    <BindingProperty name="autoResizeMode" source="CTTransicion" sourcePath="0" target="TTransicion" targetPath="autoResizeMode" updateStrategy="0" immediately="false">
                       <Property name="name" type="java.lang.String" value="R"/>
                     </BindingProperty>
                   </BindingProperties>
                 </Component>
               </SubComponents>
             </Container>
+            <Container class="javax.swing.JPanel" name="CVerificaci&#xf3;n">
+              <Properties>
+                <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
+                  <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
+                    <TitledBorder justification="1" position="2" title="Zona de Verificaci&#xf3;n">
+                      <Property name="titleX" resourceKey="CVerificaci&#xf3;n.border.title"/>
+                    </TitledBorder>
+                  </Border>
+                </Property>
+                <Property name="name" type="java.lang.String" value="CVerificaci&#xf3;n" noResource="true"/>
+              </Properties>
+
+              <Layout>
+                <DimensionLayout dim="0">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="1" attributes="0">
+                              <Component id="EVerificar" min="-2" max="-2" attributes="0"/>
+                              <Component id="EResultado" alignment="1" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <EmptySpace max="-2" attributes="0"/>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <Component id="TextaVerificar" min="-2" pref="141" max="-2" attributes="0"/>
+                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
+                                  <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace pref="221" max="32767" attributes="0"/>
+                              </Group>
+                              <Component id="ScrollResultados" pref="457" max="32767" attributes="1"/>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+                <DimensionLayout dim="1">
+                  <Group type="103" groupAlignment="0" attributes="0">
+                      <Group type="102" attributes="0">
+                          <Group type="103" groupAlignment="3" attributes="0">
+                              <Component id="EVerificar" alignment="3" min="-2" max="-2" attributes="0"/>
+                              <Component id="TextaVerificar" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                              <Component id="BVerificar" alignment="3" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="103" groupAlignment="0" attributes="0">
+                              <Group type="102" attributes="0">
+                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
+                                  <Component id="ScrollResultados" pref="53" max="32767" attributes="0"/>
+                              </Group>
+                              <Group type="102" alignment="0" attributes="0">
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="EResultado" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace max="-2" attributes="0"/>
+                              </Group>
+                          </Group>
+                      </Group>
+                  </Group>
+                </DimensionLayout>
+              </Layout>
+              <SubComponents>
+                <Component class="javax.swing.JLabel" name="EVerificar">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="EVerificar.text"/>
+                    <Property name="name" type="java.lang.String" value="EVerificar" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JTextField" name="TextaVerificar">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="TextaVerificar.text"/>
+                    <Property name="name" type="java.lang.String" value="TextaVerificar" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Component class="javax.swing.JToggleButton" name="BVerificar">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="BVerificar.text"/>
+                    <Property name="name" type="java.lang.String" value="BVerificar" noResource="true"/>
+                  </Properties>
+                  <Events>
+                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BVerificarActionPerformed"/>
+                  </Events>
+                </Component>
+                <Component class="javax.swing.JLabel" name="EResultado">
+                  <Properties>
+                    <Property name="text" type="java.lang.String" resourceKey="EResultado.text"/>
+                    <Property name="name" type="java.lang.String" value="EResultado" noResource="true"/>
+                  </Properties>
+                </Component>
+                <Container class="javax.swing.JScrollPane" name="ScrollResultados">
+                  <Properties>
+                    <Property name="name" type="java.lang.String" value="ScrollResultados" noResource="true"/>
+                  </Properties>
+                  <AuxValues>
+                    <AuxValue name="autoScrollPane" type="java.lang.Boolean" value="true"/>
+                  </AuxValues>
+
+                  <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+                  <SubComponents>
+                    <Component class="javax.swing.JTextArea" name="TextResultado">
+                      <Properties>
+                        <Property name="columns" type="int" value="20"/>
+                        <Property name="rows" type="int" value="5"/>
+                        <Property name="name" type="java.lang.String" value="TextResultado" noResource="true"/>
+                      </Properties>
+                    </Component>
+                  </SubComponents>
+                </Container>
+              </SubComponents>
+            </Container>
           </SubComponents>
         </Container>
-        <Container class="javax.swing.JScrollPane" name="Contenedor2">
+        <Container class="javax.swing.JScrollPane" name="Pesta&#xf1;a2">
           <Properties>
-            <Property name="name" type="java.lang.String" value="Contenedor2" noResource="true"/>
+            <Property name="name" type="java.lang.String" value="Pesta&#xf1;a2" noResource="true"/>
           </Properties>
           <Constraints>
             <Constraint layoutClass="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout" value="org.netbeans.modules.form.compat2.layouts.support.JTabbedPaneSupportLayout$JTabbedPaneConstraintsDescription">
               <JTabbedPaneConstraints tabName="Representaci&#xf3;n Gr&#xe1;fica">
-                <Property name="tabTitle" type="java.lang.String" resourceKey="Contenedor2.TabConstraints.tabTitle"/>
+                <Property name="tabTitle" type="java.lang.String" resourceKey="Pesta&#xf1;a2.TabConstraints.tabTitle"/>
               </JTabbedPaneConstraints>
             </Constraint>
           </Constraints>
