@@ -9,14 +9,8 @@ package Vista;
 
 import generacion.Automata;
 import generacion.TablaTransicion;
-import java.awt.event.AdjustmentEvent;
-import java.awt.event.AdjustmentListener;
 import javax.swing.JOptionPane;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableColumnModel;
 
 /**
  * Ventana que muestra y administra los Distintos Automatas del Programa.
