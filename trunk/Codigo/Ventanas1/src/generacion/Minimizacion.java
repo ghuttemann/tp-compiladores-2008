@@ -7,6 +7,9 @@ package generacion;
 
 import java.util.Hashtable;
 import java.util.Stack;
+import java.util.Vector;
+import java.util.List;
+import java.util.Arrays;
 
 /**
  * Esta clase implementa el algoritmo de minimización de 
@@ -23,31 +26,21 @@ public class Minimizacion {
      * @return Un <code>AFD</code> equivalente a <code>afd</code> 
      * pero con la menor cantidad de estados posibles.
      */
-    public static AFD getAFDminimo(AFD afd) {
-        /* AFD Mínimo */
-        AFD afdMinimo = new AFD(afd.getAlfabeto(), afd.getExprReg());
-        
-        /* 
-         * Copiamos el AFD a minimizar y realizamos
-         * la minimización sobre el nuevo AFD. Además,
-         * debemos copiar los estados finales.
-         */
-        Automata.copiarEstados(afd, afdMinimo, 0);
-        for (int i=0; i < afd.cantidadEstados(); i++) {
-            Estado tmp = afd.getEstado(i);
-            afdMinimo.getEstado(i).setEsFinal(tmp.getEsFinal());
-        }
-        
+    public static AFDMin getAFDminimo(AFD afd) {
         /* Eliminamos los estados inalcanzables */
-        eliminarInalcanzables(afdMinimo);
+        AFD afdPostInalcanzables = new AFD();
+        copiarAutomata(afd, afdPostInalcanzables);
+        eliminarInalcanzables(afdPostInalcanzables);
         
         /* Proceso de minimización */
-        minimizar(afdMinimo);
+        AFD afdPostMinimizacion = minimizar(afdPostInalcanzables);
         
         /* Eliminamos estados identidad */
-        eliminarIdentidades(afdMinimo);
+        AFD afdPostIdentidades = new AFD();
+        copiarAutomata(afdPostMinimizacion, afdPostIdentidades);
+        eliminarIdentidades(afdPostIdentidades);
         
-        return afdMinimo;
+        return new AFDMin();
     }
     
     /**
@@ -114,7 +107,7 @@ public class Minimizacion {
      * de Aho.
      * @param afdMinimo
      */
-    private static void minimizar(AFD afdMinimo) {
+    private static AFD minimizar(AFD afd) {
         /* Tablas Hash auxiliares */
         Hashtable<Estado, Conjunto<Integer>> tabla1;
         Hashtable<Conjunto<Integer>, Conjunto<Estado>> tabla2;
@@ -128,8 +121,8 @@ public class Minimizacion {
          * Separar el AFD en dos grupos, los estados finales y
          * los estados no finales.
          */
-        particion.agregar(afdMinimo.getEstadosNoFinales());
-        particion.agregar(afdMinimo.getEstadosFinales());
+        particion.agregar(afd.getEstadosNoFinales());
+        particion.agregar(afd.getEstadosFinales());
         
         /*
          * Paso 2:
@@ -189,6 +182,9 @@ public class Minimizacion {
                 }
             }
             
+            /* Ordenamos la nueva partición */
+            nuevaParticion.ordenar();
+            
             /* 
              * Paso 2.4:
              * =========
@@ -202,12 +198,105 @@ public class Minimizacion {
                 particion = nuevaParticion;
         }
         
-        /* Ordenar la partición final */
-        particion.ordenar();
+        /* 
+         * Paso 3:
+         * =======
+         * Debemos crear el nuevo AFD, con
+         * los nuevos estados producidos.
+         */
+        AFD afdPostMinimizacion = new AFD(afd.getAlfabeto(), afd.getExprReg());
         
-        // TODO: Crear nuevo AFD
+        /* 
+         * Paso 3.1:
+         * =========
+         * Agregamos los estados al nuevo AFD. Para
+         * los estados agrupados, colocamos una
+         * etiqueta distintiva, para que pueda notarse
+         * resultado de cuáles estados es.
+         */
+        for (int i=0; i < particion.cantidad(); i++) {
+            Conjunto<Estado> grupo = particion.obtener(i);
+            Boolean esFinal = false;
+            
+            /* 
+             * El grupo actual tiene un estado final,
+             * el estado correspondiente en el nuevo
+             * AFD también debe ser final.
+             */
+            if (tieneEstadoFinal(grupo))
+                esFinal = true;
+            
+            /*
+             * Si el estado es resultado de la unión de
+             * dos o más estados, su etiqueta será del 
+             * tipo e1.e2.e3, donde e1, e2 y e3 son los
+             * estados agrupados (aparecen separados por
+             * un punto).
+             */
+            String etiqueta = obtenerEtiqueta(grupo);
+            
+            /*
+             * Agregamos efectivamente el estado
+             * al nuevo AFD.
+             */
+            Estado estado = new Estado(i, esFinal);
+            estado.setEtiqueta(etiqueta);
+            afdPostMinimizacion.agregarEstado(estado);
+        }
+        
+        /*
+         * Paso 3.2:
+         * =========
+         * Generamos un mapeo de grupos (estados del nuevo AFD)
+         * a estados del AFD original, de manera a que resulte
+         * sencillo obtener los estados adecuados en el momento
+         * de agregar las transiciones al nuevo AFD.
+         */
+        Hashtable<Estado, Estado> mapeo = new Hashtable<Estado, Estado>();
+        for (int i=0; i < particion.cantidad(); i++) {
+            /* Grupo a procesar */
+            Conjunto<Estado> grupo = particion.obtener(i);
+            
+            /* Estado del nuevo AFD */
+            Estado valor = afdPostMinimizacion.getEstado(i);
+            
+            /* Guardar mapeo */
+            for (Estado clave : grupo)
+                mapeo.put(clave, valor);
+        }
+        
+        /* 
+         * Paso 3.3:
+         * =========
+         * Agregamos las transiciones al nuevo AFD utilizando
+         * el mapeo de estados entre dicho AFD y el AFD original,
+         * realizado en el paso 3.2.
+         */
+        for (int i=0; i < particion.cantidad(); i++) {
+            /* Estado representante del grupo actual */
+            Estado representante = particion.obtener(i).obtenerPrimero();
+            
+            /* Estado del nuevo AFD */
+            Estado origen = afdPostMinimizacion.getEstado(i);
+            
+            /* Agregamos las transciones */
+            for (Transicion trans : representante.getTransiciones()) {
+                Estado destino = mapeo.get(trans.getEstado());
+                origen.getTransiciones().agregar(new Transicion(destino, trans.getSimbolo()));
+            }
+        }
+        
+        return afdPostMinimizacion;
     }
     
+    /**
+     * Para un estado dado, busca los grupos en los que 
+     * caen las transiciones del mismo.
+     * @param estado El estado para el cual buscar los grupos alcanzados.
+     * @param particion El conjunto de grupos de estados sobre el cual buscar.
+     * @return Un conjunto de enteros que representan las posiciones de los
+     * grupos alcanzados dentro del conjunto de grupos.
+     */
     private static Conjunto<Integer> getGruposAlcanzados(Estado estado, Conjunto<Conjunto<Estado>> particion) {
         /* Grupos alcanzados por el estado */
         Conjunto<Integer> gruposAlcanzados = new Conjunto<Integer>();
@@ -221,6 +310,13 @@ public class Minimizacion {
                 Integer idGrupo = particion.obtenerPosicion(grupo);
                 if (grupo.contiene(destino) && !gruposAlcanzados.contiene(idGrupo)) {
                     gruposAlcanzados.agregar(idGrupo);
+                    
+                    /*
+                     * Debido a que un estado dado siempre
+                     * estará en un solo grupo, paramos de
+                     * buscar ya que no habrá otro grupo
+                     * alcanzado por el estado en cuestión.
+                     */
                     break;
                 }
             }
@@ -238,17 +334,97 @@ public class Minimizacion {
      */
     private static void eliminarIdentidades(AFD afd) {
         /* Conjunto de estados a eliminar */
-        Conjunto<Estado> estadoEliminados = new Conjunto<Estado>();
+        Conjunto<Estado> estadosEliminados = new Conjunto<Estado>();
         
         /* Seleccionamos los estados identidad no finales */
         for (Estado e : afd.getEstados())
             if (e.getEsIdentidad() && !e.getEsFinal())
-                estadoEliminados.agregar(e);
+                estadosEliminados.agregar(e);
+        
+        if (estadosEliminados.estaVacio())
+            return;
         
         /* Eliminamos los estados identidad no finales */
-        for (Estado e : estadoEliminados)
+        for (Estado e : estadosEliminados)
             afd.getEstados().eliminar(e);
         
-        // TODO: Eliminar transiciones colgadas
+        /* Transiciones a eliminar */
+        Vector<List> transEliminadas = new Vector<List>();
+        
+        /* Seleccionamos las transiciones colgadas */
+        for (Estado e : afd.getEstados())
+        for (Transicion t : e.getTransiciones())
+            if (estadosEliminados.contiene(t.getEstado()))
+                transEliminadas.add(Arrays.asList(t, e.getTransiciones()));
+        
+        /* Eliminamos las transiciones colgadas */
+        for (List a : transEliminadas) {
+            Transicion t = (Transicion) a.get(0);
+            Conjunto<Transicion> c = (Conjunto<Transicion>) a.get(1);
+            c.eliminar(t);
+        }
+    }
+    
+    /**
+     * Realiza la copia de un autómata origen a otro de destino.
+     * @param origen El autómata origen.
+     * @param destino El autómata destino.
+     */
+    private static void copiarAutomata(Automata origen, Automata destino) {
+        /* Copiamos los estados y transiciones */
+        Automata.copiarEstados(origen, destino, 0);
+        
+        /* Copiamos los estados finales y las etiquetas */
+        for (int i=0; i < origen.cantidadEstados(); i++) {
+            Estado tmp = origen.getEstado(i);
+            
+            destino.getEstado(i).setEsFinal(tmp.getEsFinal());
+            destino.getEstado(i).setEtiqueta(tmp.getEtiqueta());
+        }
+        
+        /* Copiamos el alfabeto y la expresión regular */
+        destino.setAlfabeto(origen.getAlfabeto());
+        destino.setExprReg(origen.getExprReg());
+    }
+
+    /**
+     * Determina si un grupo de estados tiene un estado final.
+     * @param grupo Grupo de estados en el cual buscar el estado final.
+     * @return <code>true</code> si el grupo de estados contiene un
+     * estados final, <code>false</code> en caso contrario.
+     */
+    private static boolean tieneEstadoFinal(Conjunto<Estado> grupo) {
+        for (Estado e : grupo)
+            if (e.getEsFinal())
+                return true;
+        
+        return false;
+    }
+    
+    /**
+     * Calcula la nueva etiqueta para un estado del nuevo AFD,
+     * según los estados agrupados.
+     * @param grupo Grupo de estados del AFD original.
+     * @return La etiqueta para el estado del AFD nuevo.
+     */
+    private static String obtenerEtiqueta(Conjunto<Estado> grupo) {
+        String etiqueta = "";
+        String pedazo;
+        
+        for (Estado e : grupo) {
+            /* Eliminamos la "i" o "f" en caso de que exista */
+            if (e.toString().endsWith("i") || e.toString().endsWith("f"))
+                pedazo = e.toString().substring(0, e.toString().length() - 1);
+            else
+                pedazo = e.toString();
+            
+            /* Agregamos */
+            etiqueta += pedazo + " ";
+        }
+        
+        if (etiqueta.endsWith(" "))
+            etiqueta = etiqueta.substring(0, etiqueta.length() - 1);
+        
+        return "(" + etiqueta + ")";
     }
 }
