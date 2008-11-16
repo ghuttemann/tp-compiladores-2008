@@ -209,7 +209,7 @@ public abstract class Automata {
                 if (datos[fil][col + colDesde + 1] == null)
                     datos[fil][col + colDesde + 1] = new Conjunto<Integer>();
                 
-                Integer id = t.getEstado().getIdentificador();
+                int id = t.getEstado().getIdentificador();
                 ((Conjunto<Integer>) datos[fil][col + colDesde + 1]).agregar(id);
             }
         }
@@ -253,8 +253,9 @@ public abstract class Automata {
      * @param afDestino Automata hacia el cual copiar estados.
      * @param incremento Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
+     * @throws Exception Si el identificador de un estado es negativo.
      */
-    public static void copiarEstados(Automata afOrigen, Automata afDestino, int incremento) {
+    public static void copiarEstados(Automata afOrigen, Automata afDestino, int incremento) throws Exception {
         copiarEstados(afOrigen, afDestino, incremento, 0);
     }
     
@@ -266,9 +267,10 @@ public abstract class Automata {
      * @param incrementoTrans Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
      * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
+     * @throws Exception Si el identificador de un es negativo.
      */
     public static void copiarEstados(Automata afOrigen, Automata afDestino, 
-                    int incrementoTrans, int omitidos) {
+                    int incrementoTrans, int omitidos) throws Exception {
         
         /* 
          * Cantidad que hay que incrementar al identificador
@@ -314,7 +316,7 @@ public abstract class Automata {
                         Estado objetivo, int incrementoTrans) {
         
         for (Transicion trans : transiciones) {
-            Integer idDestino = trans.getEstado().getIdentificador();
+            int idDestino = trans.getEstado().getIdentificador();
             String simbolo = trans.getSimbolo();
 
             Estado estadoDestino = afDestino.getEstado(idDestino + incrementoTrans);
