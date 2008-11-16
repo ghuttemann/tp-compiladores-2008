@@ -47,6 +47,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         ScrollResultados = new javax.swing.JScrollPane();
         TextResultado = new javax.swing.JTextArea();
         Pestaña2 = new javax.swing.JScrollPane();
+        Imagen = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -157,8 +158,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                         .addComponent(TextaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(BVerificar)
-                        .addContainerGap(221, Short.MAX_VALUE))
-                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 457, Short.MAX_VALUE)))
+                        .addContainerGap(511, Short.MAX_VALUE))
+                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)))
         );
         CVerificaciónLayout.setVerticalGroup(
             CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,12 +188,12 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                     .addGroup(Pestaña1Layout.createSequentialGroup()
                         .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addContainerGap())
-                    .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 595, Short.MAX_VALUE)))
+                    .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)))
         );
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -200,19 +201,26 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
+        Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
+
+        Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
+        Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
+        Imagen.setName("Imagen"); // NOI18N
+        Pestaña2.setViewportView(Imagen);
+
         CPestañas.addTab(resourceMap.getString("Pestaña2.TabConstraints.tabTitle"), Pestaña2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 610, Short.MAX_VALUE)
+            .addComponent(CPestañas)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 412, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -304,6 +312,7 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JPanel CVerificación;
     private javax.swing.JLabel EResultado;
     private javax.swing.JLabel EVerificar;
+    private javax.swing.JLabel Imagen;
     private javax.swing.JPanel Pestaña1;
     private javax.swing.JScrollPane Pestaña2;
     private javax.swing.JScrollPane ScrollResultados;
