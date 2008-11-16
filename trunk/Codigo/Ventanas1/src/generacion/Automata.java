@@ -178,10 +178,10 @@ public abstract class Automata {
      * Genera y carga la tabla de transición de estados del Autómata.
      * @param cantFil Cantidad de filas de la tabla.
      * @param cantCol Cantidad de columnas de la tabla.
-     * @param colDesde 
+     * @param colDesde Columna desde la cual debe rellenarse con los datos del Autómata.
      * @return Tabla de transición de estados del Autómata.
      */
-    protected TablaTransicion cargarTablaTransiciones(int cantFil, int cantCol, int colDesde) {
+    protected TablaTransicion cargarTablaTransicion(int cantFil, int cantCol, int colDesde) {
         /* Cabeceras de las columnas de la tabla de transiciones */
         String[] cabecera = new String[cantCol];
         
@@ -239,7 +239,7 @@ public abstract class Automata {
             str += tmp.toString();
             
             for (Transicion trans : tmp.getTransiciones())
-                str += " --> " + trans.getEstado() + "(" + trans.getSimbolo() + ")";
+                str += " --> " + trans.getEstado() + "{" + trans.getSimbolo() + "}";
             
             str += "\n";
         }
@@ -299,11 +299,16 @@ public abstract class Automata {
     }
     
     /**
-     * 
-     * @param afDestino
-     * @param transiciones
-     * @param objetivo
-     * @param incrementoTrans
+     * Dado un <code>Conjunto</code> de <code>Transicion</code>es, las aplica a un
+     * <code>Estado</code> objetivo de un <code>Automata</code> destino. El incremento
+     * es utilizado para seleccionar el <code>Estado</code> adecuado del <code>Automata</code>
+     * destino.
+     * @param afDestino El <code>Automata</code> al cual agregar <code>Transicion</code>es.
+     * @param transiciones Las <code>Transicion</code>es que deben ser copiadas.
+     * @param objetivo El <code>Estado</code> al cual deben ser agregadas las <code>Transicion</code>es.
+     * @param incrementoTrans El incremento, respecto al <code>Estado</code> de una <code>Transicion</code>
+     * dada, que debe ser aplicado para seleccionar adecuadamente el <code>Estado</code> del 
+     * <code>Automata</code> destino.
      */
     public static void copiarTransiciones(Automata afDestino, Conjunto<Transicion> transiciones, 
                         Estado objetivo, int incrementoTrans) {
