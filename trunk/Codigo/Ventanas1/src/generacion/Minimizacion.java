@@ -22,30 +22,28 @@ public class Minimizacion {
     /**
      * Obtiene un <code>AFD</code> mínimo a partir de un 
      * <code>AFD</code> determinado.
-     * @param afd El <code>AFD</code> a minimizar.
+     * @param afdOriginal El <code>AFD</code> a minimizar.
      * @return Un <code>AFD</code> equivalente a <code>afd</code> 
      * pero con la menor cantidad de estados posibles.
      */
-    public static AFDMin getAFDminimo(AFD afd) {
+    public static AFDMin getAFDminimo(AFD afdOriginal) {
         /* Eliminamos los estados inalcanzables */
         AFD afdPostInalcanzables = new AFD();
-        copiarAutomata(afd, afdPostInalcanzables);
+        copiarAutomata(afdOriginal, afdPostInalcanzables);
         eliminarInalcanzables(afdPostInalcanzables);
         
         /* Proceso de minimización */
         AFD afdPostMinimizacion = minimizar(afdPostInalcanzables);
         
-        /* Eliminamos estados identidad */
+        /* Eliminamos estados identidades no finales */
         AFD afdPostIdentidades = new AFD();
         copiarAutomata(afdPostMinimizacion, afdPostIdentidades);
         eliminarIdentidades(afdPostIdentidades);
         
         /* TODO:
-         * - Construir el AFDMin.
-         * - Comparar si hubo cambios entre AFDs intermedios.
          * - Guardar rastro del proceso.
          */
-        return new AFDMin();
+        return new AFDMin(afdOriginal, afdPostInalcanzables, afdPostMinimizacion, afdPostIdentidades);
     }
     
     /**
