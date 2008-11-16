@@ -13,13 +13,15 @@ TODO List de Otras Clases
 
 - El AFD minimo debe tener sus "estados" intermedios.
 - Imprimir procedimientos de transformación.
-- Renumeración de estados post minimización.
 - Validación de cadenas.
 - Dibujar autómatas.
 
 ----------------------------
 Pasos para dibujar automatas
 ----------------------------
-1. Generar archivo DOT.
-2. Generar imagen desde archivo DOT con el programa "dot.exe".
-3. Mostrar la imagen en la aplicación.
+1. Generar una cadena en lenguaje DOT.
+2. Generar archivo DOT.
+3. Generar imagen desde archivo DOT con el programa "dot.exe".
+4. Mostrar la imagen en la aplicación.
+
+Obs.: Los pasos 1-3 se pueden automatizar con un wrapper.
