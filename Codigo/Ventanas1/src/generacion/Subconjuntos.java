@@ -20,12 +20,17 @@ import java.util.Stack;
 public class Subconjuntos {
 
     /**
-     * 
-     * @param afn
-     * @return
+     * Realiza la conversión de un AFN a un AFD, aplicando el
+     * algoritmo 3.20 del libro de Compiladores de Aho (2a. ed).
+     * @param afn El <code>AFN</code> a convertir.
+     * @return El <code>AFD</code> equivalente a <code>afn</code>.
      */
     public static AFD getAFD(Automata afn) {
         Estado estadoOrigen, estadoDestino;
+        
+        /* TODO:
+         * - Guardar rastro del proceso
+         */
         
         /* AFD resultante */
         AFD afd = new AFD(afn.getAlfabeto(), afn.getExprReg());

@@ -21,7 +21,7 @@ import analisis.Alfabeto;
  * @author Marcelo Rodas
  */
 public class AFDMin extends Automata {
-    
+    // TODO: definir funcionamiento de la clase.
     /**
      * AFD resultante luego de aplicar la
      * eliminación de estados inalcanzables.

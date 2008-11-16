@@ -40,6 +40,11 @@ public class Minimizacion {
         copiarAutomata(afdPostMinimizacion, afdPostIdentidades);
         eliminarIdentidades(afdPostIdentidades);
         
+        /* TODO:
+         * - Construir el AFDMin.
+         * - Comparar si hubo cambios entre AFDs intermedios.
+         * - Guardar rastro del proceso.
+         */
         return new AFDMin();
     }
     

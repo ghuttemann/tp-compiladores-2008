@@ -54,6 +54,10 @@ public class AnalizadorSintactico {
     public AFN analizar() throws Exception {
         preanalisis = obtenerToken();
         
+        /* TODO:
+         * - Guardar rastro del proceso.
+         */
+        
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
         
