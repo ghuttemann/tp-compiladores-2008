@@ -192,10 +192,10 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 250, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.PREFERRED_SIZE, 250, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
@@ -242,13 +242,14 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion.setRowHeight(15);
     TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
     
-    /* Se calcula la longitud maxima en la primera columna para que muestre lindo */
+    /* Se calcula la longitud maxima en la primera columna */
     int max =18; // Tamaño correspondiente al header
     for (int i=0; i <AF.cantidadEstados();i++) {
         Object val = TTransicion.getModel().getValueAt(i, 0);
         max = max<val.toString().length()? val.toString().length(): max;
     }   
     
+    /* Se asigna el ancho a cantidad de letras*5 (correspondientes pixeles) */
     TTransicion.getColumnModel().getColumn(0).setMaxWidth(max*20);
     TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max*5);
     TTransicion.updateUI();
