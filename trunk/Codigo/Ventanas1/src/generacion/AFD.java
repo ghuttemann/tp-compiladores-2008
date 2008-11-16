@@ -37,7 +37,7 @@ public class AFD extends Automata {
      */
     public AFD(Alfabeto alfabeto, String exprReg) {
         super(alfabeto, exprReg);
-        estadosD = new Conjunto<Conjunto<Estado>>();
+        estadosD = null;
     }
     
     /**
@@ -82,14 +82,24 @@ public class AFD extends Automata {
      * @return La tabla de transición de estados.
      */
     public TablaTransicion getTablaTransicion() {
-        int cantFil = getEstados().cantidad();
-        int cantCol = getAlfabeto().getTamaño() + 2;
+        TablaTransicion tabla;
         
-        TablaTransicion tabla = cargarTablaTransiciones(cantFil, cantCol, 1);
-        tabla.setHeaderAt("Estados del AFN", 0);
-        
-        for (int i=0; i < estadosD.cantidad(); i++)
-            tabla.setValueAt(estadosD.obtener(i), i, 0);
+        if (getEstadosD() != null) {
+            int cantFil = getEstados().cantidad();
+            int cantCol = getAlfabeto().getTamaño() + 2;
+
+            tabla = cargarTablaTransicion(cantFil, cantCol, 1);
+            tabla.setHeaderAt("Estados del AFN", 0);
+
+            for (int i=0; i < estadosD.cantidad(); i++)
+                tabla.setValueAt(estadosD.obtener(i), i, 0);
+        }
+        else {
+            int cantFil = getEstados().cantidad();
+            int cantCol = getAlfabeto().getTamaño() + 1;
+
+            tabla = cargarTablaTransicion(cantFil, cantCol, 0);
+        }
         
         return tabla;
     }
