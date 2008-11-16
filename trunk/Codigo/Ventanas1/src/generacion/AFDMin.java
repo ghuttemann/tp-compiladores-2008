@@ -5,28 +5,32 @@
  */
 package generacion;
 
-import analisis.Alfabeto;
-
 /**
  * Clase que representa la abstracción para un Autómata Finito
  * Determinístico con estados mínimos (AFDMin), en cuanto a 
  * cantidad de estados se refiere.<br><br>
  * Un AFDMin es generado a partir de un AFD a través del algoritmo 
- * de Minimización de Estados. Antes del dicho algoritmo, deben 
- * eliminarse los estados inalcanzables realizando un recorrido 
- * DFS o BFS a partir del estado inicial del AFD. Luego de dicho
- * algoritmo deben eliminarse aquellos estados identidades que
- * no sean estados finales.
+ * de Minimización de Estados.<br><br>
+ * Antes del dicho algoritmo, deben eliminarse los estados inalcanzables 
+ * realizando un recorrido DFS o BFS a partir del estado inicial 
+ * del AFD. Luego de dicho algoritmo deben eliminarse aquellos estados 
+ * identidades que no sean estados finales.<br><br>
+ * El AFDMin contiene tres instancias de AFD que representan a los
+ * AFDs tras cada uno de estos algoritmos.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class AFDMin extends Automata {
-    // TODO: definir funcionamiento de la clase.
+public class AFDMin {
+    /**
+     * AFD original.
+     */
+    private AFD afdOriginal;
+    
     /**
      * AFD resultante luego de aplicar la
      * eliminación de estados inalcanzables.
      */
-    private AFD afdPostEstadosInalcanzables;
+    private AFD afdPostInalcanzables;
     
     /**
      * AFD resultante luego de aplicar el
@@ -35,30 +39,83 @@ public class AFDMin extends Automata {
     private AFD afdPostMinimizacion;
     
     /**
-     * Constructor por defecto.
+     * AFD resultante luego de aplicar la
+     * eliminación de estados identidades
+     * no finales.
      */
-    public AFDMin() {
-       this(null, "");
+    private AFD afdPostIdentidades;
+    
+    /**
+     * Construye un <code>AFDMin</code>.
+     * @param afdOriginal El <code>AFD</code> a partir del cual fue construido este <code>AFDMin</code>.
+     * @param afdPostInalcanzables El <code>AFD</code> resultante de la eliminación de estados inalcanzables.
+     * @param afdPostMinimizacion El <code>AFD</code> resultante del proceso de minimización.
+     * @param afdPostIdentidades El <code>AFD</code> resultante de la eliminación de estados identidades.
+     */
+    public AFDMin(AFD afdOriginal, AFD afdPostInalcanzables, AFD afdPostMinimizacion, AFD afdPostIdentidades) {
+        this.afdOriginal          = afdOriginal;
+        this.afdPostInalcanzables = afdPostInalcanzables;
+        this.afdPostMinimizacion  = afdPostMinimizacion;
+        this.afdPostIdentidades   = afdPostIdentidades;
     }
     
     /**
-     * Construye un <code>AFDMin</code> con un determinado <code>Alfabeto</code>
-     * y una determinada expresión regular.
-     * @param alfabeto El <code>Alfabeto</code> de este <code>AFDMin</code>.
-     * @param exprReg La expresión regular para este <code>AFDMin</code>.
+     * Obtiene el <code>AFD</code> a partir del cual fue construido este <code>AFDMin</code>.
+     * @return El <code>AFD</code> a partir del cual fue construido este <code>AFDMin</code>.
      */
-    public AFDMin(Alfabeto alfabeto, String exprReg) {
-        super(alfabeto, exprReg);
+    public AFD getAfdOriginal() {
+        return afdOriginal;
+    }
+
+    /**
+     * Obtiene el <code>AFD</code> resultante de la eliminación de estados inalcanzables.
+     * @return El <code>AFD</code> resultante de la eliminación de estados inalcanzables.
+     */
+    public AFD getAfdPostInalcanzables() {
+        return afdPostInalcanzables;
+    }
+
+    /**
+     * Obtiene el <code>AFD</code> resultante del proceso de minimización.
+     * @return El <code>AFD</code> resultante del proceso de minimización.
+     */
+    public AFD getAfdPostMinimizacion() {
+        return afdPostMinimizacion;
+    }
+
+    /**
+     * Obtiene el <code>AFD</code> resultante de la eliminación de estados identidades.
+     * @return El <code>AFD</code> resultante de la eliminación de estados identidades.
+     */
+    public AFD getAfdPostIdentidades() {
+        return afdPostIdentidades;
     }
     
     /**
-     * Retorna la tabla de transición de estados.
-     * @return La tabla de transición de estados.
+     * Verifica si la eliminación de estados inalcanzables produjo algún
+     * cambio sobre el <code>AFD</code> original.
+     * @return <code>true</code> si la eliminación de estados inalcanzables
+     * produjo algún cambio sobre el <code>AFD</code> original, <code>false</code>
+     * en caso contrario.
      */
-    public TablaTransicion getTablaTransicion() {
-        int cantFil = getEstados().cantidad();
-        int cantCol = getAlfabeto().getTamaño() + 1;
-        
-        return cargarTablaTransiciones(cantFil, cantCol, 0);
+    public boolean inalcanzablesEliminados() {
+        if (afdOriginal.toString().equals(afdPostInalcanzables.toString()))
+            return false;
+        else
+            return true;
+    }
+    
+    /**
+     * Verifica si la eliminación de estados identidades produjo algún
+     * cambio sobre el <code>AFD</code> resultante de la minimización.
+     * @return <code>true</code> si la eliminación de estados identidades
+     * produjo algún cambio sobre el <code>AFD</code> resultante de la 
+     * minimización, <code>false</code> en caso contrario.
+     */
+    public boolean identidadesEliminados() {
+        if (afdPostMinimizacion.toString().equals(afdPostIdentidades.toString()))
+            return false;
+        else
+            return true;
     }
 }
