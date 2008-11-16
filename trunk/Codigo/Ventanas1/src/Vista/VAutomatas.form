@@ -30,13 +30,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="CPestañas" pref="610" max="32767" attributes="0"/>
+          <Component id="CPestañas" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="CPestañas" pref="416" max="32767" attributes="0"/>
+              <Component id="CPestañas" pref="420" max="32767" attributes="0"/>
               <EmptySpace min="-2" pref="23" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -73,7 +73,7 @@
                               <Component id="CVerificación" max="32767" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                           </Group>
-                          <Component id="CTTransicion" alignment="0" pref="595" max="32767" attributes="0"/>
+                          <Component id="CTTransicion" alignment="0" pref="885" max="32767" attributes="0"/>
                       </Group>
                   </Group>
               </Group>
@@ -81,7 +81,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
-                      <Component id="CTTransicion" pref="251" max="32767" attributes="0"/>
+                      <Component id="CTTransicion" pref="254" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" min="-2" max="-2" attributes="0"/>
                       <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="1"/>
@@ -169,9 +169,9 @@
                                   <Component id="TextaVerificar" min="-2" pref="141" max="-2" attributes="0"/>
                                   <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                                   <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="217" max="32767" attributes="0"/>
+                                  <EmptySpace pref="511" max="32767" attributes="0"/>
                               </Group>
-                              <Component id="ScrollResultados" pref="453" max="32767" attributes="1"/>
+                              <Component id="ScrollResultados" pref="747" max="32767" attributes="1"/>
                           </Group>
                       </Group>
                   </Group>
@@ -252,6 +252,7 @@
         </Container>
         <Container class="javax.swing.JScrollPane" name="Pesta&#xf1;a2">
           <Properties>
+            <Property name="background" type="java.awt.Color" resourceKey="Pesta&#xf1;a2.background"/>
             <Property name="name" type="java.lang.String" value="Pesta&#xf1;a2" noResource="true"/>
           </Properties>
           <Constraints>
@@ -263,6 +264,15 @@
           </Constraints>
 
           <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
+          <SubComponents>
+            <Component class="javax.swing.JLabel" name="Imagen">
+              <Properties>
+                <Property name="icon" type="javax.swing.Icon" resourceKey="Imagen.icon"/>
+                <Property name="text" type="java.lang.String" resourceKey="Imagen.text"/>
+                <Property name="name" type="java.lang.String" value="Imagen" noResource="true"/>
+              </Properties>
+            </Component>
+          </SubComponents>
         </Container>
       </SubComponents>
     </Container>
