@@ -15,12 +15,12 @@ public class Estado implements Comparable<Estado> {
     /**
      * Identificador de este Estado.
      */
-    private Integer identificador;
+    private int identificador;
     
     /**
      * Variable que indica si el Estado es final.
      */
-    private Boolean esFinal;
+    private boolean esFinal;
     
     /**
      * Etiqueta de este estado.
@@ -37,20 +37,14 @@ public class Estado implements Comparable<Estado> {
      * durante algún recorrido realizado sobre
      * el Automata que contiene a este Estado.
      */
-    private Boolean visitado;
-    
-    /**
-     * Crea un <code>Estado</code> no final sin identificador.
-     */
-    public Estado() {
-        this(null, false);
-    }
+    private boolean visitado;
     
     /**
      * Crea un <code>Estado</code> no final con un identificador determinado.
      * @param identificador El identificador del nuevo estado.
+     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public Estado(Integer identificador) {
+    public Estado(int identificador) throws Exception {
         this(identificador, false);
     }
     
@@ -59,19 +53,24 @@ public class Estado implements Comparable<Estado> {
      * que será final o no de acuerdo al valor de <code>esFinal</code>.
      * @param identificador El identificador para este <code>Estado</code>.
      * @param esFinal Determina si el <code>Estado</code> es final o no.
+     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public Estado(Integer identificador, Boolean esFinal) {
+    public Estado(int identificador, boolean esFinal) throws Exception {
         setIdentificador(identificador);
         setEsFinal(esFinal);
-        setEtiqueta(identificador.toString());
+        setEtiqueta(String.valueOf(identificador));
         transiciones = new Conjunto<Transicion>();
     }
     
     /**
      * Establece un nuevo identificador para este <code>Estado</code>.
      * @param identificador El nuevo identificador para este <code>Estado</code>.
+     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public void setIdentificador(Integer identificador) {
+    public void setIdentificador(int identificador) throws Exception {
+        if (identificador < 0)
+            throw new Exception("El identificador de un Estado no puede ser negativo.");
+        
         this.identificador = identificador;
     }
     
@@ -79,7 +78,7 @@ public class Estado implements Comparable<Estado> {
      * Obtiene el identificador para este <code>Estado</code>.
      * @return El identificador del <code>Estado</code>.
      */
-    public Integer getIdentificador() {
+    public int getIdentificador() {
         return identificador;
     }
     
@@ -105,7 +104,7 @@ public class Estado implements Comparable<Estado> {
      * @return <code>true</code> si el <code>Estado</code> es final, 
      * <code>false</code> en caso contrario.
      */
-    public Boolean getEsFinal() {
+    public boolean getEsFinal() {
         return esFinal;
     }
 
@@ -116,7 +115,7 @@ public class Estado implements Comparable<Estado> {
      * final, si es <code>false</code> el <code>Estado</code> se convertirá
      * en no final.
      */
-    public void setEsFinal(Boolean esFinal) {
+    public void setEsFinal(boolean esFinal) {
         this.esFinal = esFinal;
     }
     
@@ -125,7 +124,7 @@ public class Estado implements Comparable<Estado> {
      * @return <code>true</code> si el <code>Estado</code> es inicial, 
      * <code>false</code> en caso contrario.
      */
-    public Boolean getEsInicial() {
+    public boolean getEsInicial() {
         return identificador == 0;
     }
     
@@ -142,7 +141,7 @@ public class Estado implements Comparable<Estado> {
      * @return <code>true</code> si este <code>Estado</code> ya 
      * ha sido visitado, <code>false</code> en caso contrario.
      */
-    public Boolean getVisitado() {
+    public boolean getVisitado() {
         return visitado;
     }
     
@@ -150,7 +149,7 @@ public class Estado implements Comparable<Estado> {
      * Establece el nuevo estado de visitado de este <code>Estado</code>.
      * @param visitado Nuevo estado de visitado de este <code>Estado</code>.
      */
-    public void setVisitado(Boolean visitado) {
+    public void setVisitado(boolean visitado) {
         this.visitado = visitado;
     }
     
@@ -176,7 +175,7 @@ public class Estado implements Comparable<Estado> {
             return false;
         
         final Estado other = (Estado) obj;
-        if (this.identificador.equals(other.identificador))
+        if (this.identificador == other.identificador)
             return true;
         
         return false;
