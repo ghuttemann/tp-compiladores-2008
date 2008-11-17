@@ -24,9 +24,8 @@ public class Subconjuntos {
      * algoritmo 3.20 del libro de Compiladores de Aho (2a. ed).
      * @param afn El <code>AFN</code> a convertir.
      * @return El <code>AFD</code> equivalente a <code>afn</code>.
-     * @throws Exception Si el identificador de un estado es negativo.
      */
-    public static AFD getAFD(Automata afn) throws Exception {
+    public static AFD getAFD(Automata afn) {
         Estado estadoOrigen, estadoDestino;
         
         /* TODO:
