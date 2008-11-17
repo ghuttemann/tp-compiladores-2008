@@ -10,6 +10,8 @@ import java.util.Stack;
 import java.util.Vector;
 import java.util.List;
 import java.util.Arrays;
+import analisis.Alfabeto;
+import java.util.HashMap;
 
 /**
  * Esta clase implementa el algoritmo de minimización de 
@@ -108,7 +110,8 @@ public class Minimizacion {
      * Implementación del algoritmo de minimización de
      * estados. Algoritmo 3.39, libro de Compiladores
      * de Aho.
-     * @param afdMinimo
+     * @param afd El <code>AFD</code> a minimizar.
+     * @return Un <code>AFD</code> equivalente pero con menos estados.
      */
     private static AFD minimizar(AFD afd) {
         /* Tablas Hash auxiliares */
@@ -125,7 +128,7 @@ public class Minimizacion {
          * los estados no finales.
          */
         particion.agregar(afd.getEstadosNoFinales());
-        particion.agregar(afd.getEstadosFinales());
+        particion.agregar(afd.getEstadosFinales());      
         
         /*
          * Paso 2:
@@ -139,11 +142,23 @@ public class Minimizacion {
             nuevaParticion = new Conjunto<Conjunto<Estado>>();
             
             for (Conjunto<Estado> grupo : particion) {
-                /* 
-                 * Los grupos unitarios son ignorados debido
-                 * a que ya no pueden ser particionados.
-                 */
-                if (grupo.cantidad() <= 1) {
+                if (grupo.cantidad() == 0) {
+                    /*
+                     * Los grupos vacíos no deben ser
+                     * tenidos en cuenta.
+                     * Un grupo vacío puede resultar en
+                     * el caso de que todos los estados
+                     * del AFD sean de aceptación (finales),
+                     * por lo que en la partición inicial,
+                     * uno de los grupos estará vacío.
+                     */
+                    continue;
+                }
+                else if (grupo.cantidad() == 1) {
+                    /* 
+                     * Los grupos unitarios se agregan directamente,
+                     * debido a que ya no pueden ser particionados.
+                     */
                     nuevaParticion.agregar(grupo);
                 }
                 else {
@@ -155,7 +170,7 @@ public class Minimizacion {
                      */
                     tabla1 = new Hashtable<Estado, Conjunto<Integer>>();
                     for (Estado e : grupo)
-                        tabla1.put(e, getGruposAlcanzados(e, particion));
+                        tabla1.put(e, getGruposAlcanzados(e, particion, afd.getAlfabeto()));
                     
                     /*
                      * Paso 2.2:
@@ -219,7 +234,7 @@ public class Minimizacion {
          */
         for (int i=0; i < particion.cantidad(); i++) {
             Conjunto<Estado> grupo = particion.obtener(i);
-            Boolean esFinal = false;
+            boolean esFinal = false;
             
             /* 
              * El grupo actual tiene un estado final,
@@ -295,32 +310,54 @@ public class Minimizacion {
     /**
      * Para un estado dado, busca los grupos en los que 
      * caen las transiciones del mismo.
-     * @param estado El estado para el cual buscar los grupos alcanzados.
+     * @param origen El estado para el cual buscar los grupos alcanzados.
      * @param particion El conjunto de grupos de estados sobre el cual buscar.
+     * @param alfabeto El alfabeto del correspondiente AFD.
      * @return Un conjunto de enteros que representan las posiciones de los
      * grupos alcanzados dentro del conjunto de grupos.
      */
-    private static Conjunto<Integer> getGruposAlcanzados(Estado estado, Conjunto<Conjunto<Estado>> particion) {
+    private static Conjunto<Integer> getGruposAlcanzados(Estado origen, Conjunto<Conjunto<Estado>> particion, Alfabeto alfabeto) {
         /* Grupos alcanzados por el estado */
         Conjunto<Integer> gruposAlcanzados = new Conjunto<Integer>();
         
-        /* Obtener grupo alcanzado por cada transición */
-        for (Transicion t : estado.getTransiciones()) {
-            Estado destino = t.getEstado();
+        /* 
+         * Paso 1:
+         * =======
+         * Para cada símbolo del alfabeto obtenemos los 
+         * estados alcanzados. Si para un símbolo dado
+         * el estado no posee transición, colocamos null.
+         */
+        HashMap<String, Estado> transiciones = origen.getTransicionesSegunAlfabeto(alfabeto);
+
+        /*
+         * Paso 2:
+         * =======
+         * Para cada símbolo del alfabeto obtenemos el estado
+         * alcanzado por el estado origen y buscamos en qué
+         * grupo de la partición está.
+         */
+        for (String s : alfabeto) {
+            /* Estado destino de la transición */
+            Estado destino = transiciones.get(s);
             
-            /* Buscar grupo alcanzado */
-            for (Conjunto<Estado> grupo : particion) {
-                Integer idGrupo = particion.obtenerPosicion(grupo);
-                if (grupo.contiene(destino) && !gruposAlcanzados.contiene(idGrupo)) {
-                    gruposAlcanzados.agregar(idGrupo);
+            if (destino == null) {
+                /*
+                 * Si el estado destino es "null", no pertenecerá
+                 * a ningún grupo, por lo que colocamos el grupo
+                 * ficticio con índice -1.
+                 */
+                gruposAlcanzados.agregar(-1);
+            }
+            else {
+                for (int pos=0; pos < particion.cantidad(); pos++) {
+                    Conjunto<Estado> grupo = particion.obtener(pos);
                     
-                    /*
-                     * Debido a que un estado dado siempre
-                     * estará en un solo grupo, paramos de
-                     * buscar ya que no habrá otro grupo
-                     * alcanzado por el estado en cuestión.
-                     */
-                    break;
+                    if (grupo.contiene(destino)) {
+                        gruposAlcanzados.agregar(pos);
+                        
+                        /* El estado siempre estará en un sólo grupo */
+                        break;
+                    }
                 }
             }
         }
@@ -415,8 +452,10 @@ public class Minimizacion {
         String pedazo;
         
         for (Estado e : grupo) {
-            /* Eliminamos la "i" o "f" en caso de que exista */
-            if (e.toString().endsWith("i") || e.toString().endsWith("f"))
+            /* Eliminamos la "i" y/o "f" en caso de que exista */
+            if (e.toString().endsWith("if"))
+                pedazo = e.toString().substring(0, e.toString().length() - 2);
+            else if (e.toString().endsWith("i") || e.toString().endsWith("f"))
                 pedazo = e.toString().substring(0, e.toString().length() - 1);
             else
                 pedazo = e.toString();
