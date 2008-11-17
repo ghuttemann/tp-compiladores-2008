@@ -11,7 +11,6 @@ TODO List de UI
 TODO List de Otras Clases
 -------------------------
 
-- El AFD minimo debe tener sus "estados" intermedios.
 - Imprimir procedimientos de transformación.
 - Validación de cadenas.
 - Dibujar autómatas.
