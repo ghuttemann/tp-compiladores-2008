@@ -4,11 +4,25 @@
  * Archivo: VAFN.java
  * Creado el 8 de noviembre de 2008, 08:09 PM
  */
-
 package Vista;
 
+import analisis.Alfabeto;
 import generacion.Automata;
+import generacion.Conjunto;
+import generacion.Estado;
 import generacion.TablaTransicion;
+import generacion.Transicion;
+import java.io.BufferedWriter;
+import java.io.FileInputStream;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.io.PrintWriter;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
@@ -193,16 +207,21 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 254, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(15, Short.MAX_VALUE))
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
         Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
+        Pestaña2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Pestaña2FocusGained(evt);
+            }
+        });
 
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
@@ -220,7 +239,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 420, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -229,64 +248,153 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-/*
- * Función para Completar la tabla de Transición cada vez que la ventana
- * correspondiente se Active.
- * @param evt
- */
+    /*
+     * Función para Completar la tabla de Transición cada vez que la ventana
+     * correspondiente se Active.
+     * @param evt
+     */
 private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
-    
+
     /* Se obtiene la tabla de transición del Automata */
     TablaTransicion tabla = AF.getTablaTransicion();
     TTransicion = new JTable(tabla);
-    
+
     /* Configuración Necesaria para el Contenedor de la Tabla de Transicion */
     CTTransicion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
     CTTransicion.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
     CTTransicion.setAutoscrolls(true);
     CTTransicion.setViewportView(TTransicion);
-    
+
     /* Configuración necesario para la Tabla de Transición */
     TTransicion.setRowHeight(15);
     TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    
+
     /* Se calcula la longitud maxima en la primera columna */
-    int max =18; // Tamaño correspondiente al header
-    for (int i=0; i <AF.cantidadEstados();i++) {
+    int max = 18; // Tamaño correspondiente al header
+    for (int i = 0; i < AF.cantidadEstados(); i++) {
         Object val = TTransicion.getModel().getValueAt(i, 0);
-        max = max<val.toString().length()? val.toString().length(): max;
-    }   
-    
+        max = max < val.toString().length() ? val.toString().length() : max;
+    }
+
     /* Se asigna el ancho a cantidad de letras*5 (correspondientes pixeles) */
-    TTransicion.getColumnModel().getColumn(0).setMaxWidth(max*20);
-    TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max*5);
+    TTransicion.getColumnModel().getColumn(0).setMaxWidth(max * 20);
+    TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     TTransicion.updateUI();
 }//GEN-LAST:event_formInternalFrameActivated
 
 private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVerificarActionPerformed
     String valor = TextaVerificar.getText();
-    if ( valor != null && valor.length() > 0 ) {
+    if (valor != null && valor.length() > 0) {
         // TODO Verificar cadena con el Automata correspondiente
-        
         /* Paso 1. Verificar Abecedario */
-        
         /* Paso 2. Generar el Recorrido del valor en el AF */
-        
         /* Paso 2.1. Calcular y escribir en el Area de Texto Resultado */
-        
         /* Paso 2.2. Si hubo error mostrar el error*/
-        
+        ManejarImagen();
     } else {
-        String mensajeError = new String ("Debe completar el Campo de Texto " +
+        String mensajeError = new String("Debe completar el Campo de Texto " +
                 "correspondiente a la Expresión a Verificar.");
-        JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n"+mensajeError);
-    }    
+        JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n" + mensajeError);
+    }
 }//GEN-LAST:event_BVerificarActionPerformed
 
+private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Pestaña2FocusGained
+    ManejarImagen();
+}//GEN-LAST:event_Pestaña2FocusGained
 
+    private void ManejarImagen(){
+        PrintWriter salida1 = null;
+        String salida = new String("C:\\tmp\\ejemplo.dot");
+        try {
+            salida1 = new PrintWriter(new BufferedWriter(new FileWriter(salida)));
+        } catch (IOException ex) {
+            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+            /* Paso 1. Escribir Cabecera */
+        String nombre = new String("Test2");
+
+        salida1.print("digraph " + nombre + "{\n");
+        salida1.print("\trankdir=LR;\n");
+        salida1.print("\tsize=\"8,5\"\n");
+        salida1.print("\toverlap=\"scale\"\n");
+
+        /* Paso 2. Escribir los Nodos Finales */
+        salida1.print("\tnode [shape = doublecircle];");
+
+        Conjunto<Estado> finales = AF.getEstadosFinales();
+        for (Estado e : finales) {
+            salida1.print(" \"" + e+"\"");
+        }
+        salida1.print(";\n");
+
+        /* Paso 3. Escribir los Nodos no Finales */
+        salida1.print("\tnode [shape = circle];\n");
+        Conjunto<Estado> todos = AF.getEstados();
+        for (Estado e : todos) {
+            String origen = e.toString();
+            Conjunto<Transicion> transiciones = e.getTransiciones();
+            for (Transicion t : transiciones) {
+                String etiqueta = t.getSimbolo();
+                if (etiqueta.equals(Alfabeto.VACIO))
+                    etiqueta = "\\".concat(Alfabeto.VACIO);
+                salida1.print("\t\"" + origen + "\" -> \"" + t.getEstado() + "\" [ label = \"" +
+                        etiqueta + "\" ];\n");
+            }
+        }
+        salida1.println("}");
+
+        /* Paso 4. Crear el archivo con lo construido archivo */
+
+        salida1.close();
+
+        /* Paso 5. Crear la Imagen */
+
+        String dibujo = new String("c:\\tmp\\ejemplo.png");
+        String exeFile = new String("e:\\mrodas\\Facu\\03-Compiladores\\TP-2doParcial\\repos\\Codigo\\Ventanas1\\bin\\graphviz-2.4\\bin\\dot.exe");
+        try {
+            innerTransform(exeFile, salida, dibujo);
+        } catch (IOException ex) {
+            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        /* Paso 6. Cargar la imagen en la Ventana */
+        this.Imagen.setIcon(new ImageIcon(dibujo));
+
+    }
+
+    private void innerTransform(String exeFile, String dotFileName, String outFileName) throws IOException {
+
+        //
+        // dot.exe works by taking *.dot file and piping 
+        // results into another file, for example:
+        // d:\graphviz-1.12\bin\dot.exe -Tgif c:\temp\ManualDraw.dot > c:\temp\ManualDraw.gif
+        // so we follow that model here and read stdout until EOF
+        //
+        final String exeCmd = "" + exeFile + " -Tpng"+ " "+ dotFileName;
+
+        Process p = Runtime.getRuntime().exec(exeCmd);
+        PrintStream ps = new PrintStream(outFileName);
+        InputStream is = p.getInputStream();				
+	byte[] buf = new byte[32 * 1024];
+        int len;
+        while (true) {
+            len = is.read(buf);
+            if (len <= 0){
+                break;
+            }
+            ps.write(buf, 0, len);
+        }        
+        is.close();
+        ps.close();
+        
+    }
+        
     /**
      * Sección de Variables del Programa.
      */
+    //private OutputStream out;
     private Automata AF;
 
     /**
