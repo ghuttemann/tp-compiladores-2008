@@ -42,9 +42,8 @@ public class Estado implements Comparable<Estado> {
     /**
      * Crea un <code>Estado</code> no final con un identificador determinado.
      * @param identificador El identificador del nuevo estado.
-     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public Estado(int identificador) throws Exception {
+    public Estado(int identificador) {
         this(identificador, false);
     }
     
@@ -53,9 +52,8 @@ public class Estado implements Comparable<Estado> {
      * que será final o no de acuerdo al valor de <code>esFinal</code>.
      * @param identificador El identificador para este <code>Estado</code>.
      * @param esFinal Determina si el <code>Estado</code> es final o no.
-     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public Estado(int identificador, boolean esFinal) throws Exception {
+    public Estado(int identificador, boolean esFinal) {
         setIdentificador(identificador);
         setEsFinal(esFinal);
         setEtiqueta(String.valueOf(identificador));
@@ -65,12 +63,8 @@ public class Estado implements Comparable<Estado> {
     /**
      * Establece un nuevo identificador para este <code>Estado</code>.
      * @param identificador El nuevo identificador para este <code>Estado</code>.
-     * @throws Exception Si <code>identificador</code> es negativo.
      */
-    public void setIdentificador(int identificador) throws Exception {
-        if (identificador < 0)
-            throw new Exception("El identificador de un Estado no puede ser negativo.");
-        
+    public void setIdentificador(int identificador) {
         this.identificador = identificador;
     }
     

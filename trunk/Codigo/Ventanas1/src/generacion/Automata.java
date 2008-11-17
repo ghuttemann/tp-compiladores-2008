@@ -253,9 +253,8 @@ public abstract class Automata {
      * @param afDestino Automata hacia el cual copiar estados.
      * @param incremento Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
-     * @throws Exception Si el identificador de un estado es negativo.
      */
-    public static void copiarEstados(Automata afOrigen, Automata afDestino, int incremento) throws Exception {
+    public static void copiarEstados(Automata afOrigen, Automata afDestino, int incremento) {
         copiarEstados(afOrigen, afDestino, incremento, 0);
     }
     
@@ -267,10 +266,9 @@ public abstract class Automata {
      * @param incrementoTrans Cantidad en la cual deben incrementarse los identificadores
      * de los estados finales de las transiciones.
      * @param omitidos Cantidad de estados de <code>origen</code> que deben ser omitidos.
-     * @throws Exception Si el identificador de un es negativo.
      */
     public static void copiarEstados(Automata afOrigen, Automata afDestino, 
-                    int incrementoTrans, int omitidos) throws Exception {
+                    int incrementoTrans, int omitidos) {
         
         /* 
          * Cantidad que hay que incrementar al identificador
