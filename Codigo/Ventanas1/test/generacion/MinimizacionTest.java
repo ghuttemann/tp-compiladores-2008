@@ -8,7 +8,6 @@ package generacion;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
 import org.junit.Test;
-import static org.junit.Assert.*;
 
 /**
  * Clase de prueba para la clase <code>Minimizacion</code>.
@@ -30,9 +29,9 @@ public class MinimizacionTest {
         AFN afn = as.analizar();
         AFD afd = Subconjuntos.getAFD(afn);
         AFDMin afdMin = Minimizacion.getAFDminimo(afd);
-        
-        System.out.printf("AFD 1:\n%s", afd.toString());
-        System.out.println();
-        System.out.printf("AFD 2:\n%s", afdMin.toString());
+        System.out.printf("AFD Original:\n%s\n", afdMin.getAfdOriginal());
+        System.out.printf("AFD Post Inalcanzables (%s):\n%s\n", afdMin.inalcanzablesEliminados() ? "<>" : "==", afdMin.getAfdPostInalcanzables());
+        System.out.printf("AFD Post Minimización:\n%s\n", afdMin.getAfdPostMinimizacion());
+        System.out.printf("AFD Post Identidades (%s):\n%s\n", afdMin.identidadesEliminados() ? "<>" : "==", afdMin.getAfdPostIdentidades());
     }
 }
