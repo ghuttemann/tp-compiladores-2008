@@ -5,6 +5,9 @@
  */
 package generacion;
 
+import analisis.Alfabeto;
+import java.util.HashMap;
+
 /**
  * Esta clase representa un estado para un Autómata Finito.
  * @author Germán Hüttemann
@@ -128,6 +131,29 @@ public class Estado implements Comparable<Estado> {
      */
     public Conjunto<Transicion> getTransiciones() {
         return transiciones;
+    }
+    
+    /**
+     * Obtiene una tabla hash con las transiciones de este <code>Estado</code>
+     * a través de los símbolos de un <code>Alfabeto</code> dado.
+     * @param alfabeto El <code>Alfabeto</code> sobre el cual buscar transiciones
+     * en el <code>Estado</code>.
+     * @return Un <code>Hashtable</code> que contiene el <code>Estado</code>
+     * alcanzado para cada símbolo de <code>alfabeto</code>. Si no existe transición
+     * para un símbolo dado, el valor será igual a <code>null</code>.
+     */
+    public HashMap<String, Estado> getTransicionesSegunAlfabeto(Alfabeto alfabeto) {
+        HashMap<String, Estado> trans = new HashMap<String, Estado>();
+        
+        /* Rellenamos todo con null */
+        for (String s : alfabeto)
+            trans.put(s, null);
+        
+        /* Reemplazamos las transiciones existentes */
+        for (Transicion t : getTransiciones())
+            trans.put(t.getSimbolo(), t.getEstado());
+        
+        return trans;
     }
     
     /**
