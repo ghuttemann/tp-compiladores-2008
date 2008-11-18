@@ -13,13 +13,13 @@ import generacion.Estado;
 import generacion.TablaTransicion;
 import generacion.Transicion;
 import java.io.BufferedWriter;
-import java.io.FileInputStream;
+import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -27,8 +27,10 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 
 /**
- * Ventana que muestra y administra los Distintos Automatas del Programa.
- * @author  mrodas
+ * Clase que representa la Ventana que muestra y administra los Distintos 
+ * Automatas del Programa.
+ * @author Germán Hüttemann
+ * @author Marcelo Rodas
  */
 public class VAutomatas extends javax.swing.JInternalFrame {
 
@@ -207,21 +209,16 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 258, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(15, Short.MAX_VALUE))
+                .addContainerGap(19, Short.MAX_VALUE))
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
         Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
-        Pestaña2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Pestaña2FocusGained(evt);
-            }
-        });
 
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
@@ -239,7 +236,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
                 .addGap(23, 23, 23))
         );
 
@@ -248,6 +245,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    
     /*
      * Función para Completar la tabla de Transición cada vez que la ventana
      * correspondiente se Active.
@@ -280,8 +278,16 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion.getColumnModel().getColumn(0).setMaxWidth(max * 20);
     TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     TTransicion.updateUI();
+    
+    /* Finalmente se generan las imagenes */
+    ManejarImagen();
 }//GEN-LAST:event_formInternalFrameActivated
 
+
+    /*
+     * Función para Manejar el Boton BVerificar
+     * @param evt
+     */
 private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVerificarActionPerformed
     String valor = TextaVerificar.getText();
     if (valor != null && valor.length() > 0) {
@@ -298,39 +304,64 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     }
 }//GEN-LAST:event_BVerificarActionPerformed
 
-private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Pestaña2FocusGained
-    ManejarImagen();
-}//GEN-LAST:event_Pestaña2FocusGained
-
+    /*
+     * Función para Generar y cargar la Imagen del Automata correspondiente.
+     * @param evt
+     */
     private void ManejarImagen(){
-        PrintWriter salida1 = null;
-        String salida = new String("C:\\tmp\\ejemplo.dot");
+        
+        /* Paso 1. Crear Archivo de Salida  */
+        Random r = new Random();
+        r.nextInt(100);
+        String rand = ""+r.nextInt(100);
+        String salidaDot = ubicacion.concat(proyecto).concat(rand);
+        salidaDot.concat(".dot");
+        GrafoToDot(salidaDot);
+
+        /* Paso 2. Crear la Imagen */
+        String dibujo = ubicacion.concat(proyecto).concat(rand).concat("dib");
+        dibujo.concat(".png");
+        
         try {
-            salida1 = new PrintWriter(new BufferedWriter(new FileWriter(salida)));
+            ejecutarDotExe(exeFile, salidaDot, dibujo);
         } catch (IOException ex) {
             Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
-            /* Paso 1. Escribir Cabecera */
-        String nombre = new String("Test2");
 
-        salida1.print("digraph " + nombre + "{\n");
-        salida1.print("\trankdir=LR;\n");
-        salida1.print("\tsize=\"8,5\"\n");
-        salida1.print("\toverlap=\"scale\"\n");
+        /* Paso 3. Cargar la imagen en la Ventana */
+        this.Imagen.setIcon(new ImageIcon(dibujo));
+    }
+    
+    /**
+     * Paso 1 para el Manejo de Imagenes (Crear Archivo de Salida).
+     * @param salidaDot
+     */
+    private void GrafoToDot(String salidaDot){
+        PrintWriter dotWriter = null;
+        try {
+            dotWriter = new PrintWriter(new File(salidaDot), new String("ISO-8859-1"));
+        } catch (IOException ex) {
+            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        /* Paso 1.1. Escribir Cabecera  */
+        String nombre = "\"".concat(this.getProyecto()+"\"");
+        String longitud = ""+(AF.cantidadEstados()-1);
+        dotWriter.print("digraph " + nombre + "{\n");
+        dotWriter.print("\trankdir=LR;\n");
+        dotWriter.print("\tsize=\""+longitud+",5\"\n");
+        dotWriter.print("\toverlap=\"scale\"\n");
 
-        /* Paso 2. Escribir los Nodos Finales */
-        salida1.print("\tnode [shape = doublecircle];");
+        /* Paso 1.2. Escribir los Nodos Finales */
+        dotWriter.print("\tnode [shape = doublecircle];");
 
         Conjunto<Estado> finales = AF.getEstadosFinales();
         for (Estado e : finales) {
-            salida1.print(" \"" + e+"\"");
+            dotWriter.print(" \"" + e+"\"");
         }
-        salida1.print(";\n");
+        dotWriter.print(";\n");
 
-        /* Paso 3. Escribir los Nodos no Finales */
-        salida1.print("\tnode [shape = circle];\n");
+        /* Paso 1.3. Escribir los Nodos no Finales */
+        dotWriter.print("\tnode [shape = circle];\n");
         Conjunto<Estado> todos = AF.getEstados();
         for (Estado e : todos) {
             String origen = e.toString();
@@ -338,43 +369,29 @@ private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
             for (Transicion t : transiciones) {
                 String etiqueta = t.getSimbolo();
                 if (etiqueta.equals(Alfabeto.VACIO))
-                    etiqueta = "\\".concat(Alfabeto.VACIO);
-                salida1.print("\t\"" + origen + "\" -> \"" + t.getEstado() + "\" [ label = \"" +
+                    etiqueta = "".concat("&epsilon;");
+                dotWriter.print("\t\"" + origen + "\" -> \"" + t.getEstado() + "\" [ label = \"" +
                         etiqueta + "\" ];\n");
             }
         }
-        salida1.println("}");
-
-        /* Paso 4. Crear el archivo con lo construido archivo */
-
-        salida1.close();
-
-        /* Paso 5. Crear la Imagen */
-
-        String dibujo = new String("c:\\tmp\\ejemplo.png");
-        String exeFile = new String("e:\\mrodas\\Facu\\03-Compiladores\\TP-2doParcial\\repos\\Codigo\\Ventanas1\\bin\\graphviz-2.4\\bin\\dot.exe");
-        try {
-            innerTransform(exeFile, salida, dibujo);
-        } catch (IOException ex) {
-            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
-        }
-
-        /* Paso 6. Cargar la imagen en la Ventana */
-        this.Imagen.setIcon(new ImageIcon(dibujo));
-
+        dotWriter.println("}");
+        dotWriter.close();        
     }
 
-    private void innerTransform(String exeFile, String dotFileName, String outFileName) throws IOException {
+    /*
+     * Paso 2 para el Manejo de Imagenes (Crear Imagen).
+     * 
+     * dot.exe works by taking *.dot file and piping 
+     * results into another file, for example:
+     * d:\graphviz-1.12\bin\dot.exe -Tgif c:\temp\ManualDraw.dot > c:\temp\ManualDraw.gif
+     * so we follow that model here and read stdout until EOF
+     */
+    private void ejecutarDotExe(String exeFile, String dotFileName, String outFileName) throws IOException {
 
-        //
-        // dot.exe works by taking *.dot file and piping 
-        // results into another file, for example:
-        // d:\graphviz-1.12\bin\dot.exe -Tgif c:\temp\ManualDraw.dot > c:\temp\ManualDraw.gif
-        // so we follow that model here and read stdout until EOF
-        //
         final String exeCmd = "" + exeFile + " -Tpng"+ " "+ dotFileName;
 
         Process p = Runtime.getRuntime().exec(exeCmd);
+
         PrintStream ps = new PrintStream(outFileName);
         InputStream is = p.getInputStream();				
 	byte[] buf = new byte[32 * 1024];
@@ -388,14 +405,33 @@ private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:ev
         }        
         is.close();
         ps.close();
-        
+        p.destroy();
     }
         
     /**
      * Sección de Variables del Programa.
      */
-    //private OutputStream out;
     private Automata AF;
+    private String proyecto = " ";
+    private String ubicacion = new String("C:\\tmp\\");
+    private String exeFile = new String("C:\\Program Files\\Graphviz 2.21\\bin\\dot.exe");
+
+    public String getExeFile() {
+        return exeFile;
+    }
+
+    public void setExeFile(String exeFile) {
+        this.exeFile = exeFile;
+    }
+    
+    public String getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(String proyecto) {
+        this.proyecto = new String(proyecto);
+        this.proyecto.replaceAll(" ", "_");
+    }
 
     /**
      * Obtiene el autómata.
