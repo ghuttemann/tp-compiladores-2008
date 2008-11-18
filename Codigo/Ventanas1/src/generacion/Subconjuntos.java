@@ -18,6 +18,11 @@ import java.util.Stack;
  * @author Marcelo Rodas
  */
 public class Subconjuntos {
+    
+    /**
+     * Log para el algoritmo de subconjuntos.
+     */
+    private static Log log = new Log();
 
     /**
      * Realiza la conversión de un AFN a un AFD, aplicando el
@@ -28,9 +33,8 @@ public class Subconjuntos {
     public static AFD getAFD(Automata afn) {
         Estado estadoOrigen, estadoDestino;
         
-        /* TODO:
-         * - Guardar rastro del proceso
-         */
+        // Logging
+        log.vaciar();
         
         /* AFD resultante */
         AFD afd = new AFD(afn.getAlfabeto(), afn.getExprReg());
@@ -52,6 +56,9 @@ public class Subconjuntos {
         
         /* Calculamos la Cerradura Epsilon del estado inicial */
         Conjunto<Estado> resultado = cerraduraEpsilon(afn.getEstadoInicial());
+        
+        // Logging
+        log.agregar("cerradura(" + afn.getEstadoInicial() + ") = " + resultado).nuevaLinea().nuevaLinea();
         
          /* 
           * Agregamos la Cerradura Epsilon del estado 
@@ -80,6 +87,11 @@ public class Subconjuntos {
                 Conjunto<Estado> M = mueve(T, simbolo);
                 Conjunto<Estado> U = cerraduraEpsilon(M);
                 
+                // Logging
+                log.agregar("cerradura(mover(" + T + ", " + simbolo + ")) = ")
+                   .agregar("cerradura(" + M + ") = " + U)
+                   .nuevaLinea();
+                
                 if (estadosD.contiene(U)) {
                     int posicion  = estadosD.obtenerPosicion(U);
                     estadoDestino = afd.getEstado(posicion);
@@ -106,6 +118,9 @@ public class Subconjuntos {
                 Transicion trans = new Transicion(estadoDestino, simbolo);
                 estadoOrigen.getTransiciones().agregar(trans);
             }
+            
+            // Logging
+            log.nuevaLinea();
         }
         
         /* Establecemos los estados finales del AFD */
@@ -225,5 +240,14 @@ public class Subconjuntos {
     private static void recorrido(Conjunto<Estado> inicios, Conjunto<Estado> alcanzados, String simboloBuscado) {
         for (Estado e : inicios)
             recorrido(e, alcanzados, simboloBuscado);
+    }
+    
+    /**
+     * Obtiene el <code>Log</code> de esta clase.
+     * @return El <code>Log</code> correspondiente
+     * al proceso de análisis sintáctico.
+     */
+    public static Log getLog() {
+        return log;
     }
 }
