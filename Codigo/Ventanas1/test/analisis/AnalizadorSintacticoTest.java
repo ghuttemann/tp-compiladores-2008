@@ -23,7 +23,7 @@ public class AnalizadorSintacticoTest {
     @Test
     public void testAnalizar() throws Exception {
         Alfabeto alfa = new Alfabeto("ab");
-        String er = "(a|b)a*";
+        String er = "a*b?(ab|ba)*b?a*";
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         
         AFN salida = as.analizar();
@@ -43,5 +43,7 @@ public class AnalizadorSintacticoTest {
             
             System.out.println();
         }
+        
+        System.out.printf("\nDerivaciones:\n%s", as.getLog());
     }
 }
