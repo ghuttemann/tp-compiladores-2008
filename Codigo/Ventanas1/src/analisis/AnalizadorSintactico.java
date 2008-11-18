@@ -6,6 +6,7 @@
 package analisis;
 
 import generacion.AFN;
+import generacion.Log;
 import generacion.Thompson;
 
 /**
@@ -16,6 +17,11 @@ import generacion.Thompson;
  * @author Marcelo Rodas
  */
 public class AnalizadorSintactico {
+    
+    /**
+     * Log del análisis sintáctico.
+     */
+    private Log log;
     
     /**
      * El analizador léxico para este analizador
@@ -43,6 +49,7 @@ public class AnalizadorSintactico {
     public AnalizadorSintactico(Alfabeto alfabeto, String exprReg) {
         analizadorLexico = new AnalizadorLexico(alfabeto, exprReg);
         contadorTokens = 0;
+        log = new Log();
     }
 
     /**
@@ -53,10 +60,6 @@ public class AnalizadorSintactico {
      */
     public AFN analizar() throws Exception {
         preanalisis = obtenerToken();
-        
-        /* TODO:
-         * - Guardar rastro del proceso.
-         */
         
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
@@ -76,6 +79,8 @@ public class AnalizadorSintactico {
      * @throws java.lang.Exception Propaga la excepción de Concat() y R1().
      */
     private AFN ExprReg() throws Exception {
+        log.agregar("ExprReg -> Concat R1").nuevaLinea();
+        
         AFN afn1 = Concat();
         AFN afn2 = R1();
         
@@ -99,10 +104,18 @@ public class AnalizadorSintactico {
              * ejecución de métodos, hacemos una llamada
              * al método ExpReg().
              */
-            return ExprReg();
+            log.agregar("R1 -> \"|\" Concat R1").nuevaLinea();
+            AFN afn1 = Concat();
+            AFN afn2 = R1();
+
+            if (afn2 == null)
+                return afn1;
+            else
+                return Thompson.union(afn1, afn2);
         }
         else {
             // Derivar en vacío
+            log.agregar("R1 -> " + Alfabeto.VACIO).nuevaLinea();
             return null;
         }
     }
@@ -112,6 +125,8 @@ public class AnalizadorSintactico {
      * @throws java.lang.Exception Propaga la excepción de Grupo() y R2().
      */
     private AFN Concat() throws Exception {
+        log.agregar("Concat -> Grupo R2").nuevaLinea();
+        
         AFN afn1 = Grupo();
         AFN afn2 = R2();
         
@@ -135,9 +150,17 @@ public class AnalizadorSintactico {
                  * 'Concat -> Grupo R2' hacemos una llamada
                  * al método Concat().
                  */
-                return Concat();
+                log.agregar("R2 -> Grupo R2").nuevaLinea();
+                AFN afn1 = Grupo();
+                AFN afn2 = R2();
+
+                if (afn2 == null)
+                    return afn1;
+                else
+                    return Thompson.concatenacion(afn1, afn2);
             default:
                 // Derivar en vacío
+                log.agregar("R2 -> " + Alfabeto.VACIO).nuevaLinea();
                 return null;
         }
     }
@@ -148,6 +171,8 @@ public class AnalizadorSintactico {
      * @throws java.lang.Exception Propaga las excepciones de Elem() y Oper().
      */
     private AFN Grupo() throws Exception {
+        log.agregar("Grupo -> Elem Oper").nuevaLinea();
+        
         AFN afn = Elem();
         TokenExprReg operador = Oper();
         
@@ -175,10 +200,13 @@ public class AnalizadorSintactico {
             case CERRADURA_POSITIVA:
             case OPCION:
                 operador = preanalisis.getIdentificador();
+                
+                log.agregar("Oper -> " + preanalisis.getValor()).nuevaLinea();
                 match(preanalisis);
                 break;
             default:
                 // Derivar en vacío
+                log.agregar("Oper -> " + Alfabeto.VACIO).nuevaLinea();
                 operador = TokenExprReg.DESCONOCIDO;
         }
         
@@ -199,11 +227,15 @@ public class AnalizadorSintactico {
         
         switch (preanalisis.getIdentificador()) {
             case PAREN_IZQUIERDO:
+                log.agregar("Elem -> \"(\" ExprReg \")\"").nuevaLinea();
+                
                 match(new Token(TokenExprReg.PAREN_IZQUIERDO));
                 afn = ExprReg();
                 match(new Token(TokenExprReg.PAREN_DERECHO));
                 break;
             case ALFABETO:
+                log.agregar("Elem -> SimLen").nuevaLinea();
+                
                 afn = SimLen();
                 break;
             default:
@@ -225,6 +257,8 @@ public class AnalizadorSintactico {
             error("El símbolo \"" + simbolo + 
                 "\" no pertenece al alfabeto definido.");
         }
+        
+        log.agregar("SimElem -> " + simbolo).nuevaLinea();
         
         AFN afn = Thompson.basico(simbolo);
         match(preanalisis);
@@ -275,5 +309,14 @@ public class AnalizadorSintactico {
     private Token obtenerToken() throws Exception {
         ++contadorTokens;
         return analizadorLexico.sgteToken();
+    }
+    
+    /**
+     * Obtiene el <code>Log</code> de esta clase.
+     * @return El <code>Log</code> correspondiente
+     * al proceso de análisis sintáctico.
+     */
+    public Log getLog() {
+        return log;
     }
 }
