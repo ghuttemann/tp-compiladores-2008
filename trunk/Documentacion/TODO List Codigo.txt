@@ -12,7 +12,7 @@ TODO List de Otras Clases
 -------------------------
 
 - Imprimir procedimientos de transformación.
-- Validación de cadenas.
+- Validación de cadenas. --> YA ESTA PARA AFD
 - Dibujar autómatas.
 
 ----------------------------
