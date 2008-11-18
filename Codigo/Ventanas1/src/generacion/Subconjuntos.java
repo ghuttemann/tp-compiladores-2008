@@ -154,7 +154,7 @@ public class Subconjuntos {
      * Implementa la operación Mueve.
      * @param estados <code>Estado</code>s sobre los cuales aplicar la operación.
      * @param simbolo Símbolo que debe seguirse en las <code>Transicion</code>s.
-     * @return
+     * @return El <code>Conjunto</code> de estados alcanzados.
      */
     private static Conjunto<Estado> mueve(Conjunto<Estado> estados, String simbolo) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
