@@ -7,11 +7,15 @@
 package Vista;
 
 import analisis.Alfabeto;
+import generacion.AFD;
+import generacion.AFN;
 import generacion.Automata;
 import generacion.Conjunto;
 import generacion.Estado;
+import generacion.ResultadoValidacion;
 import generacion.TablaTransicion;
 import generacion.Transicion;
+import generacion.Validacion;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -23,6 +27,7 @@ import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
+import org.jdesktop.application.Action;
 
 /**
  * Clase que representa la Ventana que muestra y administra los Distintos 
@@ -55,7 +60,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TTransicion = new javax.swing.JTable();
         CVerificación = new javax.swing.JPanel();
         EVerificar = new javax.swing.JLabel();
-        TextaVerificar = new javax.swing.JTextField();
+        TextoaVerificar = new javax.swing.JTextField();
         BVerificar = new javax.swing.JToggleButton();
         EResultado = new javax.swing.JLabel();
         ScrollResultados = new javax.swing.JScrollPane();
@@ -139,16 +144,13 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         EVerificar.setText(resourceMap.getString("EVerificar.text")); // NOI18N
         EVerificar.setName("EVerificar"); // NOI18N
 
-        TextaVerificar.setText(resourceMap.getString("TextaVerificar.text")); // NOI18N
-        TextaVerificar.setName("TextaVerificar"); // NOI18N
+        TextoaVerificar.setText(resourceMap.getString("TextoaVerificar.text")); // NOI18N
+        TextoaVerificar.setName("TextoaVerificar"); // NOI18N
 
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getActionMap(VAutomatas.class, this);
+        BVerificar.setAction(actionMap.get("Verificacion")); // NOI18N
         BVerificar.setText(resourceMap.getString("BVerificar.text")); // NOI18N
         BVerificar.setName("BVerificar"); // NOI18N
-        BVerificar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BVerificarActionPerformed(evt);
-            }
-        });
 
         EResultado.setText(resourceMap.getString("EResultado.text")); // NOI18N
         EResultado.setName("EResultado"); // NOI18N
@@ -156,6 +158,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         ScrollResultados.setName("ScrollResultados"); // NOI18N
 
         TextResultado.setColumns(20);
+        TextResultado.setEditable(false);
+        TextResultado.setFont(resourceMap.getFont("TextResultado.font")); // NOI18N
         TextResultado.setRows(5);
         TextResultado.setName("TextResultado"); // NOI18N
         ScrollResultados.setViewportView(TextResultado);
@@ -166,33 +170,37 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CVerificaciónLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(EVerificar)
-                    .addComponent(EResultado))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CVerificaciónLayout.createSequentialGroup()
-                        .addComponent(TextaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(24, 24, 24)
-                        .addComponent(BVerificar)
-                        .addContainerGap(252, Short.MAX_VALUE))
-                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)))
+                        .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                                .addComponent(EVerificar)
+                                .addGap(4, 4, 4)
+                                .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(10, 10, 10))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                                .addComponent(BVerificar)
+                                .addGap(47, 47, 47)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                        .addGap(327, 327, 327)
+                        .addComponent(EResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGap(251, 251, 251))))
         );
         CVerificaciónLayout.setVerticalGroup(
             CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CVerificaciónLayout.createSequentialGroup()
-                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(EVerificar)
-                    .addComponent(TextaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BVerificar))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                .addComponent(EResultado)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CVerificaciónLayout.createSequentialGroup()
-                        .addGap(9, 9, 9)
-                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
-                    .addGroup(CVerificaciónLayout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(EResultado)
-                        .addContainerGap())))
+                        .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(EVerificar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(BVerificar))
+                    .addComponent(ScrollResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
 
         javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
@@ -202,12 +210,12 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             .addGroup(Pestaña1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
+            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -276,12 +284,12 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
+            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -290,7 +298,6 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    
     /*
      * Función para Completar la tabla de Transición cada vez que la ventana
      * correspondiente se Active.
@@ -311,7 +318,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     /* Configuración necesario para la Tabla de Transición */
     TTransicion.setRowHeight(15);
     TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-    
+
     /* Se calcula la longitud maxima en la primera columna */
     int max = 18; // Tamaño correspondiente al header
     for (int i = 0; i < AF.cantidadEstados(); i++) {
@@ -323,7 +330,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion.getColumnModel().getColumn(0).setMaxWidth(max * 20);
     TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     TTransicion.updateUI();
-    
+
     /* Se carga tambíen para la pestaña procesos */
     TTransicion1 = new JTable(TTransicion.getModel(), TTransicion.getColumnModel());
     TTransicion1.setRowHeight(15);
@@ -332,30 +339,54 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion1.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     CTTransicion1.setViewportView(TTransicion1);
     TTransicion1.updateUI();
-    
+
     /* Finalmente se generan las imagenes */
     ManejarImagen();
 }//GEN-LAST:event_formInternalFrameActivated
 
 
-    /*
+    /**
      * Función para Manejar el Boton BVerificar
      * @param evt
      */
-private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BVerificarActionPerformed
-    String valor = TextaVerificar.getText();
-    if (valor != null && valor.length() > 0) {
-        // TODO Verificar cadena con el Automata correspondiente
-        /* Paso 1. Verificar Abecedario */
-        /* Paso 2. Generar el Recorrido del valor en el AF */
-        /* Paso 2.1. Calcular y escribir en el Area de Texto Resultado */
-        /* Paso 2.2. Si hubo error mostrar el error*/
-    } else {
-        String mensajeError = new String("Debe completar el Campo de Texto " +
-                "correspondiente a la Expresión a Verificar.");
-        JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n" + mensajeError);
+    @Action
+    public void Verificacion() {
+        String valor = TextoaVerificar.getText();
+        if (valor != null && valor.length() > 0) {
+
+            // TODO Verificar cadena con el Automata correspondiente
+            ResultadoValidacion Result = null;
+            if (AFN.class.isInstance(this.AF)) {
+                Result = Validacion.validarAFN((AFN) this.AF, valor);
+            } else if (AFD.class.isInstance(this.AF)) {
+                Result = Validacion.validarAFD((AFD) this.AF, valor);
+            }
+            String mensaje = null;
+            if (!Result.esValido()) {
+                mensaje = "ERROR: La cadena ingresada no es válida. Debido a que:\n";
+                String Resto = Result.getEntradaFaltante();
+                if (!Resto.isEmpty()) {
+                    mensaje += "- Se recorrió " + Result.getCamino() + " y no se " +
+                            "puede abanzar. Falta Evaluar: " + Resto + "\n";
+                } else {
+                    mensaje += "- Se recorrió " + Result.getCamino() + " y se terminó" +
+                            " la cadena de entrada sin llegar a un estado Final. \n";
+                }
+                mensaje += "---\n";
+            } else {
+                mensaje = "OK. La cadena es Aceptada.\n Se recorrio " +
+                        Result.getCamino();
+            }
+            TextResultado.setText("" + mensaje);
+
+        } else {
+
+            String mensajeError = new String("Debe completar el Campo de Texto " +
+                    "correspondiente a la Expresión a Verificar.");
+            JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el " +
+                    "siguiente error:\n" + mensajeError);
+        }
     }
-}//GEN-LAST:event_BVerificarActionPerformed
 
     /*
      * Función para Generar y cargar la Imagen del Automata correspondiente.
@@ -368,12 +399,12 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         r.nextInt(100);
         String rand = ""+r.nextInt(100);
         String salidaDot = ubicacion.concat(proyecto).concat(rand);
-        salidaDot.concat(".dot");
+        salidaDot += ".dot";
         GrafoToDot(salidaDot);
 
         /* Paso 2. Crear la Imagen */
-        String dibujo = ubicacion.concat(proyecto).concat(rand).concat("dib");
-        dibujo.concat(".png");
+        String dibujo = ubicacion.concat(proyecto).concat(rand);
+        dibujo +=".png";
         
         try {
             ejecutarDotExe(exeFile, salidaDot, dibujo);
@@ -521,7 +552,7 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
     private javax.swing.JTable TTransicion;
     private javax.swing.JTable TTransicion1;
     private javax.swing.JTextArea TextResultado;
-    private javax.swing.JTextField TextaVerificar;
+    private javax.swing.JTextField TextoaVerificar;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
     // End of variables declaration//GEN-END:variables
 }

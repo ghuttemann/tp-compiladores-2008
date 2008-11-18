@@ -381,12 +381,13 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarSimulacion() {
-        VAutomatas VAFDmin = new VAutomatas();
+        VSimulador VAFDmin = new VSimulador();
         String titulo = new String("AFD Mínimo Simulado para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
-        VAFDmin.setVisible(true);
+        
         this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFDmin);
+        VAFDmin.setVisible(true);
 
     }
     

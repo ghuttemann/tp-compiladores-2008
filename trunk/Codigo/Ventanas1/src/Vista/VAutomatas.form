@@ -30,13 +30,13 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="CPestañas" pref="659" max="32767" attributes="0"/>
+          <Component id="CPestañas" pref="667" max="32767" attributes="0"/>
       </Group>
     </DimensionLayout>
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="CPestañas" pref="444" max="32767" attributes="0"/>
+              <Component id="CPestañas" pref="448" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -70,13 +70,13 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CVerificación" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="CTTransicion" alignment="1" pref="626" max="32767" attributes="0"/>
+                  <Component id="CTTransicion" alignment="1" pref="662" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="CTTransicion" pref="264" max="32767" attributes="0"/>
+                      <Component id="CTTransicion" pref="255" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -151,42 +151,48 @@
                 <DimensionLayout dim="0">
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
-                          <EmptySpace max="-2" attributes="0"/>
-                          <Group type="103" groupAlignment="1" attributes="0">
-                              <Component id="EVerificar" min="-2" max="-2" attributes="0"/>
-                              <Component id="EResultado" alignment="1" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <EmptySpace max="-2" attributes="0"/>
+                          <EmptySpace min="-2" max="-2" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <Component id="TextaVerificar" min="-2" pref="141" max="-2" attributes="0"/>
-                                  <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
-                                  <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="252" max="32767" attributes="0"/>
+                                  <Group type="103" groupAlignment="0" attributes="0">
+                                      <Group type="102" alignment="1" attributes="1">
+                                          <Component id="EVerificar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="4" pref="4" max="-2" attributes="0"/>
+                                          <Component id="TextoaVerificar" min="-2" pref="141" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
+                                      </Group>
+                                      <Group type="102" alignment="1" attributes="1">
+                                          <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
+                                          <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
+                                      </Group>
+                                  </Group>
+                                  <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="ScrollResultados" pref="424" max="32767" attributes="2"/>
                               </Group>
-                              <Component id="ScrollResultados" pref="488" max="32767" attributes="1"/>
+                              <Group type="102" alignment="1" attributes="0">
+                                  <EmptySpace min="327" pref="327" max="327" attributes="0"/>
+                                  <Component id="EResultado" max="32767" attributes="0"/>
+                                  <EmptySpace min="-2" pref="251" max="-2" attributes="0"/>
+                              </Group>
                           </Group>
                       </Group>
                   </Group>
                 </DimensionLayout>
                 <DimensionLayout dim="1">
                   <Group type="103" groupAlignment="0" attributes="0">
-                      <Group type="102" attributes="0">
-                          <Group type="103" groupAlignment="3" attributes="0">
-                              <Component id="EVerificar" alignment="3" min="-2" max="-2" attributes="0"/>
-                              <Component id="TextaVerificar" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
-                              <Component id="BVerificar" alignment="3" min="-2" max="-2" attributes="0"/>
-                          </Group>
+                      <Group type="102" alignment="1" attributes="0">
+                          <Component id="EResultado" min="-2" max="-2" attributes="0"/>
+                          <EmptySpace max="32767" attributes="0"/>
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
-                                  <EmptySpace min="-2" pref="9" max="-2" attributes="0"/>
-                                  <Component id="ScrollResultados" pref="61" max="32767" attributes="0"/>
-                              </Group>
-                              <Group type="102" alignment="0" attributes="0">
-                                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                                  <Component id="EResultado" min="-2" max="-2" attributes="0"/>
+                                  <Group type="103" groupAlignment="3" attributes="0">
+                                      <Component id="TextoaVerificar" alignment="3" min="-2" pref="20" max="-2" attributes="0"/>
+                                      <Component id="EVerificar" alignment="3" min="-2" max="-2" attributes="0"/>
+                                  </Group>
                                   <EmptySpace max="-2" attributes="0"/>
+                                  <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
                               </Group>
+                              <Component id="ScrollResultados" min="-2" pref="96" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                   </Group>
@@ -199,20 +205,20 @@
                     <Property name="name" type="java.lang.String" value="EVerificar" noResource="true"/>
                   </Properties>
                 </Component>
-                <Component class="javax.swing.JTextField" name="TextaVerificar">
+                <Component class="javax.swing.JTextField" name="TextoaVerificar">
                   <Properties>
-                    <Property name="text" type="java.lang.String" resourceKey="TextaVerificar.text"/>
-                    <Property name="name" type="java.lang.String" value="TextaVerificar" noResource="true"/>
+                    <Property name="text" type="java.lang.String" resourceKey="TextoaVerificar.text"/>
+                    <Property name="name" type="java.lang.String" value="TextoaVerificar" noResource="true"/>
                   </Properties>
                 </Component>
                 <Component class="javax.swing.JToggleButton" name="BVerificar">
                   <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="Vista.VAutomatas" id="Verificacion" methodName="Verificacion"/>
+                    </Property>
                     <Property name="text" type="java.lang.String" resourceKey="BVerificar.text"/>
                     <Property name="name" type="java.lang.String" value="BVerificar" noResource="true"/>
                   </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BVerificarActionPerformed"/>
-                  </Events>
                 </Component>
                 <Component class="javax.swing.JLabel" name="EResultado">
                   <Properties>
@@ -233,6 +239,8 @@
                     <Component class="javax.swing.JTextArea" name="TextResultado">
                       <Properties>
                         <Property name="columns" type="int" value="20"/>
+                        <Property name="editable" type="boolean" value="false"/>
+                        <Property name="font" type="java.awt.Font" resourceKey="TextResultado.font"/>
                         <Property name="rows" type="int" value="5"/>
                         <Property name="name" type="java.lang.String" value="TextResultado" noResource="true"/>
                       </Properties>
