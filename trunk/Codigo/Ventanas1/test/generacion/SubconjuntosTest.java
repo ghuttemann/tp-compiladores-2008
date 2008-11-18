@@ -65,5 +65,7 @@ public class SubconjuntosTest {
             
             System.out.println();
         }
+        
+        System.out.printf("\nConjuntos estados producidos:\n%s", Subconjuntos.getLog());
     }
 }
