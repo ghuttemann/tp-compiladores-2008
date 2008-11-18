@@ -174,8 +174,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                         .addComponent(TextaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(BVerificar)
-                        .addContainerGap(511, Short.MAX_VALUE))
-                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 747, Short.MAX_VALUE)))
+                        .addContainerGap(985, Short.MAX_VALUE))
+                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 1221, Short.MAX_VALUE)))
         );
         CVerificaciónLayout.setVerticalGroup(
             CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -219,6 +219,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
+        Pestaña2.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusGained(java.awt.event.FocusEvent evt) {
+                Pestaña2FocusGained(evt);
+            }
+        });
 
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
@@ -231,13 +236,13 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPestañas)
+            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 1376, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                .addGap(23, 23, 23))
+                .addGap(27, 27, 27))
         );
 
         bindingGroup.bind();
@@ -303,6 +308,10 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n" + mensajeError);
     }
 }//GEN-LAST:event_BVerificarActionPerformed
+
+private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Pestaña2FocusGained
+ManejarImagen();
+}//GEN-LAST:event_Pestaña2FocusGained
 
     /*
      * Función para Generar y cargar la Imagen del Automata correspondiente.
