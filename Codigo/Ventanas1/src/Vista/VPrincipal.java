@@ -9,7 +9,9 @@ package Vista;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
 import generacion.AFD;
+import generacion.AFDMin;
 import generacion.AFN;
+import generacion.Minimizacion;
 import generacion.Subconjuntos;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -155,18 +157,22 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         Procesos.setName("Procesos"); // NOI18N
 
         BAFN.setAction(actionMap.get("procesarAFN")); // NOI18N
+        BAFN.setEnabled(false);
         BAFN.setName("BAFN"); // NOI18N
 
         BAFD.setAction(actionMap.get("procesarAFD")); // NOI18N
         BAFD.setFont(resourceMap.getFont("BAFD.font")); // NOI18N
         BAFD.setText(resourceMap.getString("BAFD.text")); // NOI18N
+        BAFD.setEnabled(false);
         BAFD.setName("BAFD"); // NOI18N
 
         BAFDmin.setAction(actionMap.get("procesarAFDmin")); // NOI18N
         BAFDmin.setText(resourceMap.getString("BAFDmin.text")); // NOI18N
+        BAFDmin.setEnabled(false);
         BAFDmin.setName("BAFDmin"); // NOI18N
 
         BSimulacion.setAction(actionMap.get("procesarSimulacion")); // NOI18N
+        BSimulacion.setEnabled(false);
         BSimulacion.setName("BSimulacion"); // NOI18N
 
         javax.swing.GroupLayout ProcesosLayout = new javax.swing.GroupLayout(Procesos);
@@ -227,7 +233,7 @@ public class VPrincipal extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addContainerGap(36, Short.MAX_VALUE))
         );
 
         pack();
@@ -254,10 +260,10 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
 }//GEN-LAST:event_ClasesActionPerformed
 
     /**
-     * Función para realizar el control de la Entrada y ejecutar los algoritmos
-     * del Analizador Léxico.
-     * También deberá habilitar los Botones para mostrar los procesos.
-     */
+      * Función para realizar el control de la Entrada y ejecutar los algoritmos
+      * del Analizador Léxico.
+      * También deberá habilitar los Botones para mostrar los procesos.
+      */
     @Action
     public void procesarEntrada() {
 
@@ -268,7 +274,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             error = true;
         }
         if (this.FPersonalizado.isEnabled()) {
-
+            
             if (this.FPersonalizado.getText().isEmpty()) {
                 JOptionPane.showMessageDialog(this.getDesktopPane(), "Se debe seleccionar un Alfabeto.");
                 error = true;
@@ -276,6 +282,10 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             } else if (this.FPersonalizado.getText().length() > 26) {
                 JOptionPane.showMessageDialog(this.getDesktopPane(), "El Alfabeto solo puede tener 26 caracteres.");
                 error = true;
+                
+            } else if (!this.FPersonalizado.getText().matches("[a-zA-Z0-9]+")) {
+                JOptionPane.showMessageDialog(this.getDesktopPane(), "El Alfabeto solo puede contener [a-z],[A-Z] ó [0-9].");
+                error = true;                
             }
         }
 
@@ -300,6 +310,9 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 return;
             } else {
                 miAFD = Subconjuntos.getAFD(miAFN);
+                
+                miAFDmin = Minimizacion.getAFDminimo(miAFD);
+                
             }
             
             // Habilitamos los Botones para mostrar los Procesos.
@@ -319,6 +332,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         VAutomatas VAFN = new VAutomatas();
         VAFN.setAF(miAFN);
         String titulo = new String("AFN para Proyecto: \"".concat(this.getTitle().concat("\"")));
+        VAFN.setTitle(titulo);
         VAFN.setProyecto(this.getTitle());
         
         this.getDesktopPane().add(VAFN, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -337,6 +351,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         VAFD.setAF(miAFD);
         String titulo = new String("AFD para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFD.setTitle(titulo);
+        VAFD.setProyecto(this.getTitle());
         
         this.getDesktopPane().add(VAFD, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFD);
@@ -350,12 +365,14 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     @Action
     public void procesarAFDmin() {
         VAutomatas VAFDmin = new VAutomatas();
+        VAFDmin.setAF(miAFDmin.getAfdPostMinimizacion());
         String titulo = new String("AFD Mínimo para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
         VAFDmin.setProyecto(this.getTitle());
-        VAFDmin.setVisible(true);
+        
         this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFDmin);
+        VAFDmin.setVisible(true);
     }
     
     /**
@@ -379,6 +396,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     private AFN miAFN;
     private AFD miAFD;
+    private AFDMin miAFDmin;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BAFD;
