@@ -12,9 +12,7 @@ import generacion.Conjunto;
 import generacion.Estado;
 import generacion.TablaTransicion;
 import generacion.Transicion;
-import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
@@ -64,6 +62,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TextResultado = new javax.swing.JTextArea();
         Pestaña2 = new javax.swing.JScrollPane();
         Imagen = new javax.swing.JLabel();
+        Pestaña3 = new javax.swing.JSplitPane();
+        CTTransicion1 = new javax.swing.JScrollPane();
+        TTransicion1 = new javax.swing.JTable();
+        CConsola = new javax.swing.JScrollPane();
+        Consola = new javax.swing.JTextArea();
 
         setClosable(true);
         setIconifiable(true);
@@ -96,8 +99,6 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         Pestaña1.setName("Pestaña1"); // NOI18N
 
-        CTTransicion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_ALWAYS);
-        CTTransicion.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         CTTransicion.setAutoscrolls(true);
         CTTransicion.setName("CTTransicion"); // NOI18N
 
@@ -174,8 +175,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                         .addComponent(TextaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(24, 24, 24)
                         .addComponent(BVerificar)
-                        .addContainerGap(985, Short.MAX_VALUE))
-                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 1221, Short.MAX_VALUE)))
+                        .addContainerGap(252, Short.MAX_VALUE))
+                    .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 488, Short.MAX_VALUE)))
         );
         CVerificaciónLayout.setVerticalGroup(
             CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -187,7 +188,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                 .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(CVerificaciónLayout.createSequentialGroup()
                         .addGap(9, 9, 9)
-                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 53, Short.MAX_VALUE))
+                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 61, Short.MAX_VALUE))
                     .addGroup(CVerificaciónLayout.createSequentialGroup()
                         .addGap(18, 18, 18)
                         .addComponent(EResultado)
@@ -200,30 +201,22 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestaña1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(Pestaña1Layout.createSequentialGroup()
-                        .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addContainerGap())
-                    .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 885, Short.MAX_VALUE)))
+                .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 626, Short.MAX_VALUE)
         );
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 262, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 264, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(19, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
         Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
-        Pestaña2.addFocusListener(new java.awt.event.FocusAdapter() {
-            public void focusGained(java.awt.event.FocusEvent evt) {
-                Pestaña2FocusGained(evt);
-            }
-        });
 
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
@@ -232,17 +225,64 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         CPestañas.addTab(resourceMap.getString("Pestaña2.TabConstraints.tabTitle"), Pestaña2); // NOI18N
 
+        Pestaña3.setDividerLocation(200);
+        Pestaña3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        Pestaña3.setName("Pestaña3"); // NOI18N
+
+        CTTransicion1.setAutoscrolls(true);
+        CTTransicion1.setName("CTTransicion1"); // NOI18N
+
+        TTransicion1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+
+            },
+            new String [] {
+                "Estados"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        TTransicion1.setMaximumSize(new java.awt.Dimension(50, 100));
+        TTransicion1.setMinimumSize(new java.awt.Dimension(15, 10));
+        TTransicion1.setName("TTransicion1"); // NOI18N
+        TTransicion1.setPreferredSize(new java.awt.Dimension(55, 30));
+        TTransicion1.setRowSelectionAllowed(false);
+        TTransicion1.getTableHeader().setReorderingAllowed(false);
+        CTTransicion1.setViewportView(TTransicion1);
+        TTransicion1.getColumnModel().getColumn(0).setResizable(false);
+        TTransicion1.getColumnModel().getColumn(0).setPreferredWidth(57);
+        TTransicion1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
+
+        Pestaña3.setLeftComponent(CTTransicion1);
+
+        CConsola.setName("CConsola"); // NOI18N
+
+        Consola.setColumns(20);
+        Consola.setRows(5);
+        Consola.setName("Consola"); // NOI18N
+        CConsola.setViewportView(Consola);
+
+        Pestaña3.setBottomComponent(CConsola);
+
+        CPestañas.addTab(resourceMap.getString("Pestaña3.TabConstraints.tabTitle"), Pestaña3); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 1376, Short.MAX_VALUE)
+            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 659, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 432, Short.MAX_VALUE)
-                .addGap(27, 27, 27))
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 444, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         bindingGroup.bind();
@@ -263,15 +303,15 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion = new JTable(tabla);
 
     /* Configuración Necesaria para el Contenedor de la Tabla de Transicion */
-    CTTransicion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    CTTransicion.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    CTTransicion.setAutoscrolls(true);
+    //CTTransicion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+    //CTTransicion.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
+    //CTTransicion.setAutoscrolls(true);
     CTTransicion.setViewportView(TTransicion);
 
     /* Configuración necesario para la Tabla de Transición */
     TTransicion.setRowHeight(15);
     TTransicion.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
-
+    
     /* Se calcula la longitud maxima en la primera columna */
     int max = 18; // Tamaño correspondiente al header
     for (int i = 0; i < AF.cantidadEstados(); i++) {
@@ -283,6 +323,15 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion.getColumnModel().getColumn(0).setMaxWidth(max * 20);
     TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     TTransicion.updateUI();
+    
+    /* Se carga tambíen para la pestaña procesos */
+    TTransicion1 = new JTable(TTransicion.getModel(), TTransicion.getColumnModel());
+    TTransicion1.setRowHeight(15);
+    TTransicion1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
+    TTransicion1.getColumnModel().getColumn(0).setMaxWidth(max * 20);
+    TTransicion1.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
+    CTTransicion1.setViewportView(TTransicion1);
+    TTransicion1.updateUI();
     
     /* Finalmente se generan las imagenes */
     ManejarImagen();
@@ -301,17 +350,12 @@ private void BVerificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FI
         /* Paso 2. Generar el Recorrido del valor en el AF */
         /* Paso 2.1. Calcular y escribir en el Area de Texto Resultado */
         /* Paso 2.2. Si hubo error mostrar el error*/
-        ManejarImagen();
     } else {
         String mensajeError = new String("Debe completar el Campo de Texto " +
                 "correspondiente a la Expresión a Verificar.");
         JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n" + mensajeError);
     }
 }//GEN-LAST:event_BVerificarActionPerformed
-
-private void Pestaña2FocusGained(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_Pestaña2FocusGained
-ManejarImagen();
-}//GEN-LAST:event_Pestaña2FocusGained
 
     /*
      * Función para Generar y cargar la Imagen del Automata correspondiente.
@@ -354,12 +398,13 @@ ManejarImagen();
         }
         /* Paso 1.1. Escribir Cabecera  */
         String nombre = "\"".concat(this.getProyecto()+"\"");
-        String longitud = ""+(AF.cantidadEstados()-1);
+        int longitud = AF.cantidadEstados();
+        if (longitud > 2)
+            longitud--;
         dotWriter.print("digraph " + nombre + "{\n");
         dotWriter.print("\trankdir=LR;\n");
         dotWriter.print("\tsize=\""+longitud+",5\"\n");
         dotWriter.print("\toverlap=\"scale\"\n");
-
         /* Paso 1.2. Escribir los Nodos Finales */
         dotWriter.print("\tnode [shape = doublecircle];");
 
@@ -460,16 +505,21 @@ ManejarImagen();
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JToggleButton BVerificar;
+    private javax.swing.JScrollPane CConsola;
     private javax.swing.JTabbedPane CPestañas;
     private javax.swing.JScrollPane CTTransicion;
+    private javax.swing.JScrollPane CTTransicion1;
     private javax.swing.JPanel CVerificación;
+    private javax.swing.JTextArea Consola;
     private javax.swing.JLabel EResultado;
     private javax.swing.JLabel EVerificar;
     private javax.swing.JLabel Imagen;
     private javax.swing.JPanel Pestaña1;
     private javax.swing.JScrollPane Pestaña2;
+    private javax.swing.JSplitPane Pestaña3;
     private javax.swing.JScrollPane ScrollResultados;
     private javax.swing.JTable TTransicion;
+    private javax.swing.JTable TTransicion1;
     private javax.swing.JTextArea TextResultado;
     private javax.swing.JTextField TextaVerificar;
     private org.jdesktop.beansbinding.BindingGroup bindingGroup;
