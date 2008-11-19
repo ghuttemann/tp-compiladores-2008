@@ -20,6 +20,11 @@ import java.util.HashMap;
  * @author Marcelo Rodas
  */
 public class Minimizacion {
+    
+    /**
+     * Log para el algoritmo de minimización.
+     */
+    private static Log log = new Log();
 
     /**
      * Obtiene un <code>AFD</code> mínimo a partir de un 
@@ -29,6 +34,9 @@ public class Minimizacion {
      * pero con la menor cantidad de estados posibles.
      */
     public static AFDMin getAFDminimo(AFD afdOriginal) {
+        // Logging
+        log.vaciar();
+        
         /* Eliminamos los estados inalcanzables */
         AFD afdPostInalcanzables = new AFD();
         copiarAutomata(afdOriginal, afdPostInalcanzables);
@@ -53,14 +61,21 @@ public class Minimizacion {
      * @param afd El AFD sobre el cual se eliminan estados inalcanzables.
      */
     private static void eliminarInalcanzables(AFD afd) {
+        // Logging
+        log.agregar("Antes de eliminar inalcanzables:   " + afd.getEstados()).nuevaLinea();
+        
         /* Conjunto de estados alcanzados desde el estado inicial */
         Conjunto<Estado> alcanzados = recuperarAlcanzados(afd);
         
         /* Eliminamos los estados no alcanzados */
         afd.getEstados().retener(alcanzados);
         
+        // Logging
+        log.agregar("Después de eliminar inalcanzables: " + afd.getEstados()).nuevaLinea();
+        log.nuevaLinea();
+        
         /* 
-         * No se actualizan los identificadores de 
+         * No se actualizan los identificadores 
          * para que pueda notarse cuales fueron
          * eliminados, si los hay.
          */
@@ -129,6 +144,9 @@ public class Minimizacion {
          */
         particion.agregar(afd.getEstadosNoFinales());
         particion.agregar(afd.getEstadosFinales());      
+        
+        // Logging
+        log.agregar("Partición: " + particion).nuevaLinea();
         
         /*
          * Paso 2:
@@ -203,6 +221,9 @@ public class Minimizacion {
             /* Ordenamos la nueva partición */
             nuevaParticion.ordenar();
             
+            // Logging
+            log.agregar("Partición: " + nuevaParticion).nuevaLinea();
+            
             /* 
              * Paso 2.4:
              * =========
@@ -215,6 +236,9 @@ public class Minimizacion {
             else
                 particion = nuevaParticion;
         }
+        
+        // Logging
+        log.nuevaLinea();
         
         /* 
          * Paso 3:
@@ -373,6 +397,9 @@ public class Minimizacion {
      * @param afd El AFD sobre el cual eliminar estados identidad.
      */
     private static void eliminarIdentidades(AFD afd) {
+        // Logging
+        log.agregar("Antes de eliminar identidades:   " + afd.getEstados()).nuevaLinea();
+        
         /* Conjunto de estados a eliminar */
         Conjunto<Estado> estadosEliminados = new Conjunto<Estado>();
         
@@ -403,6 +430,10 @@ public class Minimizacion {
             Conjunto<Transicion> c = (Conjunto<Transicion>) a.get(1);
             c.eliminar(t);
         }
+        
+        // Logging
+        log.agregar("Después de eliminar identidades: " + afd.getEstados()).nuevaLinea();
+        log.nuevaLinea();
     }
     
     /**
@@ -468,5 +499,14 @@ public class Minimizacion {
             etiqueta = etiqueta.substring(0, etiqueta.length() - 1);
         
         return "(" + etiqueta + ")";
+    }
+    
+    /**
+     * Obtiene el <code>Log</code> de esta clase.
+     * @return El <code>Log</code> correspondiente
+     * al algoritmo de minimización.
+     */
+    public static Log getLog() {
+        return log;
     }
 }
