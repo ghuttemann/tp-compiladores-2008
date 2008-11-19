@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package algoritmos;
 
 import estructuras.AFD;
 import estructuras.AFDMin;
