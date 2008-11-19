@@ -13,33 +13,53 @@ package analisis;
  * @see Token
  */
 public enum TokenExprReg {
-    // Paréntesis derecho
+    /**
+     * Paréntesis derecho, ")".
+     */
     PAREN_DERECHO,
     
-    // Paréntesis izquierdo
+    /**
+     * Paréntesis izquierdo, "(".
+     */
     PAREN_IZQUIERDO,
     
-    // Operador de unión, "|"
+    /**
+     * Operador de unión, "|".
+     */
     UNION,
     
-    // Operador de cerradura de Kleene, "*"
+    /**
+     * Operador de cerradura de Kleene, "*".
+     */
     CERRADURA_KLEENE,
     
-    // Operador de cerradura positiva, "+"
+    /**
+     * Operador de cerradura positiva, "+".
+     */
     CERRADURA_POSITIVA,
     
-    // Operador de opción, "?"
+    /**
+     * Operador de opción, "?".
+     */
     OPCION,
     
-    // Operador de concatenación (no tiene dibujo)
+    /**
+     * Operador de concatenación (no tiene dibujo).
+     */
     CONCATENACION,
     
-    // Un símbolo del alfabeto
+    /**
+     * Un símbolo del alfabeto.
+     */
     ALFABETO,
     
-    // Finalizador de una expresión regular
+    /**
+     * Finalizador de una expresión regular (EOF).
+     */
     FINAL,
     
-    // Token inválido
+    /**
+     * Token desconocido (inválido).
+     */
     DESCONOCIDO
 }
