@@ -5,6 +5,10 @@
  */
 package generacion;
 
+import estructuras.TablaTransicion;
+import estructuras.AFD;
+import estructuras.AFN;
+import algoritmos.Subconjuntos;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
 import org.junit.Test;

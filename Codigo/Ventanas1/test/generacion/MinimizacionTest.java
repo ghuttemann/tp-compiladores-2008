@@ -5,6 +5,11 @@
  */
 package generacion;
 
+import estructuras.AFD;
+import estructuras.AFDMin;
+import estructuras.AFN;
+import algoritmos.Minimizacion;
+import algoritmos.Subconjuntos;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
 import org.junit.Test;
