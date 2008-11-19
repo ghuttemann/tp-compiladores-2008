@@ -53,9 +53,6 @@ public class Minimizacion {
         copiarAutomata(afdPostMinimizacion, afdPostIdentidades);
         eliminarIdentidades(afdPostIdentidades);
         
-        /* TODO:
-         * - Guardar rastro del proceso.
-         */
         return new AFDMin(afdOriginal, afdPostInalcanzables, afdPostMinimizacion, afdPostIdentidades);
     }
     
