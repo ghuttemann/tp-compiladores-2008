@@ -4,7 +4,9 @@
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-package generacion;
+package algoritmos;
+
+import generacion.*;
 
 /**
  * Esta clase representa los datos obtenidos

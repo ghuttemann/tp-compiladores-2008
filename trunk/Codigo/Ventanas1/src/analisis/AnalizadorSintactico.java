@@ -7,7 +7,7 @@ package analisis;
 
 import generacion.AFN;
 import generacion.Log;
-import generacion.Thompson;
+import algoritmos.Thompson;
 
 /**
  * Clase que implementa un analizador sintáctico predictivo
