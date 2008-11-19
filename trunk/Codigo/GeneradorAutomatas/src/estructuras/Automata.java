@@ -38,6 +38,11 @@ public abstract class Automata {
     protected Alfabeto alfabeto;
     
     /**
+     * Alfabeto para este autómata.
+     */
+    protected String LogProceso;
+   
+    /**
      * Constructor por defecto.
      */
     protected Automata() {
@@ -54,6 +59,22 @@ public abstract class Automata {
         estados = new Conjunto<Estado>();
         setAlfabeto(alfabeto);
         setExprReg(exprReg);
+    }
+    
+    /**
+     * Obtiene el Log de procesos realizados para obtener este <code>Automata</code>.
+     * @return El <code>LogProceso</code> de este <code>Automata</code>.
+     */    
+    public String getLogProceso() {
+        return LogProceso;
+    }
+
+    /**
+     * Establece el Log de procesos realizados para obtener este <code>Automata</code>.
+     * @param LogProceso El nuevo <code>LogProceso</code> para este <code>Automata</code>.
+     */
+    public void setLogProceso(String LogProceso) {
+        this.LogProceso = LogProceso;
     }
     
     /**
