@@ -4,8 +4,6 @@
 
 package Vista;
 
-import org.jdesktop.application.Action;
-
 public class AcercaDe extends javax.swing.JDialog {
 
     public AcercaDe(java.awt.Frame parent) {
