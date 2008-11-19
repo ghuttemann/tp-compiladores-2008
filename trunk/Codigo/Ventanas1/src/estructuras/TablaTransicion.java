@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package estructuras;
 
 import javax.swing.event.TableModelListener;
 import javax.swing.table.TableModel;
