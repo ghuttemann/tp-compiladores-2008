@@ -245,7 +245,7 @@ public class Subconjuntos {
     /**
      * Obtiene el <code>Log</code> de esta clase.
      * @return El <code>Log</code> correspondiente
-     * al proceso de análisis sintáctico.
+     * al algoritmo de subconjuntos.
      */
     public static Log getLog() {
         return log;
