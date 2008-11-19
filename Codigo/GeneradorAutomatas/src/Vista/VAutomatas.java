@@ -21,7 +21,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
@@ -65,13 +64,13 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         EResultado = new javax.swing.JLabel();
         ScrollResultados = new javax.swing.JScrollPane();
         TextResultado = new javax.swing.JTextArea();
-        Pestaña2 = new javax.swing.JScrollPane();
-        Imagen = new javax.swing.JLabel();
         Pestaña3 = new javax.swing.JSplitPane();
         CTTransicion1 = new javax.swing.JScrollPane();
         TTransicion1 = new javax.swing.JTable();
         CConsola = new javax.swing.JScrollPane();
         Consola = new javax.swing.JTextArea();
+        Pestaña2 = new javax.swing.JScrollPane();
+        Imagen = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
@@ -161,6 +160,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TextResultado.setColumns(20);
         TextResultado.setEditable(false);
         TextResultado.setFont(resourceMap.getFont("TextResultado.font")); // NOI18N
+        TextResultado.setLineWrap(true);
         TextResultado.setRows(5);
         TextResultado.setName("TextResultado"); // NOI18N
         ScrollResultados.setViewportView(TextResultado);
@@ -183,7 +183,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                                 .addComponent(BVerificar)
                                 .addGap(47, 47, 47)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 424, Short.MAX_VALUE))
+                        .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
                         .addGap(327, 327, 327)
                         .addComponent(EResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -211,28 +211,18 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             .addGroup(Pestaña1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
+            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
         );
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
-
-        Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
-        Pestaña2.setName("Pestaña2"); // NOI18N
-
-        Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
-        Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
-        Imagen.setName("Imagen"); // NOI18N
-        Pestaña2.setViewportView(Imagen);
-
-        CPestañas.addTab(resourceMap.getString("Pestaña2.TabConstraints.tabTitle"), Pestaña2); // NOI18N
 
         Pestaña3.setDividerLocation(200);
         Pestaña3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
@@ -273,6 +263,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         CConsola.setName("CConsola"); // NOI18N
 
         Consola.setColumns(20);
+        Consola.setEditable(false);
         Consola.setRows(5);
         Consola.setName("Consola"); // NOI18N
         CConsola.setViewportView(Consola);
@@ -280,6 +271,16 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña3.setBottomComponent(CConsola);
 
         CPestañas.addTab(resourceMap.getString("Pestaña3.TabConstraints.tabTitle"), Pestaña3); // NOI18N
+
+        Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
+        Pestaña2.setName("Pestaña2"); // NOI18N
+
+        Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
+        Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
+        Imagen.setName("Imagen"); // NOI18N
+        Pestaña2.setViewportView(Imagen);
+
+        CPestañas.addTab(resourceMap.getString("Pestaña2.TabConstraints.tabTitle"), Pestaña2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -290,7 +291,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -363,19 +364,17 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
             }
             String mensaje = null;
             if (!Result.esValido()) {
-                mensaje = "ERROR: La cadena ingresada no es válida. Debido a que:\n";
+                mensaje = "ERROR: La cadena ingresada NO ES ACEPTADA.\n\n";
                 String Resto = Result.getEntradaFaltante();
                 if (!Resto.isEmpty()) {
-                    mensaje += "- Se recorrió " + Result.getCamino() + " y no se " +
-                            "puede abanzar. Falta Evaluar: " + Resto + "\n";
+                    mensaje += "Se recorrió " + Result.getCamino() + " y no se " +
+                            "pudo avanzar más. FALTÓ CONSUMIR: \"" + Resto + "\".";
                 } else {
-                    mensaje += "- Se recorrió " + Result.getCamino() + " y se terminó" +
-                            " la cadena de entrada sin llegar a un estado Final. \n";
+                    mensaje += "Se recorrió " + Result.getCamino() + " y se consumió" +
+                            " la cadena de entrada sin llegar a un ESTADO FINAL. \n";
                 }
-                mensaje += "---\n";
             } else {
-                mensaje = "OK. La cadena es Aceptada.\n Se recorrio " +
-                        Result.getCamino();
+                mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + Result.getCamino();
             }
             TextResultado.setText("" + mensaje);
 
@@ -395,21 +394,19 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private void ManejarImagen(){
         
         /* Paso 1. Crear Archivo de Salida  */
-        Random r = new Random();
-        r.nextInt(100);
-        String rand = ""+r.nextInt(100);
-        String salidaDot = ubicacion.concat(proyecto).concat(rand);
+        String marca = "" + System.currentTimeMillis();
+        String salidaDot = ubicacion + proyecto.replace(" ", "") + "-" + marca;
         salidaDot += ".dot";
         GrafoToDot(salidaDot);
 
         /* Paso 2. Crear la Imagen */
-        String dibujo = ubicacion.concat(proyecto).concat(rand);
-        dibujo +=".png";
+        String dibujo = ubicacion + proyecto.replace(" ", "") + "-" + marca;
+        dibujo += ".png";
         
         try {
             ejecutarDotExe(exeFile, salidaDot, dibujo);
         } catch (IOException ex) {
-            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mostrar error
         }
 
         /* Paso 3. Cargar la imagen en la Ventana */
@@ -425,7 +422,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         try {
             dotWriter = new PrintWriter(new File(salidaDot), new String("ISO-8859-1"));
         } catch (IOException ex) {
-            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mostrar error
         }
         /* Paso 1.1. Escribir Cabecera  */
         String nombre = "\"".concat(this.getProyecto()+"\"");
