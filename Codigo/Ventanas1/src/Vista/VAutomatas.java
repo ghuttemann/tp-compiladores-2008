@@ -12,10 +12,10 @@ import generacion.AFN;
 import generacion.Automata;
 import generacion.Conjunto;
 import generacion.Estado;
-import generacion.ResultadoValidacion;
+import algoritmos.ResultadoValidacion;
 import generacion.TablaTransicion;
 import generacion.Transicion;
-import generacion.Validacion;
+import algoritmos.Validacion;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -347,7 +347,6 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
 
     /**
      * Función para Manejar el Boton BVerificar
-     * @param evt
      */
     @Action
     public void Verificacion() {

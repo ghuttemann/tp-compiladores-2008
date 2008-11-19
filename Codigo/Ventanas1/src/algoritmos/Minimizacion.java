@@ -3,8 +3,9 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package algoritmos;
 
+import generacion.*;
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;

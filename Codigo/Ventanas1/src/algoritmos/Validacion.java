@@ -3,8 +3,9 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package algoritmos;
 
+import generacion.*;
 import java.util.LinkedList;
 import java.util.Queue;
 
