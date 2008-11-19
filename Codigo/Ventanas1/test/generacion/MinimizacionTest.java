@@ -33,5 +33,7 @@ public class MinimizacionTest {
         System.out.printf("AFD Post Inalcanzables (%s):\n%s\n", afdMin.inalcanzablesEliminados() ? "<>" : "==", afdMin.getAfdPostInalcanzables());
         System.out.printf("AFD Post Minimización:\n%s\n", afdMin.getAfdPostMinimizacion());
         System.out.printf("AFD Post Identidades (%s):\n%s\n", afdMin.identidadesEliminados() ? "<>" : "==", afdMin.getAfdPostIdentidades());
+        
+        System.out.printf("\nParticiones:\n%s", Minimizacion.getLog());
     }
 }
