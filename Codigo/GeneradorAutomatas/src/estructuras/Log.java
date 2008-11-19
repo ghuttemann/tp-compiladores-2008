@@ -59,7 +59,7 @@ public class Log {
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
-        
+        str.append("Los Procesos realizados son: \n");
         for (String s : cadenas)
             str.append(s);
         
