@@ -5,8 +5,8 @@
  */
 package analisis;
 
-import generacion.AFN;
-import generacion.TablaTransicion;
+import estructuras.AFN;
+import estructuras.TablaTransicion;
 import org.junit.Test;
 
 /**
