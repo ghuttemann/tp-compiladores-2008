@@ -47,6 +47,15 @@ public class Log {
         return this;
     }
     
+    /**
+     * Vacia las cadenas de este <code>Log</code>.
+     * @return this (para encadenamiento de métodos).
+     */
+    public Log vaciar() {
+        cadenas.clear();
+        return this;
+    }
+    
     @Override
     public String toString() {
         StringBuffer str = new StringBuffer();
