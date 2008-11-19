@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package estructuras;
 
 /**
  * Implementa la transición de un autómata, representada

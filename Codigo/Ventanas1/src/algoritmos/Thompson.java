@@ -5,7 +5,7 @@
  */
 package algoritmos;
 
-import generacion.*;
+import estructuras.*;
 import analisis.Alfabeto;
 
 /**

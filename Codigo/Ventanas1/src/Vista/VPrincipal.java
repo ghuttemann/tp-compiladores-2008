@@ -8,9 +8,9 @@ package Vista;
 
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
-import generacion.AFD;
-import generacion.AFDMin;
-import generacion.AFN;
+import estructuras.AFD;
+import estructuras.AFDMin;
+import estructuras.AFN;
 import algoritmos.Minimizacion;
 import algoritmos.Subconjuntos;
 import java.util.logging.Level;

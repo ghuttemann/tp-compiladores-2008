@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package estructuras;
 
 import java.util.Arrays;
 import java.util.Iterator;

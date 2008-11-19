@@ -6,7 +6,7 @@
  */
 package algoritmos;
 
-import generacion.*;
+import estructuras.*;
 
 /**
  * Esta clase representa los datos obtenidos

@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package estructuras;
 
 /**
  * Clase que representa la abstracción para un Autómata Finito

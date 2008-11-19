@@ -7,14 +7,14 @@
 package Vista;
 
 import analisis.Alfabeto;
-import generacion.AFD;
-import generacion.AFN;
-import generacion.Automata;
-import generacion.Conjunto;
-import generacion.Estado;
+import estructuras.AFD;
+import estructuras.AFN;
+import estructuras.Automata;
+import estructuras.Conjunto;
+import estructuras.Estado;
 import algoritmos.ResultadoValidacion;
-import generacion.TablaTransicion;
-import generacion.Transicion;
+import estructuras.TablaTransicion;
+import estructuras.Transicion;
 import algoritmos.Validacion;
 import java.io.File;
 import java.io.IOException;

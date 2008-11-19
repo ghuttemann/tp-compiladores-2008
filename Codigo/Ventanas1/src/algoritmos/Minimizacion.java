@@ -5,7 +5,7 @@
  */
 package algoritmos;
 
-import generacion.*;
+import estructuras.*;
 import java.util.Hashtable;
 import java.util.Stack;
 import java.util.Vector;

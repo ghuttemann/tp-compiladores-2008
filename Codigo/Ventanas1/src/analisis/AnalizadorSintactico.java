@@ -5,8 +5,8 @@
  */
 package analisis;
 
-import generacion.AFN;
-import generacion.Log;
+import estructuras.AFN;
+import estructuras.Log;
 import algoritmos.Thompson;
 
 /**
