@@ -64,6 +64,11 @@ public class AnalizadorSintactico {
         if (preanalisis.getIdentificador() == TokenExprReg.FINAL)
             error("Expresión regular vacía");
         
+        // Logging
+        log.vaciar();
+        log.agregar("Derivaciones realizadas por el parser".toUpperCase()).nuevaLinea();
+        log.agregar("-------------------------------------").nuevaLinea().nuevaLinea();
+        
         AFN afn = ExprReg();
         afn.setAlfabeto(analizadorLexico.getAlfabeto());
         afn.setExprReg(analizadorLexico.getExpresionRegular());
