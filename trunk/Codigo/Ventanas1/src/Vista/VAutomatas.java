@@ -146,6 +146,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         TextoaVerificar.setText(resourceMap.getString("TextoaVerificar.text")); // NOI18N
         TextoaVerificar.setName("TextoaVerificar"); // NOI18N
+        TextoaVerificar.setNextFocusableComponent(BVerificar);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getActionMap(VAutomatas.class, this);
         BVerificar.setAction(actionMap.get("Verificacion")); // NOI18N
@@ -215,7 +216,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 255, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 259, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -289,7 +290,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 448, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 452, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -310,9 +311,6 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion = new JTable(tabla);
 
     /* Configuración Necesaria para el Contenedor de la Tabla de Transicion */
-    //CTTransicion.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
-    //CTTransicion.setVerticalScrollBarPolicy(javax.swing.ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
-    //CTTransicion.setAutoscrolls(true);
     CTTransicion.setViewportView(TTransicion);
 
     /* Configuración necesario para la Tabla de Transición */
@@ -331,7 +329,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion.getColumnModel().getColumn(0).setPreferredWidth(max * 5);
     TTransicion.updateUI();
 
-    /* Se carga tambíen para la pestaña procesos */
+    /* Se carga la tabla tambíen para la pestaña procesos */
     TTransicion1 = new JTable(TTransicion.getModel(), TTransicion.getColumnModel());
     TTransicion1.setRowHeight(15);
     TTransicion1.setAutoResizeMode(JTable.AUTO_RESIZE_OFF);
