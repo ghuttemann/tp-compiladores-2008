@@ -36,6 +36,8 @@ public class Subconjuntos {
         
         // Logging
         log.vaciar();
+        log.agregar("Cálculo de conjuntos de estados".toUpperCase()).nuevaLinea();
+        log.agregar("-------------------------------").nuevaLinea().nuevaLinea();
         
         /* AFD resultante */
         AFD afd = new AFD(afn.getAlfabeto(), afn.getExprReg());
