@@ -299,6 +299,8 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
             try {
                 // Se procesa el AFN.
                 miAFN = ASintactico.analizar();
+                miAFN.setLogProceso(ASintactico.getLog().toString());
+                
             } catch (Exception ex) {
                 Logger.getLogger(VPrincipal.class.getName()).log(Level.SEVERE, null, ex);
                 String mensajeError = ex.getMessage();                
@@ -310,9 +312,10 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 return;
             } else {
                 miAFD = Subconjuntos.getAFD(miAFN);
+                miAFD.setLogProceso(Subconjuntos.getLog().toString());
                 
                 miAFDmin = Minimizacion.getAFDminimo(miAFD);
-                
+                miAFDmin.getAfdPostMinimizacion().setLogProceso(Minimizacion.getLog().toString());
             }
             
             // Habilitamos los Botones para mostrar los Procesos.
@@ -398,6 +401,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private AFN miAFN;
     private AFD miAFD;
     private AFDMin miAFDmin;
+
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BAFD;
