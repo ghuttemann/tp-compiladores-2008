@@ -340,6 +340,9 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
 
     /* Finalmente se generan las imagenes */
     ManejarImagen();
+    
+    /* Se carga el proceso realizado por el Automata */
+    Consola.setText(this.AF.getLogProceso());
 }//GEN-LAST:event_formInternalFrameActivated
 
 
