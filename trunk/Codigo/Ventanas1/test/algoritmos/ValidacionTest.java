@@ -3,7 +3,7 @@
  * 10mo Semestre Ingeniería Infomática.
  * Facultad Politécnica - UNA.
  */
-package generacion;
+package algoritmos;
 
 import algoritmos.ResultadoValidacion;
 import algoritmos.Subconjuntos;
