@@ -5,8 +5,14 @@
  */
 package generacion;
 
+import algoritmos.ResultadoValidacion;
+import algoritmos.Subconjuntos;
+import algoritmos.Validacion;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
+import estructuras.AFD;
+import estructuras.AFN;
+import estructuras.Estado;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
