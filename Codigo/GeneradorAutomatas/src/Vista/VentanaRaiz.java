@@ -206,7 +206,7 @@ public class VentanaRaiz extends FrameView {
     public void nuevoProyecto() {
         // Se construye y muestra la Ventana para nombrar nuevo Proyecto.
         String mensaje = new String("Ingrese el Nombre del Proyecto.");
-        String nombre = JOptionPane.showInputDialog(mensaje);
+        String nombre = JOptionPane.showInputDialog(mensaje, "Proyecto " + (++numeroProyecto));
         
         // Se controla si se cancela (null)
         if (nombre != null) {
@@ -265,6 +265,7 @@ public class VentanaRaiz extends FrameView {
     private final Icon idleIcon;
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
+    private int numeroProyecto = 0;
 
     private JDialog aboutBox;
 }
