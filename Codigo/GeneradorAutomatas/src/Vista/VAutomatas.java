@@ -16,19 +16,17 @@ import algoritmos.ResultadoValidacion;
 import estructuras.TablaTransicion;
 import estructuras.Transicion;
 import algoritmos.Validacion;
+import estructuras.Configuracion;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
-import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import org.jdesktop.application.Action;
-import org.jdesktop.application.Application;
-import org.jdesktop.application.ResourceMap;
 
 /**
  * Clase que representa la Ventana que muestra y administra los Distintos 
@@ -40,8 +38,10 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
     /** 
      * Constructor Principal
+     * @param config La configuración de directorios.
      */
-    public VAutomatas() {
+    public VAutomatas(Configuracion config) {
+        this.config = config;
         initComponents();
     }
 
@@ -369,7 +369,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         if (valor == null)
             valor = "";
 
-        // TODO Verificar cadena con el Automata correspondiente
+        // Verificar cadena con el Automata correspondiente
         ResultadoValidacion Result = null;
         if (AFN.class.isInstance(this.AF)) {
             Result = Validacion.validarAFN((AFN) this.AF, valor);
@@ -401,22 +401,19 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         
         /* Paso 1. Crear Archivo de Salida  */
         String marca = "" + System.currentTimeMillis();
-        String salidaDot = ubicacion + proyecto.replace(" ", "") + "-" + marca;
+        String salidaDot = config.getTempPath() + File.separator + proyecto.replace(" ", "");
+        salidaDot +=  "-" + marca;
         salidaDot += ".dot";
+        
         GrafoToDot(salidaDot);
 
-        /* Paso 2. Crear la Imagen */
-        ResourceMap resourceMap = Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VAutomatas.class);
-        String filename = resourceMap.getResourcesDir() + "dot.exe";
-        URL miurl = resourceMap.getClassLoader().getResource(filename);
-        filename = miurl.getFile();
-        
-        this.setExeFile(filename);
-        
-        String dibujo = ubicacion + proyecto.replace(" ", "") + "-" + marca;
+        /* Paso 2. Crear la Imagen */        
+        String dibujo = config.getTempPath() + File.separator + proyecto.replace(" ", "");
+        dibujo += "-" + marca;
         dibujo += ".png";
         
         try {
+            String exeFile = config.getGraphvizPath() + File.separator + "dot";
             ejecutarDotExe(exeFile, salidaDot, dibujo);
         } catch (IOException ex) {
             Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mostrar error
@@ -483,7 +480,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
      */
     private void ejecutarDotExe(String exeFile, String dotFileName, String outFileName) throws IOException {
 
-        final String exeCmd = "" + exeFile + " -Tpng"+ " "+ dotFileName;
+        final String exeCmd = exeFile + " -Tpng " + dotFileName;
 
         Process p = Runtime.getRuntime().exec(exeCmd);
 
@@ -507,17 +504,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
      * Sección de Variables del Programa.
      */
     private Automata AF;
-    private String proyecto = " ";
-    private String ubicacion = new String("C:\\tmp\\");
-    private String exeFile = new String("C:\\tmp\\dot.exe");
-
-    public String getExeFile() {
-        return exeFile;
-    }
-
-    public void setExeFile(String exeFile) {
-        this.exeFile = exeFile;
-    }
+    private String proyecto;
     
     public String getProyecto() {
         return proyecto;
@@ -525,7 +512,6 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
 
     public void setProyecto(String proyecto) {
         this.proyecto = new String(proyecto);
-        this.proyecto.replaceAll(" ", "_");
     }
 
     /**
@@ -548,6 +534,11 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     public void LimpiarResultadoValidacion() {
         TextResultado.setText("");
     }
+    
+    /**
+     * Variables adicionales
+     */
+    private Configuracion config;
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BLimpiarValidacion;
