@@ -7,6 +7,8 @@
 package Vista;
 
 import java.awt.Component;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -18,6 +20,10 @@ import javax.swing.*;
 import javax.swing.Icon;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
+import estructuras.Configuracion;
+import java.io.File;
+import org.simpleframework.xml.Serializer;
+import org.simpleframework.xml.load.Persister;
 
 /**
  * La Ventana Principal de la Aplicación.
@@ -86,6 +92,15 @@ public class VentanaRaiz extends FrameView {
                 }
             }
         });
+        
+        /* Leemos las configuraciones */
+        Serializer serializer = new Persister();
+        try {
+            config = serializer.read(Configuracion.class, new File("config.xml"));
+        } catch (Exception ex) {
+            config = new Configuracion();
+            Logger.getLogger(VentanaRaiz.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mensaje
+        }
     }
     
     /** This method is called from within the constructor to
@@ -99,7 +114,8 @@ public class VentanaRaiz extends FrameView {
 
         menuBar = new javax.swing.JMenuBar();
         javax.swing.JMenu fileMenu = new javax.swing.JMenu();
-        Nuevo = new javax.swing.JMenuItem();
+        NuevoMenuItem = new javax.swing.JMenuItem();
+        ConfigMenuItem = new javax.swing.JMenuItem();
         javax.swing.JMenuItem Salir = new javax.swing.JMenuItem();
         javax.swing.JMenu helpMenu = new javax.swing.JMenu();
         javax.swing.JMenuItem aboutMenuItem = new javax.swing.JMenuItem();
@@ -117,9 +133,14 @@ public class VentanaRaiz extends FrameView {
         fileMenu.setName("fileMenu"); // NOI18N
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getActionMap(VentanaRaiz.class, this);
-        Nuevo.setAction(actionMap.get("nuevoProyecto")); // NOI18N
-        Nuevo.setName("Nuevo"); // NOI18N
-        fileMenu.add(Nuevo);
+        NuevoMenuItem.setAction(actionMap.get("nuevoProyecto")); // NOI18N
+        NuevoMenuItem.setName("NuevoMenuItem"); // NOI18N
+        fileMenu.add(NuevoMenuItem);
+
+        ConfigMenuItem.setAction(actionMap.get("EstablecerConf")); // NOI18N
+        ConfigMenuItem.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_O, java.awt.event.InputEvent.CTRL_MASK));
+        ConfigMenuItem.setName("ConfigMenuItem"); // NOI18N
+        fileMenu.add(ConfigMenuItem);
 
         Salir.setAction(actionMap.get("quit")); // NOI18N
         Salir.setName("Salir"); // NOI18N
@@ -246,13 +267,34 @@ public class VentanaRaiz extends FrameView {
         }
         return false;
     }
+
+    @Action
+    public void EstablecerConf() {
+        ConfigDialog dialog = new ConfigDialog(new javax.swing.JFrame(), true, config);
+        dialog.setLocationRelativeTo(null);
+        dialog.setVisible(true);
+        
+        String graphvizPath = dialog.getGraphvizPath();
+        String tempPath = dialog.getTempPath();
+        
+        config.setGraphvizPath(graphvizPath);
+        config.setTempPath(tempPath);
+        
+        Serializer serializer = new Persister();
+        try {
+            serializer.write(config, new File("config.xml"));
+        } catch (Exception ex) {
+            Logger.getLogger(VentanaRaiz.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mensaje
+        }
+    }
     
     /*
      * Sección de Variables del Programa.
      */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JMenuItem ConfigMenuItem;
     private javax.swing.JDesktopPane Desktop;
-    private javax.swing.JMenuItem Nuevo;
+    private javax.swing.JMenuItem NuevoMenuItem;
     private javax.swing.JMenuBar menuBar;
     private javax.swing.JProgressBar progressBar;
     private javax.swing.JPanel status;
@@ -266,6 +308,7 @@ public class VentanaRaiz extends FrameView {
     private final Icon[] busyIcons = new Icon[15];
     private int busyIconIndex = 0;
     private int numeroProyecto = 0;
+    private Configuracion config;
 
     private JDialog aboutBox;
 }
