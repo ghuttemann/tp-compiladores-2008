@@ -283,7 +283,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 error = true;
                 
             } else if (!this.FPersonalizado.getText().matches("[a-zA-Z0-9]+")) {
-                JOptionPane.showMessageDialog(this.getDesktopPane(), "El Alfabeto solo puede contener [a-z],[A-Z] ó [0-9].");
+                JOptionPane.showMessageDialog(this.getDesktopPane(), "El Alfabeto solo puede contener [a-z], [A-Z] ó [0-9].");
                 error = true;                
             }
         }
@@ -314,7 +314,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 miAFD.setLogProceso(Subconjuntos.getLog().toString());
                 
                 miAFDmin = Minimizacion.getAFDminimo(miAFD);
-                miAFDmin.getAfdPostMinimizacion().setLogProceso(Minimizacion.getLog().toString());
+                miAFDmin.getAfdPostIdentidades().setLogProceso(Minimizacion.getLog().toString()); // TODO: Agregar todos los pasos
             }
             
             // Habilitamos los Botones para mostrar los Procesos.
