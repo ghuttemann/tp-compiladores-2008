@@ -5,14 +5,10 @@
  */
 package algoritmos;
 
-import algoritmos.ResultadoValidacion;
-import algoritmos.Subconjuntos;
-import algoritmos.Validacion;
 import analisis.Alfabeto;
 import analisis.AnalizadorSintactico;
 import estructuras.AFD;
 import estructuras.AFN;
-import estructuras.Estado;
 import org.junit.Test;
 import static org.junit.Assert.*;
 
@@ -39,7 +35,7 @@ public class ValidacionTest {
     public void testValidarAFD() throws Exception {
         Alfabeto alfa = new Alfabeto("ab");
         String er = "(a|b)*abb";
-        String entrada = "ab";
+        String entrada = "abb";
         
         AnalizadorSintactico as = new AnalizadorSintactico(alfa, er);
         AFN afn = as.analizar();
@@ -50,8 +46,7 @@ public class ValidacionTest {
         
         ResultadoValidacion rv = Validacion.validarAFD(afd, entrada);       
         System.out.printf("\nCamino: ");
-        for (Estado e : rv.getCamino())
-            System.out.printf("%s ", e);
+        System.out.printf("%s ", rv.getCamino());
         
         System.out.printf("\nFaltante: '%s'\n", rv.getEntradaFaltante());
                 
