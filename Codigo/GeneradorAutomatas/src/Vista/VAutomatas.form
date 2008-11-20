@@ -70,7 +70,7 @@
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="CVerificación" max="32767" attributes="0"/>
                   </Group>
-                  <Component id="CTTransicion" alignment="1" pref="666" max="32767" attributes="0"/>
+                  <Component id="CTTransicion" alignment="1" pref="662" max="32767" attributes="0"/>
               </Group>
             </DimensionLayout>
             <DimensionLayout dim="1">
