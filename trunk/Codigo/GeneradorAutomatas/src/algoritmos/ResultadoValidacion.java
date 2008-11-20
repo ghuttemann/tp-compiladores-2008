@@ -1,8 +1,7 @@
-/**
- * Esta clase implementa los algoritmos de validación
- * para AFNs y AFDs.
- * @author Germán Hüttemann
- * @author Marcelo Rodas
+/*
+ * Trabajo Práctico de Compiladores 2008.
+ * 10mo Semestre Ingeniería Infomática.
+ * Facultad Politécnica - UNA.
  */
 package algoritmos;
 
@@ -11,51 +10,29 @@ import estructuras.*;
 /**
  * Esta clase representa los datos obtenidos
  * como resultado de un proceso de validación
- * de una cadena de entrada contra un AF.
+ * de una cadena de entrada contra un <code>Automata</code>.
  * @author Germán Hüttemann
  * @author Marcelo Rodas
  */
-public class ResultadoValidacion {
+public abstract class ResultadoValidacion {
     
     /**
      * Autómata asociado a este resultado
      * de validación.
      */
-    private Automata automata;
+    protected Automata automata;
     
     /**
      * Cadena de entrada asociada a este
      * resultado de validación.
      */
-    private String entrada;
-    
-    /**
-     * Camino producido
-     */
-    private Conjunto<Estado> camino;
+    protected String entrada;
     
     /**
      * Simbolos de entrada que no pudieron
      * ser consumidos.
      */
-    private String entradaFaltante;
-    
-    /**
-     * Construye el resultado de una validación de
-     * una cadena de entrada contra un <code>Automata</code>.
-     * @param automata 
-     * @param entrada 
-     * @param camino El camino resultante de la validación.
-     * @param entradaFaltante Simbolos de entrada que no pudieron ser consumidos.
-     */
-    public ResultadoValidacion(Automata automata, String entrada, 
-        Conjunto<Estado> camino, String entradaFaltante) {
-        
-        this.automata = automata;
-        this.entrada = entrada;
-        this.camino = camino;
-        this.entradaFaltante = (entradaFaltante == null) ? "" : entradaFaltante;
-    }
+    protected String entradaFaltante;
 
     /**
      * Obtiene el <code>Automata</code> asociado
@@ -78,14 +55,14 @@ public class ResultadoValidacion {
     }
 
     /**
-     * El camino de <code>Estado</code>s que
-     * resulta de validar la cadena de entrada.
+     * El camino de <code>Estado</code>s o <code>Conjunto</code> 
+     * de <code>Estado</code>s que resulta de validar la cadena 
+     * de entrada.
      * @return Un <code>Conjunto</code> de <code>Estado</code>s
+     * o de <code>Conjunto</code> de <code>Estado</code>s 
      * alcanzados durante la validación.
      */
-    public Conjunto<Estado> getCamino() {
-        return camino;
-    }
+    public abstract Conjunto getCamino();
 
     /**
      * Obtiene los simbolos de entrada que no
@@ -107,13 +84,5 @@ public class ResultadoValidacion {
      * es aceptada por el <code>Automata</code>, <code>false</code>
      * en caso contrario.
      */
-    public boolean esValido() {
-        if (!entradaFaltante.equals(""))
-            return false;
-        
-        if (camino.obtenerUltimo().getEsFinal())
-            return true;
-        else
-            return false;
-    }
+    public abstract boolean esValido();
 }
