@@ -36,7 +36,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="CPestañas" pref="468" max="32767" attributes="0"/>
+              <Component id="CPestañas" pref="476" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -76,7 +76,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="CTTransicion" pref="272" max="32767" attributes="0"/>
+                      <Component id="CTTransicion" pref="269" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -139,13 +139,16 @@
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
-                    <TitledBorder justification="1" position="2" title="Zona de Verificaci&#xf3;n">
+                    <TitledBorder justification="1" position="2" title="Area de Validaci&#xf3;n">
                       <Property name="titleX" resourceKey="CVerificaci&#xf3;n.border.title"/>
                     </TitledBorder>
                   </Border>
                 </Property>
                 <Property name="name" type="java.lang.String" value="CVerificaci&#xf3;n" noResource="true"/>
               </Properties>
+              <AccessibilityProperties>
+                <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="CVerificaci&#xf3;n.AccessibleContext.accessibleName"/>
+              </AccessibilityProperties>
 
               <Layout>
                 <DimensionLayout dim="0">
@@ -161,8 +164,11 @@
                                           <Component id="TextoaVerificar" min="-2" pref="141" max="-2" attributes="0"/>
                                           <EmptySpace min="-2" pref="10" max="-2" attributes="0"/>
                                       </Group>
-                                      <Group type="102" alignment="1" attributes="1">
-                                          <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
+                                      <Group type="102" alignment="1" attributes="0">
+                                          <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                                              <Component id="BLimpiarValidacion" alignment="1" min="0" pref="0" max="32767" attributes="1"/>
+                                              <Component id="BVerificar" alignment="1" max="32767" attributes="1"/>
+                                          </Group>
                                           <EmptySpace min="-2" pref="47" max="-2" attributes="0"/>
                                       </Group>
                                   </Group>
@@ -191,9 +197,12 @@
                                   </Group>
                                   <EmptySpace max="-2" attributes="0"/>
                                   <Component id="BVerificar" min="-2" max="-2" attributes="0"/>
+                                  <EmptySpace type="separate" max="-2" attributes="0"/>
+                                  <Component id="BLimpiarValidacion" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="ScrollResultados" min="-2" pref="96" max="-2" attributes="0"/>
                           </Group>
+                          <EmptySpace max="-2" attributes="0"/>
                       </Group>
                   </Group>
                 </DimensionLayout>
@@ -251,6 +260,14 @@
                     </Component>
                   </SubComponents>
                 </Container>
+                <Component class="javax.swing.JButton" name="BLimpiarValidacion">
+                  <Properties>
+                    <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
+                      <action class="Vista.VAutomatas" id="LimpiarResultadoVerificacion" methodName="LimpiarResultadoVerificacion"/>
+                    </Property>
+                    <Property name="name" type="java.lang.String" value="BLimpiarVerificacion" noResource="true"/>
+                  </Properties>
+                </Component>
               </SubComponents>
             </Container>
           </SubComponents>

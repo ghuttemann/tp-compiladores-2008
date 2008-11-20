@@ -64,6 +64,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         EResultado = new javax.swing.JLabel();
         ScrollResultados = new javax.swing.JScrollPane();
         TextResultado = new javax.swing.JTextArea();
+        BLimpiarValidacion = new javax.swing.JButton();
         Pestaña3 = new javax.swing.JSplitPane();
         CTTransicion1 = new javax.swing.JScrollPane();
         TTransicion1 = new javax.swing.JTable();
@@ -165,6 +166,9 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TextResultado.setName("TextResultado"); // NOI18N
         ScrollResultados.setViewportView(TextResultado);
 
+        BLimpiarValidacion.setAction(actionMap.get("LimpiarResultadoVerificacion")); // NOI18N
+        BLimpiarValidacion.setName("BLimpiarVerificacion"); // NOI18N
+
         javax.swing.GroupLayout CVerificaciónLayout = new javax.swing.GroupLayout(CVerificación);
         CVerificación.setLayout(CVerificaciónLayout);
         CVerificaciónLayout.setHorizontalGroup(
@@ -180,7 +184,9 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                                 .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
-                                .addComponent(BVerificar)
+                                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(BLimpiarValidacion, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
+                                    .addComponent(BVerificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(47, 47, 47)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
@@ -200,8 +206,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                             .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EVerificar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(BVerificar))
-                    .addComponent(ScrollResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(BVerificar)
+                        .addGap(18, 18, 18)
+                        .addComponent(BLimpiarValidacion))
+                    .addComponent(ScrollResultados, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
@@ -216,11 +225,13 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 272, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
+
+        CVerificación.getAccessibleContext().setAccessibleName(resourceMap.getString("CVerificación.AccessibleContext.accessibleName")); // NOI18N
 
         CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
 
@@ -291,7 +302,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 468, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -351,7 +362,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
      * Función para Manejar el Boton BVerificar
      */
     @Action
-    public void Verificacion() {
+    public void Validacion() {
         String valor = TextoaVerificar.getText();
         if (valor != null && valor.length() > 0) {
 
@@ -530,8 +541,14 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     public void setAF(Automata AF) {
         this.AF = AF;
     }
+
+    @Action
+    public void LimpiarResultadoValidacion() {
+        TextResultado.setText("");
+    }
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton BLimpiarValidacion;
     private javax.swing.JToggleButton BVerificar;
     private javax.swing.JScrollPane CConsola;
     private javax.swing.JTabbedPane CPestañas;
