@@ -87,7 +87,7 @@ public class Subconjuntos {
             /* Buscar transiciones por cada simbolo */
             for (String simbolo : afn.getAlfabeto()) {
                 /* Aplicar cerraduraEpsilon(mueve(T, simbolo)) */
-                Conjunto<Estado> M = mueve(T, simbolo);
+                Conjunto<Estado> M = mover(T, simbolo);
                 Conjunto<Estado> U = cerraduraEpsilon(M);
                 
                 // Logging
@@ -147,7 +147,7 @@ public class Subconjuntos {
      * @param estado <code>Estado</code> sobre el cual aplicar la operación.
      * @return El <code>Conjunto</code> de estados alcanzados.
      */
-    private static Conjunto<Estado> cerraduraEpsilon(Estado estado) {
+    public static Conjunto<Estado> cerraduraEpsilon(Estado estado) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estado, resultado, Alfabeto.VACIO);
         resultado.ordenar();
@@ -161,7 +161,7 @@ public class Subconjuntos {
      * cual aplicar operación.
      * @return El <code>Conjunto</code> de estados alcanzados.
      */
-    private static Conjunto<Estado> cerraduraEpsilon(Conjunto<Estado> estados) {
+    public static Conjunto<Estado> cerraduraEpsilon(Conjunto<Estado> estados) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estados, resultado, Alfabeto.VACIO);
         resultado.ordenar();
@@ -174,7 +174,7 @@ public class Subconjuntos {
      * @param simbolo Símbolo que debe seguirse en las <code>Transicion</code>s.
      * @return El <code>Conjunto</code> de estados alcanzados.
      */
-    private static Conjunto<Estado> mueve(Conjunto<Estado> estados, String simbolo) {
+    public static Conjunto<Estado> mover(Conjunto<Estado> estados, String simbolo) {
         Conjunto<Estado> resultado = new Conjunto<Estado>();
         recorrido(estados, resultado, simbolo);
         resultado.ordenar();
