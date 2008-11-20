@@ -1,14 +1,15 @@
 /*
- * VSimulador.java
- *
- * Created on 18 de noviembre de 2008, 06:08 PM
+ * Trabajo Práctico de Compiladores 2008.
+ * 10mo Semestre Ingeniería Infomática.
+ * Facultad Politécnica - UNA.
  */
-
 package Vista;
 
 /**
- *
- * @author  Marcelo
+ * Clase que representa la Ventana donde se cargar los datos del Analizador
+ * y permite seleccionar las funcionalidades disponibles (AFN, AFD, Simulación).
+ * @author Germán Hüttemann
+ * @author Marcelo Rodas
  */
 public class VSimulador extends javax.swing.JInternalFrame {
 
