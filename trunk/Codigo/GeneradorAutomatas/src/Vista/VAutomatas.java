@@ -21,12 +21,15 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintStream;
 import java.io.PrintWriter;
+import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.jdesktop.application.Action;
+import org.jdesktop.application.Application;
+import org.jdesktop.application.ResourceMap;
 
 /**
  * Clase que representa la Ventana que muestra y administra los Distintos 
@@ -411,6 +414,13 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         GrafoToDot(salidaDot);
 
         /* Paso 2. Crear la Imagen */
+        ResourceMap resourceMap = Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VAutomatas.class);
+        String filename = resourceMap.getResourcesDir() + "dot.exe";
+        URL miurl = resourceMap.getClassLoader().getResource(filename);
+        filename = miurl.getFile();
+        
+        this.setExeFile(filename);
+        
         String dibujo = ubicacion + proyecto.replace(" ", "") + "-" + marca;
         dibujo += ".png";
         
@@ -507,7 +517,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private Automata AF;
     private String proyecto = " ";
     private String ubicacion = new String("C:\\tmp\\");
-    private String exeFile = new String("C:\\Program Files\\Graphviz 2.21\\bin\\dot.exe");
+    private String exeFile = new String("C:\\tmp\\dot.exe");
 
     public String getExeFile() {
         return exeFile;
