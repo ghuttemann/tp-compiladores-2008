@@ -1,8 +1,7 @@
 /*
  * Trabajo Práctico de Compiladores 2008.
- * Analizador Léxico.
- * Archivo: VPrincipal.java
- * Creado el 8 de noviembre de 2008, 05:39 PM
+ * 10mo Semestre Ingeniería Infomática.
+ * Facultad Politécnica - UNA.
  */
 package Vista;
 
