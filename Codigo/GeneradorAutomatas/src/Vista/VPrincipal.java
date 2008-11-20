@@ -12,6 +12,7 @@ import estructuras.AFDMin;
 import estructuras.AFN;
 import algoritmos.Minimizacion;
 import algoritmos.Subconjuntos;
+import estructuras.Configuracion;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -27,8 +28,10 @@ public class VPrincipal extends javax.swing.JInternalFrame {
 
     /** 
      * Constructor Principal
+     * @param config La configuración de directorios.
      */
-    public VPrincipal() {
+    public VPrincipal(Configuracion config) {
+        this.config = config;
         initComponents();
     }
 
@@ -269,7 +272,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         // Controlar que se tenga completo los datos.
         boolean error = false;
         if (this.FERegular.getText().isEmpty()) {
-            JOptionPane.showMessageDialog(this.getDesktopPane(), "La Expresión Regular Debe ser Completada.");
+            JOptionPane.showMessageDialog(this.getDesktopPane(), "La Expresión Regular debe ser completada.");
             error = true;
         }
         if (this.FPersonalizado.isEnabled()) {
@@ -314,7 +317,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 miAFD.setLogProceso(Subconjuntos.getLog().toString());
                 
                 miAFDmin = Minimizacion.getAFDminimo(miAFD);
-                miAFDmin.getAfdPostIdentidades().setLogProceso(Minimizacion.getLog().toString()); // TODO: Agregar todos los pasos
+                miAFDmin.getAfdPostIdentidades().setLogProceso(Minimizacion.getLog().toString());
             }
             
             // Habilitamos los Botones para mostrar los Procesos.
@@ -331,7 +334,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFN() {
-        VAutomatas VAFN = new VAutomatas();
+        VAutomatas VAFN = new VAutomatas(config);
         VAFN.setAF(miAFN);
         String titulo = new String("AFN para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFN.setTitle(titulo);
@@ -349,7 +352,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFD() {
-        VAutomatas VAFD = new VAutomatas();
+        VAutomatas VAFD = new VAutomatas(config);
         VAFD.setAF(miAFD);
         String titulo = new String("AFD para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFD.setTitle(titulo);
@@ -366,7 +369,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarAFDmin() {
-        VAutomatas VAFDmin = new VAutomatas();
+        VAutomatas VAFDmin = new VAutomatas(config);
         VAFDmin.setAF(miAFDmin.getAfdPostMinimizacion());
         String titulo = new String("AFD Mínimo para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
@@ -400,6 +403,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private AFN miAFN;
     private AFD miAFD;
     private AFDMin miAFDmin;
+    private Configuracion config;
 
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
