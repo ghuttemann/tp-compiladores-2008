@@ -25,7 +25,6 @@ import java.net.URL;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.ImageIcon;
-import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.Application;
@@ -367,38 +366,31 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     @Action
     public void Validacion() {
         String valor = TextoaVerificar.getText();
-        if (valor != null && valor.length() > 0) {
+        if (valor == null)
+            valor = "";
 
-            // TODO Verificar cadena con el Automata correspondiente
-            ResultadoValidacion Result = null;
-            if (AFN.class.isInstance(this.AF)) {
-                Result = Validacion.validarAFN((AFN) this.AF, valor);
-            } else if (AFD.class.isInstance(this.AF)) {
-                Result = Validacion.validarAFD((AFD) this.AF, valor);
-            }
-            String mensaje = null;
-            if (!Result.esValido()) {
-                mensaje = "ERROR: La cadena ingresada NO ES ACEPTADA.\n\n";
-                String Resto = Result.getEntradaFaltante();
-                if (!Resto.isEmpty()) {
-                    mensaje += "Se recorrió " + Result.getCamino() + " y no se " +
-                            "pudo avanzar más. FALTÓ CONSUMIR: \"" + Resto + "\".";
-                } else {
-                    mensaje += "Se recorrió " + Result.getCamino() + " y se consumió" +
-                            " la cadena de entrada sin llegar a un ESTADO FINAL. \n";
-                }
-            } else {
-                mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + Result.getCamino();
-            }
-            TextResultado.setText("" + mensaje);
-
-        } else {
-
-            String mensajeError = new String("Debe completar el Campo de Texto " +
-                    "correspondiente a la Expresión a Verificar.");
-            JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el " +
-                    "siguiente error:\n" + mensajeError);
+        // TODO Verificar cadena con el Automata correspondiente
+        ResultadoValidacion Result = null;
+        if (AFN.class.isInstance(this.AF)) {
+            Result = Validacion.validarAFN((AFN) this.AF, valor);
+        } else if (AFD.class.isInstance(this.AF)) {
+            Result = Validacion.validarAFD((AFD) this.AF, valor);
         }
+        String mensaje = null;
+        if (!Result.esValido()) {
+            mensaje = "ERROR: La cadena ingresada NO ES ACEPTADA.\n\n";
+            String Resto = Result.getEntradaFaltante();
+            if (!Resto.isEmpty()) {
+                mensaje += "Se recorrió " + Result.getCamino() + " y no se " +
+                        "pudo avanzar más. FALTÓ CONSUMIR: \"" + Resto + "\".";
+            } else {
+                mensaje += "Se recorrió " + Result.getCamino() + " y se consumió" +
+                        " la cadena de entrada sin llegar a un ESTADO FINAL. \n";
+            }
+        } else {
+            mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + Result.getCamino();
+        }
+        TextResultado.setText("" + mensaje);
     }
 
     /*
