@@ -7,8 +7,6 @@
 package Vista;
 
 import java.awt.Component;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.jdesktop.application.Action;
 import org.jdesktop.application.ResourceMap;
 import org.jdesktop.application.SingleFrameApplication;
@@ -99,7 +97,8 @@ public class VentanaRaiz extends FrameView {
             config = serializer.read(Configuracion.class, new File("config.xml"));
         } catch (Exception ex) {
             config = new Configuracion();
-            Logger.getLogger(VentanaRaiz.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mensaje
+            JOptionPane.showMessageDialog(Desktop, 
+                "Error al leer el archivo \"config.xml\"\n\n" + ex.getMessage());
         }
     }
     
@@ -236,7 +235,7 @@ public class VentanaRaiz extends FrameView {
             if (!nombre.isEmpty() && !hayNombreRepetido(nombre)) {
                 
                 // Se crea el nuevo proyecto con el nombre ingresado.
-                VPrincipal miVentana = new VPrincipal();
+                VPrincipal miVentana = new VPrincipal(config);
                 miVentana.setTitle(nombre);
                 
                 Desktop.add(miVentana, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -284,8 +283,17 @@ public class VentanaRaiz extends FrameView {
         try {
             serializer.write(config, new File("config.xml"));
         } catch (Exception ex) {
-            Logger.getLogger(VentanaRaiz.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mensaje
+            JOptionPane.showMessageDialog(Desktop, 
+                "Error al escribir el archivo \"config.xml\"\n\n" + ex.getMessage());
         }
+    }
+    
+    /**
+     * Retorna la configuración de directorios.
+     * @return La configuración de directorios.
+     */
+    public Configuracion getConfiguracion() {
+        return config;
     }
     
     /*
