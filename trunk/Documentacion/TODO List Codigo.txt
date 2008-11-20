@@ -2,25 +2,25 @@
 TODO List de UI
 ---------------
 
-- Controlar Errores.
-- Guardar Proyecto.
-- Abrir Proyecto.
+- Controlar Errores. --> que errores??
+- Guardar Proyecto. --> en otra vida
+- Abrir Proyecto. --> en otra vida
 - Controlar que 2 proyectos no tengan el mismo Nombre. --> OK
 
 -------------------------
 TODO List de Otras Clases
 -------------------------
 
-- Imprimir procedimientos de transformación.
-- Validación de cadenas. --> YA ESTA PARA AFD
-- Dibujar autómatas.
+- Imprimir procedimientos de transformación. --> OK
+- Validación de cadenas. --> OK	
+- Dibujar autómatas. --> OK
 
 ----------------------------
 Pasos para dibujar automatas
 ----------------------------
-1. Generar una cadena en lenguaje DOT.
-2. Generar archivo DOT.
-3. Generar imagen desde archivo DOT con el programa "dot.exe".
-4. Mostrar la imagen en la aplicación.
+1. Generar una cadena en lenguaje DOT. --> OK
+2. Generar archivo DOT. --> OK
+3. Generar imagen desde archivo DOT con el programa "dot.exe". --> OK
+4. Mostrar la imagen en la aplicación. --> OK
 
-Obs.: Los pasos 1-3 se pueden automatizar con un wrapper.
+Obs.: Los pasos 1-3 se pueden automatizar con un wrapper. --> Cierto... =)
