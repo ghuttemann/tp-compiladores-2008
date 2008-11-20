@@ -36,7 +36,7 @@
     <DimensionLayout dim="1">
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="0" attributes="0">
-              <Component id="CPestañas" pref="476" max="32767" attributes="0"/>
+              <Component id="CPestañas" pref="480" max="32767" attributes="0"/>
               <EmptySpace min="-2" max="-2" attributes="0"/>
           </Group>
       </Group>
@@ -76,7 +76,7 @@
             <DimensionLayout dim="1">
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="1" attributes="0">
-                      <Component id="CTTransicion" pref="269" max="32767" attributes="0"/>
+                      <Component id="CTTransicion" pref="273" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
                       <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
@@ -226,7 +226,7 @@
                 <Component class="javax.swing.JToggleButton" name="BVerificar">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="Vista.VAutomatas" id="Verificacion" methodName="Verificacion"/>
+                      <action class="Vista.VAutomatas" id="Validacion" methodName="Validacion"/>
                     </Property>
                     <Property name="text" type="java.lang.String" resourceKey="BVerificar.text"/>
                     <Property name="name" type="java.lang.String" value="BVerificar" noResource="true"/>
@@ -263,7 +263,7 @@
                 <Component class="javax.swing.JButton" name="BLimpiarValidacion">
                   <Properties>
                     <Property name="action" type="javax.swing.Action" editor="org.netbeans.modules.swingapp.ActionEditor">
-                      <action class="Vista.VAutomatas" id="LimpiarResultadoVerificacion" methodName="LimpiarResultadoVerificacion"/>
+                      <action class="Vista.VAutomatas" id="LimpiarResultadoValidacion" methodName="LimpiarResultadoValidacion"/>
                     </Property>
                     <Property name="name" type="java.lang.String" value="BLimpiarVerificacion" noResource="true"/>
                   </Properties>

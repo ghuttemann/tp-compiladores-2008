@@ -149,7 +149,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TextoaVerificar.setNextFocusableComponent(BVerificar);
 
         javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getActionMap(VAutomatas.class, this);
-        BVerificar.setAction(actionMap.get("Verificacion")); // NOI18N
+        BVerificar.setAction(actionMap.get("Validacion")); // NOI18N
         BVerificar.setText(resourceMap.getString("BVerificar.text")); // NOI18N
         BVerificar.setName("BVerificar"); // NOI18N
 
@@ -166,7 +166,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TextResultado.setName("TextResultado"); // NOI18N
         ScrollResultados.setViewportView(TextResultado);
 
-        BLimpiarValidacion.setAction(actionMap.get("LimpiarResultadoVerificacion")); // NOI18N
+        BLimpiarValidacion.setAction(actionMap.get("LimpiarResultadoValidacion")); // NOI18N
         BLimpiarValidacion.setName("BLimpiarVerificacion"); // NOI18N
 
         javax.swing.GroupLayout CVerificaciónLayout = new javax.swing.GroupLayout(CVerificación);
@@ -225,7 +225,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 269, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -302,7 +302,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 476, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
