@@ -24,3 +24,11 @@ Pasos para dibujar automatas
 4. Mostrar la imagen en la aplicación. --> OK
 
 Obs.: Los pasos 1-3 se pueden automatizar con un wrapper. --> Cierto... =)
+
+----------------------------
+TODO List Final
+----------------------------
+1. Documentación
+2. Confirmar Salir
+3. Mostrar errores de dibujo y E/S
+4. Mostrar Alfab. y E.R. en VAutomatas
