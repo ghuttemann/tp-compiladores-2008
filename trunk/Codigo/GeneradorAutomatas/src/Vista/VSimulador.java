@@ -5,6 +5,17 @@
  */
 package Vista;
 
+import algoritmos.ResultadoValidacion;
+import algoritmos.Validacion;
+import estructuras.AFD;
+import estructuras.Configuracion;
+import estructuras.Conjunto;
+import estructuras.Estado;
+import estructuras.Par;
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+import org.jdesktop.application.Action;
+
 /**
  * Clase que representa la Ventana donde se cargar los datos del Analizador
  * y permite seleccionar las funcionalidades disponibles (AFN, AFD, Simulación).
@@ -13,9 +24,14 @@ package Vista;
  */
 public class VSimulador extends javax.swing.JInternalFrame {
 
+
+
     /** Creates new form VSimulador */
-    public VSimulador() {
+    public VSimulador( AFD automata, String proyecto, Configuracion config) {
         initComponents();
+        this.automata = automata;
+        this.proyecto = proyecto;
+        this.config = config;
     }
 
     /** This method is called from within the constructor to
@@ -27,134 +43,285 @@ public class VSimulador extends javax.swing.JInternalFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        CSimulador = new javax.swing.JSplitPane();
         CDatos = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
-        jButton3 = new javax.swing.JButton();
-        CConsola = new javax.swing.JScrollPane();
-        Consola = new javax.swing.JTextArea();
+        subtitulo = new javax.swing.JLabel();
+        entradaActual = new javax.swing.JTextField();
+        BIniciarSim = new javax.swing.JButton();
+        BAtrasSim = new javax.swing.JButton();
+        BAvanzarSim = new javax.swing.JButton();
+        BTerminarSim = new javax.swing.JButton();
+        entradaConsumida = new javax.swing.JTextField();
+        subtitulo1 = new javax.swing.JLabel();
+        ScrollPaneSimulacion = new javax.swing.JScrollPane();
+        Simulacion = new javax.swing.JLabel();
 
         setClosable(true);
         setIconifiable(true);
         setMaximizable(true);
         setResizable(true);
         setName("Form"); // NOI18N
-
-        CSimulador.setDividerLocation(85);
-        CSimulador.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        CSimulador.setName("CSimulador"); // NOI18N
+        addInternalFrameListener(new javax.swing.event.InternalFrameListener() {
+            public void internalFrameActivated(javax.swing.event.InternalFrameEvent evt) {
+                formInternalFrameActivated(evt);
+            }
+            public void internalFrameClosed(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameClosing(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeactivated(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameDeiconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameIconified(javax.swing.event.InternalFrameEvent evt) {
+            }
+            public void internalFrameOpened(javax.swing.event.InternalFrameEvent evt) {
+            }
+        });
 
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(VSimulador.class);
         CDatos.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("CDatos.border.title"), javax.swing.border.TitledBorder.CENTER, javax.swing.border.TitledBorder.TOP, resourceMap.getFont("CDatos.border.titleFont"))); // NOI18N
         CDatos.setName("CDatos"); // NOI18N
 
-        jLabel1.setText(resourceMap.getString("jLabel1.text")); // NOI18N
-        jLabel1.setName("jLabel1"); // NOI18N
+        subtitulo.setText(resourceMap.getString("subtitulo.text")); // NOI18N
+        subtitulo.setName("subtitulo"); // NOI18N
 
-        jTextField1.setText(resourceMap.getString("jTextField1.text")); // NOI18N
-        jTextField1.setName("jTextField1"); // NOI18N
+        entradaActual.setText(resourceMap.getString("entradaActual.text")); // NOI18N
+        entradaActual.setName("entradaActual"); // NOI18N
 
-        jButton1.setText(resourceMap.getString("jButton1.text")); // NOI18N
-        jButton1.setEnabled(false);
-        jButton1.setName("jButton1"); // NOI18N
+        javax.swing.ActionMap actionMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getActionMap(VSimulador.class, this);
+        BIniciarSim.setAction(actionMap.get("Simular")); // NOI18N
+        BIniciarSim.setText(resourceMap.getString("BIniciarSim.text")); // NOI18N
+        BIniciarSim.setName("BIniciarSim"); // NOI18N
 
-        jButton2.setText(resourceMap.getString("jButton2.text")); // NOI18N
-        jButton2.setEnabled(false);
-        jButton2.setName("jButton2"); // NOI18N
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
-            }
-        });
+        BAtrasSim.setAction(actionMap.get("Atras")); // NOI18N
+        BAtrasSim.setText(resourceMap.getString("BAtrasSim.text")); // NOI18N
+        BAtrasSim.setEnabled(false);
+        BAtrasSim.setName("BAtrasSim"); // NOI18N
 
-        jButton3.setText(resourceMap.getString("jButton3.text")); // NOI18N
-        jButton3.setName("jButton3"); // NOI18N
+        BAvanzarSim.setAction(actionMap.get("Avanzar")); // NOI18N
+        BAvanzarSim.setText(resourceMap.getString("BAvanzarSim.text")); // NOI18N
+        BAvanzarSim.setEnabled(false);
+        BAvanzarSim.setName("BAvanzarSim"); // NOI18N
+
+        BTerminarSim.setAction(actionMap.get("Terminar")); // NOI18N
+        BTerminarSim.setText(resourceMap.getString("BTerminarSim.text")); // NOI18N
+        BTerminarSim.setEnabled(false);
+        BTerminarSim.setName("BTerminarSim"); // NOI18N
+
+        entradaConsumida.setEditable(false);
+        entradaConsumida.setName("entradaConsumida"); // NOI18N
+
+        subtitulo1.setText(resourceMap.getString("subtitulo1.text")); // NOI18N
+        subtitulo1.setName("subtitulo1"); // NOI18N
 
         javax.swing.GroupLayout CDatosLayout = new javax.swing.GroupLayout(CDatos);
         CDatos.setLayout(CDatosLayout);
         CDatosLayout.setHorizontalGroup(
             CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CDatosLayout.createSequentialGroup()
-                .addGap(120, 120, 120)
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CDatosLayout.createSequentialGroup()
-                        .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 75, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButton2))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(184, Short.MAX_VALUE))
+                .addGap(210, 210, 210)
+                .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addGroup(CDatosLayout.createSequentialGroup()
+                        .addComponent(subtitulo)
+                        .addGap(4, 4, 4)
+                        .addComponent(entradaActual, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(CDatosLayout.createSequentialGroup()
+                        .addComponent(BIniciarSim, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
+                        .addComponent(BTerminarSim, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addGroup(CDatosLayout.createSequentialGroup()
+                        .addComponent(BAtrasSim, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
+                        .addGap(6, 6, 6)
+                        .addComponent(BAvanzarSim, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addGroup(CDatosLayout.createSequentialGroup()
+                        .addComponent(subtitulo1)
+                        .addGap(4, 4, 4)
+                        .addComponent(entradaConsumida, javax.swing.GroupLayout.PREFERRED_SIZE, 248, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(187, 187, 187))
         );
         CDatosLayout.setVerticalGroup(
             CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(CDatosLayout.createSequentialGroup()
                 .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(subtitulo)
+                    .addComponent(entradaActual, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(BIniciarSim)
+                    .addComponent(BTerminarSim))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE, false)
+                    .addComponent(BAvanzarSim)
+                    .addComponent(BAtrasSim))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(CDatosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton2)
-                    .addComponent(jButton1)
-                    .addComponent(jButton3))
-                .addGap(29, 29, 29))
+                    .addComponent(entradaConsumida, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(subtitulo1))
+                .addGap(11, 11, 11))
         );
 
-        CSimulador.setLeftComponent(CDatos);
+        ScrollPaneSimulacion.setAutoscrolls(true);
+        ScrollPaneSimulacion.setName("ScrollPaneSimulacion"); // NOI18N
 
-        CConsola.setName("CConsola"); // NOI18N
-
-        Consola.setColumns(20);
-        Consola.setRows(5);
-        Consola.setName("Consola"); // NOI18N
-        CConsola.setViewportView(Consola);
-
-        CSimulador.setBottomComponent(CConsola);
+        Simulacion.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        Simulacion.setText(resourceMap.getString("Simulacion.text")); // NOI18N
+        Simulacion.setName("Simulacion"); // NOI18N
+        ScrollPaneSimulacion.setViewportView(Simulacion);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 654, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(CSimulador, javax.swing.GroupLayout.PREFERRED_SIZE, 654, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CDatos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
+            .addComponent(ScrollPaneSimulacion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 779, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 420, Short.MAX_VALUE)
-            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addGroup(layout.createSequentialGroup()
-                    .addGap(0, 0, Short.MAX_VALUE)
-                    .addComponent(CSimulador, javax.swing.GroupLayout.PREFERRED_SIZE, 420, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGap(0, 0, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(CDatos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(ScrollPaneSimulacion, javax.swing.GroupLayout.DEFAULT_SIZE, 278, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-// TODO add your handling code here:
-}//GEN-LAST:event_jButton2ActionPerformed
+private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt) {//GEN-FIRST:event_formInternalFrameActivated
+    
+}//GEN-LAST:event_formInternalFrameActivated
 
+    @Action
+    public void Simular() {
+        Pintor brocha = new Pintor(automata, proyecto, config);
+        
+        ResultadoValidacion result = Validacion.validarAFD(automata, this.entradaActual.getText());
+        esvalido = result.esValido();
+        recorrido = (Conjunto<Par<Estado, String>>) result.getCamino();
+        resto = result.getEntradaFaltante();
+        
+        misImagenes = new ImageIcon[recorrido.cantidad()];
+        
+        int i = 0;
+        for (Par<Estado, String> p: recorrido) {
+            misImagenes[i++] = brocha.ManejarImagen(p.getPrimero());
+        }
+        
+        contador = 0;
+        Simulacion.setIcon(misImagenes[contador]);
+        
+        BAvanzarSim.setEnabled(true);
+        BTerminarSim.setEnabled(true);
+        BIniciarSim.setEnabled(false);
+        entradaActual.setEditable(false);
+    }
 
+    @Action
+    public void Avanzar() {
+        if (contador < recorrido.cantidad()-1) {
+            if (contador == 0)
+                BAtrasSim.setEnabled(true);
+            
+            contador++;
+            Simulacion.setIcon(misImagenes[contador]);
+            
+            String eActual = entradaActual.getText();
+            String eConsum = entradaConsumida.getText();
+            entradaActual.setText(eActual.substring(1));
+            entradaConsumida.setText(eConsum + eActual.charAt(0));
+            
+            if (contador == recorrido.cantidad()-1) {
+                Validacion();
+                BAvanzarSim.setEnabled(false);
+            }
+        } else {
+            Validacion();
+            BAvanzarSim.setEnabled(false);            
+        }
+    }
+
+    @Action
+    public void Terminar() {
+        BIniciarSim.setEnabled(true);
+        BAvanzarSim.setEnabled(false);
+        BAtrasSim.setEnabled(false);
+        BTerminarSim.setEnabled(false);
+        
+        String eActual = entradaActual.getText();
+        entradaActual.setText(entradaConsumida.getText() + eActual);
+        entradaConsumida.setText("");
+        
+        entradaActual.setEditable(true);
+    }
+
+    @Action
+    public void Atras() {
+        if (contador > 0) {
+            if (contador == recorrido.cantidad()-1)
+                BAvanzarSim.setEnabled(true);
+            
+            contador--;
+            Simulacion.setIcon(misImagenes[contador]);
+            
+            String eActual = entradaActual.getText();
+            String eConsum = entradaConsumida.getText();
+            entradaActual.setText("" + eConsum.charAt(eConsum.length() - 1) + eActual);
+            entradaConsumida.setText(eConsum.substring(0, eConsum.length() - 1));
+            
+            if (contador == 0)
+                BAtrasSim.setEnabled(false);
+        } else {
+            BAtrasSim.setEnabled(false);          
+        }
+    }
+    
+    
+    public void Validacion() {
+        String mensaje = null;
+        if (!esvalido) {
+            mensaje = "ERROR: La cadena ingresada NO ES ACEPTADA.\n\n";
+            if (!resto.isEmpty()) {
+                mensaje += "Se recorrió " + recorrido + " y no se " +
+                        "pudo avanzar más. FALTÓ CONSUMIR: \"" + resto + "\".";
+            } else {
+                mensaje += "Se recorrió " + recorrido + " y se consumió" +
+                        " la cadena de entrada sin llegar a un ESTADO FINAL. \n";
+            }
+            JOptionPane.showMessageDialog(this.getDesktopPane(), "Ocurrio el siguiente error:\n"+mensaje);
+        } else {
+            mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + recorrido;
+            JOptionPane.showMessageDialog(this.getDesktopPane(), mensaje);
+        }
+        
+    }    
+    /*
+     * Zona de Variables Locales
+     */
+    private boolean esvalido;
+    private Conjunto<Par<Estado, String>> recorrido;
+    private String resto;
+    private int contador;
+    private AFD automata;
+    private String proyecto;
+    private Configuracion config;
+    private ImageIcon[] misImagenes;
+    
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JScrollPane CConsola;
+    private javax.swing.JButton BAtrasSim;
+    private javax.swing.JButton BAvanzarSim;
+    private javax.swing.JButton BIniciarSim;
+    private javax.swing.JButton BTerminarSim;
     private javax.swing.JPanel CDatos;
-    private javax.swing.JSplitPane CSimulador;
-    private javax.swing.JTextArea Consola;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JScrollPane ScrollPaneSimulacion;
+    private javax.swing.JLabel Simulacion;
+    private javax.swing.JTextField entradaActual;
+    private javax.swing.JTextField entradaConsumida;
+    private javax.swing.JLabel subtitulo;
+    private javax.swing.JLabel subtitulo1;
     // End of variables declaration//GEN-END:variables
 
 }
