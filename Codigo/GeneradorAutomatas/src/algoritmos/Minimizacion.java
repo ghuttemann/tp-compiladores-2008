@@ -408,8 +408,12 @@ public class Minimizacion {
             if (e.getEsIdentidad() && !e.getEsFinal())
                 estadosEliminados.agregar(e);
         
-        if (estadosEliminados.estaVacio())
+        if (estadosEliminados.estaVacio()) {
+            // Logging
+            log.agregar("Después de eliminar identidades: " + afd.getEstados()).nuevaLinea();
+            log.nuevaLinea();
             return;
+        }
         
         /* Eliminamos los estados identidad no finales */
         for (Estado e : estadosEliminados)
