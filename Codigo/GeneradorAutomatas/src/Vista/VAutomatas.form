@@ -68,7 +68,7 @@
               <Group type="103" groupAlignment="0" attributes="0">
                   <Group type="102" alignment="0" attributes="0">
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CVerificación" max="32767" attributes="0"/>
+                      <Component id="CVerificacion" max="32767" attributes="0"/>
                   </Group>
                   <Component id="CTTransicion" alignment="1" pref="662" max="32767" attributes="0"/>
               </Group>
@@ -78,7 +78,7 @@
                   <Group type="102" alignment="1" attributes="0">
                       <Component id="CTTransicion" pref="280" max="32767" attributes="0"/>
                       <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="CVerificación" min="-2" max="-2" attributes="0"/>
+                      <Component id="CVerificacion" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
                   </Group>
               </Group>
@@ -135,16 +135,16 @@
                 </Component>
               </SubComponents>
             </Container>
-            <Container class="javax.swing.JPanel" name="CVerificaci&#xf3;n">
+            <Container class="javax.swing.JPanel" name="CVerificacion">
               <Properties>
                 <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
                   <Border info="org.netbeans.modules.form.compat2.border.TitledBorderInfo">
                     <TitledBorder justification="1" position="2" title="Area de Validaci&#xf3;n">
-                      <Property name="titleX" resourceKey="CVerificaci&#xf3;n.border.title"/>
+                      <Property name="titleX" resourceKey="CVerificacion.border.title"/>
                     </TitledBorder>
                   </Border>
                 </Property>
-                <Property name="name" type="java.lang.String" value="CVerificaci&#xf3;n" noResource="true"/>
+                <Property name="name" type="java.lang.String" value="CVerificacion" noResource="true"/>
               </Properties>
               <AccessibilityProperties>
                 <Property name="AccessibleContext.accessibleName" type="java.lang.String" resourceKey="CVerificaci&#xf3;n.AccessibleContext.accessibleName"/>
