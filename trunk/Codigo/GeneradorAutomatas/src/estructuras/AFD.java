@@ -86,7 +86,7 @@ public class AFD extends Automata {
         
         if (getEstadosD() != null) {
             int cantFil = getEstados().cantidad();
-            int cantCol = getAlfabeto().getTamaño() + 2;
+            int cantCol = getAlfabeto().getCantidad() + 2;
 
             tabla = cargarTablaTransicion(cantFil, cantCol, 1);
             tabla.setHeaderAt("Estados del AFN", 0);
@@ -96,7 +96,7 @@ public class AFD extends Automata {
         }
         else {
             int cantFil = getEstados().cantidad();
-            int cantCol = getAlfabeto().getTamaño() + 1;
+            int cantCol = getAlfabeto().getCantidad() + 1;
 
             tabla = cargarTablaTransicion(cantFil, cantCol, 0);
         }

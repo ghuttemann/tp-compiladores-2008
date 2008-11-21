@@ -39,7 +39,7 @@ public class AFN extends Automata {
      */
     public TablaTransicion getTablaTransicion() {
         int cantFil = getEstados().cantidad();
-        int cantCol = getAlfabeto().getTamaño() + 2;
+        int cantCol = getAlfabeto().getCantidad() + 2;
         
         return cargarTablaTransicion(cantFil, cantCol, 0);
     }

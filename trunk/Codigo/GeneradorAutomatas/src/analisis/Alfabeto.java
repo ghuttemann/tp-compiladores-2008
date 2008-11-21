@@ -51,7 +51,7 @@ public class Alfabeto implements Iterable<String> {
      * la cantidad de símbolos que contiene.
      * @return Cantidad de símbolos del alfabeto.
      */
-    public int getTamaño() {
+    public int getCantidad() {
         return simbolos.size();
     }
     
@@ -61,7 +61,7 @@ public class Alfabeto implements Iterable<String> {
      * @return El símbolo del alfabeto ubicado en la posición <code>pos</code>.
      */
     public String getSimbolo(int pos) {
-        if (pos == getTamaño())
+        if (pos == getCantidad())
             return Alfabeto.VACIO;
         else
             return simbolos.get(pos);
@@ -87,7 +87,7 @@ public class Alfabeto implements Iterable<String> {
      */
     public int obtenerPosicion(String caracter) {
         if (caracter.equals(Alfabeto.VACIO))
-            return getTamaño();
+            return getCantidad();
         else
             return simbolos.indexOf(caracter);
     }
@@ -96,10 +96,10 @@ public class Alfabeto implements Iterable<String> {
     public String toString() {
         String salida = "{";
         
-        for (int i=0; i < this.getTamaño(); i++) {
+        for (int i=0; i < this.getCantidad(); i++) {
             salida += simbolos.get(i);
             
-            if (i < this.getTamaño()-1)
+            if (i < this.getCantidad()-1)
                 salida += ", ";
         }
         
@@ -119,11 +119,11 @@ public class Alfabeto implements Iterable<String> {
         final Alfabeto other = (Alfabeto) obj;
         
         // Si los tamaños son distintos, no pueden ser iguales.
-        if (other.getTamaño() != this.getTamaño())
+        if (other.getCantidad() != this.getCantidad())
             return false;
         
         // Verificamos cada uno de los símbolos
-        for (int i=0; i < this.getTamaño(); i++) {
+        for (int i=0; i < this.getCantidad(); i++) {
             String tmp1 = this.getSimbolo(i);
             String tmp2 = other.getSimbolo(i);
             
