@@ -43,8 +43,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
     private void initComponents() {
         bindingGroup = new org.jdesktop.beansbinding.BindingGroup();
 
-        CPestañas = new javax.swing.JTabbedPane();
-        Pestaña1 = new javax.swing.JPanel();
+        CPestanhas = new javax.swing.JTabbedPane();
+        Pestanha1 = new javax.swing.JPanel();
         CTTransicion = new javax.swing.JScrollPane();
         TTransicion = new javax.swing.JTable();
         CVerificación = new javax.swing.JPanel();
@@ -55,12 +55,12 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         ScrollResultados = new javax.swing.JScrollPane();
         TextResultado = new javax.swing.JTextArea();
         BLimpiarValidacion = new javax.swing.JButton();
-        Pestaña3 = new javax.swing.JSplitPane();
+        Pestanha3 = new javax.swing.JSplitPane();
         CTTransicion1 = new javax.swing.JScrollPane();
         TTransicion1 = new javax.swing.JTable();
         CConsola = new javax.swing.JScrollPane();
         Consola = new javax.swing.JTextArea();
-        Pestaña2 = new javax.swing.JScrollPane();
+        Pestanha2 = new javax.swing.JScrollPane();
         Imagen = new javax.swing.JLabel();
 
         setClosable(true);
@@ -89,10 +89,10 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             }
         });
 
-        CPestañas.setAutoscrolls(true);
-        CPestañas.setName("CPestañas"); // NOI18N
+        CPestanhas.setAutoscrolls(true);
+        CPestanhas.setName("CPestanhas"); // NOI18N
 
-        Pestaña1.setName("Pestaña1"); // NOI18N
+        Pestanha1.setName("Pestanha1"); // NOI18N
 
         CTTransicion.setAutoscrolls(true);
         CTTransicion.setName("CTTransicion"); // NOI18N
@@ -203,18 +203,18 @@ public class VAutomatas extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        javax.swing.GroupLayout Pestaña1Layout = new javax.swing.GroupLayout(Pestaña1);
-        Pestaña1.setLayout(Pestaña1Layout);
-        Pestaña1Layout.setHorizontalGroup(
-            Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(Pestaña1Layout.createSequentialGroup()
+        javax.swing.GroupLayout Pestanha1Layout = new javax.swing.GroupLayout(Pestanha1);
+        Pestanha1.setLayout(Pestanha1Layout);
+        Pestanha1Layout.setHorizontalGroup(
+            Pestanha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(Pestanha1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
-        Pestaña1Layout.setVerticalGroup(
-            Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
+        Pestanha1Layout.setVerticalGroup(
+            Pestanha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestanha1Layout.createSequentialGroup()
                 .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -223,11 +223,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
 
         CVerificación.getAccessibleContext().setAccessibleName(resourceMap.getString("CVerificación.AccessibleContext.accessibleName")); // NOI18N
 
-        CPestañas.addTab(resourceMap.getString("Pestaña1.TabConstraints.tabTitle"), Pestaña1); // NOI18N
+        CPestanhas.addTab(resourceMap.getString("Pestanha1.TabConstraints.tabTitle"), Pestanha1); // NOI18N
 
-        Pestaña3.setDividerLocation(200);
-        Pestaña3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
-        Pestaña3.setName("Pestaña3"); // NOI18N
+        Pestanha3.setDividerLocation(200);
+        Pestanha3.setOrientation(javax.swing.JSplitPane.VERTICAL_SPLIT);
+        Pestanha3.setName("Pestanha3"); // NOI18N
 
         CTTransicion1.setAutoscrolls(true);
         CTTransicion1.setName("CTTransicion1"); // NOI18N
@@ -259,7 +259,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TTransicion1.getColumnModel().getColumn(0).setPreferredWidth(57);
         TTransicion1.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
 
-        Pestaña3.setLeftComponent(CTTransicion1);
+        Pestanha3.setLeftComponent(CTTransicion1);
 
         CConsola.setName("CConsola"); // NOI18N
 
@@ -269,31 +269,31 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Consola.setName("Consola"); // NOI18N
         CConsola.setViewportView(Consola);
 
-        Pestaña3.setBottomComponent(CConsola);
+        Pestanha3.setBottomComponent(CConsola);
 
-        CPestañas.addTab(resourceMap.getString("Pestaña3.TabConstraints.tabTitle"), Pestaña3); // NOI18N
+        CPestanhas.addTab(resourceMap.getString("Pestanha3.TabConstraints.tabTitle"), Pestanha3); // NOI18N
 
-        Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
-        Pestaña2.setName("Pestaña2"); // NOI18N
+        Pestanha2.setBackground(resourceMap.getColor("Pestanha2.background")); // NOI18N
+        Pestanha2.setName("Pestanha2"); // NOI18N
 
         Imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
         Imagen.setName("Imagen"); // NOI18N
-        Pestaña2.setViewportView(Imagen);
+        Pestanha2.setViewportView(Imagen);
 
-        CPestañas.addTab(resourceMap.getString("Pestaña2.TabConstraints.tabTitle"), Pestaña2); // NOI18N
+        CPestanhas.addTab(resourceMap.getString("Pestanha2.TabConstraints.tabTitle"), Pestanha2); // NOI18N
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
+            .addComponent(CPestanhas, javax.swing.GroupLayout.DEFAULT_SIZE, 667, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
+                .addComponent(CPestanhas, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -427,7 +427,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private javax.swing.JButton BLimpiarValidacion;
     private javax.swing.JToggleButton BVerificar;
     private javax.swing.JScrollPane CConsola;
-    private javax.swing.JTabbedPane CPestañas;
+    private javax.swing.JTabbedPane CPestanhas;
     private javax.swing.JScrollPane CTTransicion;
     private javax.swing.JScrollPane CTTransicion1;
     private javax.swing.JPanel CVerificación;
@@ -435,9 +435,9 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private javax.swing.JLabel EResultado;
     private javax.swing.JLabel EVerificar;
     private javax.swing.JLabel Imagen;
-    private javax.swing.JPanel Pestaña1;
-    private javax.swing.JScrollPane Pestaña2;
-    private javax.swing.JSplitPane Pestaña3;
+    private javax.swing.JPanel Pestanha1;
+    private javax.swing.JScrollPane Pestanha2;
+    private javax.swing.JSplitPane Pestanha3;
     private javax.swing.JScrollPane ScrollResultados;
     private javax.swing.JTable TTransicion;
     private javax.swing.JTable TTransicion1;
