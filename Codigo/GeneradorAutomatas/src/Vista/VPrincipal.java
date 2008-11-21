@@ -58,7 +58,8 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         BAFN = new javax.swing.JButton();
         BAFD = new javax.swing.JButton();
         BAFDmin = new javax.swing.JButton();
-        BSimulacion = new javax.swing.JButton();
+        BSimulacionAFDMin = new javax.swing.JButton();
+        BSimulacionAFD = new javax.swing.JButton();
 
         setClosable(true);
         setIconifiable(true);
@@ -173,9 +174,14 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         BAFDmin.setEnabled(false);
         BAFDmin.setName("BAFDmin"); // NOI18N
 
-        BSimulacion.setAction(actionMap.get("procesarSimulacion")); // NOI18N
-        BSimulacion.setEnabled(false);
-        BSimulacion.setName("BSimulacion"); // NOI18N
+        BSimulacionAFDMin.setAction(actionMap.get("procesarSimulacionAFDMin")); // NOI18N
+        BSimulacionAFDMin.setEnabled(false);
+        BSimulacionAFDMin.setName("BSimulacionAFDMin"); // NOI18N
+
+        BSimulacionAFD.setAction(actionMap.get("procesarSimulacionAFD")); // NOI18N
+        BSimulacionAFD.setText(resourceMap.getString("BSimulacionAFD.text")); // NOI18N
+        BSimulacionAFD.setEnabled(false);
+        BSimulacionAFD.setName("BSimulacionAFD"); // NOI18N
 
         javax.swing.GroupLayout ProcesosLayout = new javax.swing.GroupLayout(Procesos);
         Procesos.setLayout(ProcesosLayout);
@@ -189,8 +195,10 @@ public class VPrincipal extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BAFDmin)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(BSimulacion)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(BSimulacionAFD)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BSimulacionAFDMin)
+                .addContainerGap(23, Short.MAX_VALUE))
         );
         ProcesosLayout.setVerticalGroup(
             ProcesosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -200,7 +208,8 @@ public class VPrincipal extends javax.swing.JInternalFrame {
                     .addComponent(BAFDmin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(BAFN, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(BSimulacion, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BSimulacionAFD, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BSimulacionAFDMin, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -208,34 +217,36 @@ public class VPrincipal extends javax.swing.JInternalFrame {
         Principal.setLayout(PrincipalLayout);
         PrincipalLayout.setHorizontalGroup(
             PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PrincipalLayout.createSequentialGroup()
+                .addGap(35, 35, 35)
+                .addComponent(Procesos, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(32, 32, 32))
             .addGroup(PrincipalLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-            .addGroup(PrincipalLayout.createSequentialGroup()
-                .addGap(36, 36, 36)
-                .addComponent(Procesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(65, 65, 65)
+                .addComponent(Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(66, Short.MAX_VALUE))
         );
         PrincipalLayout.setVerticalGroup(
             PrincipalLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PrincipalLayout.createSequentialGroup()
-                .addContainerGap()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, PrincipalLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(Datos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(Procesos, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(20, Short.MAX_VALUE))
+                .addGap(55, 55, 55))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(Principal, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(36, Short.MAX_VALUE))
+                .addComponent(Principal, javax.swing.GroupLayout.PREFERRED_SIZE, 293, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -320,11 +331,14 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
                 miAFDmin.getAfdPostIdentidades().setLogProceso(Minimizacion.getLog().toString());
             }
             
+            JOptionPane.showMessageDialog(this.getDesktopPane(), "Entrada procesada exitosamente.");
+            
             // Habilitamos los Botones para mostrar los Procesos.
             this.BAFN.setEnabled(true);
             this.BAFD.setEnabled(true);
             this.BAFDmin.setEnabled(true);
-            this.BSimulacion.setEnabled(true);
+            this.BSimulacionAFD.setEnabled(true);
+            this.BSimulacionAFDMin.setEnabled(true);
         }
     }
 
@@ -385,7 +399,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      * representación Gráfica, con expresiones regulares ingresadas.
      */
     @Action
-    public void procesarSimulacion() {
+    public void procesarSimulacionAFDMin() {
         VSimulador VAFDmin = new VSimulador(miAFDmin.getAfdPostIdentidades(), this.getTitle(), config);
         String titulo = new String("AFD Mínimo Simulado para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
@@ -393,6 +407,21 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
         this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFDmin);
         VAFDmin.setVisible(true);
+    }
+    
+    /**
+     * Función para procesar el AFD Mínimo y Generar la Simulación de su
+     * representación Gráfica, con expresiones regulares ingresadas.
+     */
+    @Action
+    public void procesarSimulacionAFD() {
+        VSimulador VAFD = new VSimulador(miAFD, this.getTitle(), config);
+        String titulo = new String("AFD Simulado para Proyecto: \"".concat(this.getTitle().concat("\"")));
+        VAFD.setTitle(titulo);
+        
+        this.getDesktopPane().add(VAFD, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        this.getDesktopPane().moveToFront(VAFD);
+        VAFD.setVisible(true);
     }
     
     
@@ -409,7 +438,8 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     private javax.swing.JButton BAFD;
     private javax.swing.JButton BAFDmin;
     private javax.swing.JButton BAFN;
-    private javax.swing.JButton BSimulacion;
+    private javax.swing.JButton BSimulacionAFD;
+    private javax.swing.JButton BSimulacionAFDMin;
     private javax.swing.JComboBox Clases;
     private javax.swing.JPanel Datos;
     private javax.swing.JTextField FERegular;
