@@ -370,7 +370,7 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
     @Action
     public void procesarAFDmin() {
         VAutomatas VAFDmin = new VAutomatas(config);
-        VAFDmin.setAF(miAFDmin.getAfdPostMinimizacion());
+        VAFDmin.setAF(miAFDmin.getAfdPostIdentidades());
         String titulo = new String("AFD Mínimo para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
         VAFDmin.setProyecto(this.getTitle());
@@ -386,14 +386,13 @@ private void ClasesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:
      */
     @Action
     public void procesarSimulacion() {
-        VSimulador VAFDmin = new VSimulador();
+        VSimulador VAFDmin = new VSimulador(miAFDmin.getAfdPostIdentidades(), this.getTitle(), config);
         String titulo = new String("AFD Mínimo Simulado para Proyecto: \"".concat(this.getTitle().concat("\"")));
         VAFDmin.setTitle(titulo);
         
         this.getDesktopPane().add(VAFDmin, javax.swing.JLayeredPane.DEFAULT_LAYER);
         this.getDesktopPane().moveToFront(VAFDmin);
         VAFDmin.setVisible(true);
-
     }
     
     
