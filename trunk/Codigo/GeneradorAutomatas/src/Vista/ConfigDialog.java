@@ -7,6 +7,7 @@
 package Vista;
 
 import estructuras.Configuracion;
+import java.io.File;
 import javax.swing.JFileChooser;
 import org.jdesktop.application.Action;
 
@@ -179,10 +180,11 @@ public class ConfigDialog extends javax.swing.JDialog {
         dispose();
     }
     
-    private String ObtenerDirectorio() {
+    private String ObtenerDirectorio(File directorioActual) {
         JFileChooser chooser = new JFileChooser();
         chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
         
+        chooser.setCurrentDirectory(directorioActual);
         int valor = chooser.showOpenDialog(this);
         String resultado = "";
         
@@ -194,13 +196,33 @@ public class ConfigDialog extends javax.swing.JDialog {
 
     @Action
     public void graphvizBtnAction() {
-        String ruta = ObtenerDirectorio();
+        /* 
+         * Por defecto, el directorio actual será
+         * el directorio por defecto del usuario
+         */
+        File dir = null;
+        
+        /*
+         * Hacemos el intento de ubicar el directorio
+         * actual en la raíz del sistema de archivo,
+         * para el caso de Windows (C:\) y para el
+         * caso de Unix/Linux (/).
+         */
+        for (File root : File.listRoots()) {
+            if (root.toString().startsWith("C") || root.toString().startsWith("/")) {
+                dir = root;
+                break;
+            }
+        }
+        
+        String ruta = ObtenerDirectorio(dir);
         graphvizPath.setText(ruta);
     }
 
     @Action
     public void tempBtnAction() {
-        String ruta = ObtenerDirectorio();
+        File dir = new File(".");
+        String ruta = ObtenerDirectorio(dir);
         tempPath.setText(ruta);
     }
     
