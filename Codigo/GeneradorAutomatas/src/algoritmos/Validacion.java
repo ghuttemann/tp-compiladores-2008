@@ -44,7 +44,7 @@ public class Validacion {
         
         /* Comenzamos por la cerradura del estado inicial del AFN */
         Conjunto<Estado> estadosActuales = Subconjuntos.cerraduraEpsilon(afn.getEstadoInicial());
-        camino.agregar(new Par<Conjunto<Estado>, String>(estadosActuales));
+        camino.agregar(new Par<Conjunto<Estado>, String>(estadosActuales, ""));
         
         /* Cada simbolo de entrada */
         String simbolo;
@@ -125,7 +125,7 @@ public class Validacion {
         
         /* Comenzamos por el estado inicial del AFD */
         Estado estadoActual = afd.getEstadoInicial();
-        camino.agregar(new Par<Estado, String>(estadoActual));
+        camino.agregar(new Par<Estado, String>(estadoActual, ""));
         
         /* Cada simbolo de entrada */
         String simbolo;
