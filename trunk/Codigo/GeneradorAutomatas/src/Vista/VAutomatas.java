@@ -6,25 +6,13 @@
  */
 package Vista;
 
-import analisis.Alfabeto;
 import estructuras.AFD;
 import estructuras.AFN;
 import estructuras.Automata;
-import estructuras.Conjunto;
-import estructuras.Estado;
 import algoritmos.ResultadoValidacion;
 import estructuras.TablaTransicion;
-import estructuras.Transicion;
 import algoritmos.Validacion;
 import estructuras.Configuracion;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-import javax.swing.ImageIcon;
 import javax.swing.JTable;
 import org.jdesktop.application.Action;
 
@@ -222,12 +210,12 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             .addGroup(Pestaña1Layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 666, Short.MAX_VALUE)
+            .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
         Pestaña1Layout.setVerticalGroup(
             Pestaña1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestaña1Layout.createSequentialGroup()
-                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 273, Short.MAX_VALUE)
+                .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -288,6 +276,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestaña2.setBackground(resourceMap.getColor("Pestaña2.background")); // NOI18N
         Pestaña2.setName("Pestaña2"); // NOI18N
 
+        Imagen.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         Imagen.setIcon(resourceMap.getIcon("Imagen.icon")); // NOI18N
         Imagen.setText(resourceMap.getString("Imagen.text")); // NOI18N
         Imagen.setName("Imagen"); // NOI18N
@@ -304,7 +293,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 480, Short.MAX_VALUE)
+                .addComponent(CPestañas, javax.swing.GroupLayout.DEFAULT_SIZE, 484, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -353,7 +342,8 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     TTransicion1.updateUI();
 
     /* Finalmente se generan las imagenes */
-    ManejarImagen();
+    Pintor brocha = new Pintor(AF, proyecto, config);
+    this.Imagen.setIcon(brocha.ManejarImagen(null));
     
     /* Se carga el proceso realizado por el Automata */
     Consola.setText(this.AF.getLogProceso());
@@ -391,113 +381,6 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
             mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + Result.getCamino();
         }
         TextResultado.setText("" + mensaje);
-    }
-
-    /*
-     * Función para Generar y cargar la Imagen del Automata correspondiente.
-     * @param evt
-     */
-    private void ManejarImagen(){
-        
-        /* Paso 1. Crear Archivo de Salida  */
-        String marca = "" + System.currentTimeMillis();
-        String salidaDot = config.getTempPath() + File.separator + proyecto.replace(" ", "");
-        salidaDot +=  "-" + marca;
-        salidaDot += ".dot";
-        
-        GrafoToDot(salidaDot);
-
-        /* Paso 2. Crear la Imagen */        
-        String dibujo = config.getTempPath() + File.separator + proyecto.replace(" ", "");
-        dibujo += "-" + marca;
-        dibujo += ".png";
-        
-        try {
-            String exeFile = config.getGraphvizPath() + File.separator + "dot";
-            ejecutarDotExe(exeFile, salidaDot, dibujo);
-        } catch (IOException ex) {
-            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mostrar error
-        }
-
-        /* Paso 3. Cargar la imagen en la Ventana */
-        this.Imagen.setIcon(new ImageIcon(dibujo));
-    }
-    
-    /**
-     * Paso 1 para el Manejo de Imagenes (Crear Archivo de Salida).
-     * @param salidaDot
-     */
-    private void GrafoToDot(String salidaDot){
-        PrintWriter dotWriter = null;
-        try {
-            dotWriter = new PrintWriter(new File(salidaDot), new String("ISO-8859-1"));
-        } catch (IOException ex) {
-            Logger.getLogger(VAutomatas.class.getName()).log(Level.SEVERE, null, ex); // TODO: Mostrar error
-        }
-        /* Paso 1.1. Escribir Cabecera  */
-        String nombre = "\"".concat(this.getProyecto()+"\"");
-        int longitud = AF.cantidadEstados();
-        if (longitud > 2)
-            longitud--;
-        dotWriter.print("digraph " + nombre + "{\n");
-        dotWriter.print("\trankdir=LR;\n");
-        dotWriter.print("\tsize=\""+longitud+",5\"\n");
-        dotWriter.print("\toverlap=\"scale\"\n");
-        /* Paso 1.2. Escribir los Nodos Finales */
-        dotWriter.print("\tnode [shape = doublecircle];");
-
-        Conjunto<Estado> finales = AF.getEstadosFinales();
-        for (Estado e : finales) {
-            dotWriter.print(" \"" + e+"\"");
-        }
-        dotWriter.print(";\n");
-
-        /* Paso 1.3. Escribir los Nodos no Finales */
-        dotWriter.print("\tnode [shape = circle];\n");
-        Conjunto<Estado> todos = AF.getEstados();
-        for (Estado e : todos) {
-            String origen = e.toString();
-            Conjunto<Transicion> transiciones = e.getTransiciones();
-            for (Transicion t : transiciones) {
-                String etiqueta = t.getSimbolo();
-                if (etiqueta.equals(Alfabeto.VACIO))
-                    etiqueta = "".concat("&epsilon;");
-                dotWriter.print("\t\"" + origen + "\" -> \"" + t.getEstado() + "\" [ label = \"" +
-                        etiqueta + "\" ];\n");
-            }
-        }
-        dotWriter.println("}");
-        dotWriter.close();        
-    }
-
-    /*
-     * Paso 2 para el Manejo de Imagenes (Crear Imagen).
-     * 
-     * dot.exe works by taking *.dot file and piping 
-     * results into another file, for example:
-     * d:\graphviz-1.12\bin\dot.exe -Tgif c:\temp\ManualDraw.dot > c:\temp\ManualDraw.gif
-     * so we follow that model here and read stdout until EOF
-     */
-    private void ejecutarDotExe(String exeFile, String dotFileName, String outFileName) throws IOException {
-
-        final String exeCmd = exeFile + " -Tpng " + dotFileName;
-
-        Process p = Runtime.getRuntime().exec(exeCmd);
-
-        PrintStream ps = new PrintStream(outFileName);
-        InputStream is = p.getInputStream();				
-	byte[] buf = new byte[32 * 1024];
-        int len;
-        while (true) {
-            len = is.read(buf);
-            if (len <= 0){
-                break;
-            }
-            ps.write(buf, 0, len);
-        }        
-        is.close();
-        ps.close();
-        p.destroy();
     }
         
     /**
