@@ -47,7 +47,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         Pestanha1 = new javax.swing.JPanel();
         CTTransicion = new javax.swing.JScrollPane();
         TTransicion = new javax.swing.JTable();
-        CVerificación = new javax.swing.JPanel();
+        CVerificacion = new javax.swing.JPanel();
         EVerificar = new javax.swing.JLabel();
         TextoaVerificar = new javax.swing.JTextField();
         BVerificar = new javax.swing.JToggleButton();
@@ -128,8 +128,8 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         TTransicion.getColumnModel().getColumn(0).setPreferredWidth(57);
         TTransicion.getColumnModel().getColumn(0).setHeaderValue(resourceMap.getString("TTransicion.columnModel.title0")); // NOI18N
 
-        CVerificación.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("CVerificación.border.title"), javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP)); // NOI18N
-        CVerificación.setName("CVerificación"); // NOI18N
+        CVerificacion.setBorder(javax.swing.BorderFactory.createTitledBorder(null, resourceMap.getString("CVerificacion.border.title"), javax.swing.border.TitledBorder.LEFT, javax.swing.border.TitledBorder.TOP)); // NOI18N
+        CVerificacion.setName("CVerificacion"); // NOI18N
 
         EVerificar.setText(resourceMap.getString("EVerificar.text")); // NOI18N
         EVerificar.setName("EVerificar"); // NOI18N
@@ -159,40 +159,40 @@ public class VAutomatas extends javax.swing.JInternalFrame {
         BLimpiarValidacion.setAction(actionMap.get("LimpiarResultadoValidacion")); // NOI18N
         BLimpiarValidacion.setName("BLimpiarVerificacion"); // NOI18N
 
-        javax.swing.GroupLayout CVerificaciónLayout = new javax.swing.GroupLayout(CVerificación);
-        CVerificación.setLayout(CVerificaciónLayout);
-        CVerificaciónLayout.setHorizontalGroup(
-            CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(CVerificaciónLayout.createSequentialGroup()
+        javax.swing.GroupLayout CVerificacionLayout = new javax.swing.GroupLayout(CVerificacion);
+        CVerificacion.setLayout(CVerificacionLayout);
+        CVerificacionLayout.setHorizontalGroup(
+            CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(CVerificacionLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CVerificaciónLayout.createSequentialGroup()
-                        .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                .addGroup(CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CVerificacionLayout.createSequentialGroup()
+                        .addGroup(CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificacionLayout.createSequentialGroup()
                                 .addComponent(EVerificar)
                                 .addGap(4, 4, 4)
                                 .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 141, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(10, 10, 10))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
-                                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificacionLayout.createSequentialGroup()
+                                .addGroup(CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addComponent(BLimpiarValidacion, javax.swing.GroupLayout.Alignment.TRAILING, 0, 0, Short.MAX_VALUE)
                                     .addComponent(BVerificar, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                 .addGap(47, 47, 47)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(ScrollResultados, javax.swing.GroupLayout.DEFAULT_SIZE, 433, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificacionLayout.createSequentialGroup()
                         .addGap(327, 327, 327)
                         .addComponent(EResultado, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(251, 251, 251))))
         );
-        CVerificaciónLayout.setVerticalGroup(
-            CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificaciónLayout.createSequentialGroup()
+        CVerificacionLayout.setVerticalGroup(
+            CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, CVerificacionLayout.createSequentialGroup()
                 .addComponent(EResultado)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(CVerificaciónLayout.createSequentialGroup()
-                        .addGroup(CVerificaciónLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                .addGroup(CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(CVerificacionLayout.createSequentialGroup()
+                        .addGroup(CVerificacionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(TextoaVerificar, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(EVerificar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -209,7 +209,7 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             Pestanha1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Pestanha1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(CVerificación, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(CVerificacion, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(CTTransicion, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 662, Short.MAX_VALUE)
         );
         Pestanha1Layout.setVerticalGroup(
@@ -217,11 +217,11 @@ public class VAutomatas extends javax.swing.JInternalFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Pestanha1Layout.createSequentialGroup()
                 .addComponent(CTTransicion, javax.swing.GroupLayout.DEFAULT_SIZE, 280, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(CVerificación, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(CVerificacion, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
 
-        CVerificación.getAccessibleContext().setAccessibleName(resourceMap.getString("CVerificación.AccessibleContext.accessibleName")); // NOI18N
+        CVerificacion.getAccessibleContext().setAccessibleName(resourceMap.getString("CVerificación.AccessibleContext.accessibleName")); // NOI18N
 
         CPestanhas.addTab(resourceMap.getString("Pestanha1.TabConstraints.tabTitle"), Pestanha1); // NOI18N
 
@@ -430,7 +430,7 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
     private javax.swing.JTabbedPane CPestanhas;
     private javax.swing.JScrollPane CTTransicion;
     private javax.swing.JScrollPane CTTransicion1;
-    private javax.swing.JPanel CVerificación;
+    private javax.swing.JPanel CVerificacion;
     private javax.swing.JTextArea Consola;
     private javax.swing.JLabel EResultado;
     private javax.swing.JLabel EVerificar;
