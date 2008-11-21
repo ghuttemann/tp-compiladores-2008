@@ -102,13 +102,7 @@ public class AnalizadorSintactico {
     private AFN R1() throws Exception {
         if (preanalisis.getIdentificador() == TokenExprReg.UNION) {
             match(preanalisis);
-            /*
-             * Como el lado derecho de la producción 
-             * 'R1 -> "|" Concat R1' es igual al de 
-             * 'ExpReg -> Concat R1', en terminos de
-             * ejecución de métodos, hacemos una llamada
-             * al método ExpReg().
-             */
+            
             log.agregar("R1 -> \"|\" Concat R1").nuevaLinea();
             AFN afn1 = Concat();
             AFN afn2 = R1();
@@ -149,12 +143,7 @@ public class AnalizadorSintactico {
         switch (preanalisis.getIdentificador()) {
             case PAREN_IZQUIERDO:
             case ALFABETO:
-                /*
-                 * Como el lado derecho de la producción 
-                 * 'R2 -> Grupo R2' es igual al de 
-                 * 'Concat -> Grupo R2' hacemos una llamada
-                 * al método Concat().
-                 */
+                
                 log.agregar("R2 -> Grupo R2").nuevaLinea();
                 AFN afn1 = Grupo();
                 AFN afn2 = R2();
