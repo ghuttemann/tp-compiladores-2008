@@ -130,7 +130,7 @@ public class AnalizadorLexico {
         tablaSimbolos.put(")", TokenExprReg.PAREN_DERECHO);
         tablaSimbolos.put("", TokenExprReg.FINAL);
 
-        for (int i=0; i < alfabeto.getTamaño(); i++) {
+        for (int i=0; i < alfabeto.getCantidad(); i++) {
             String simbolo = alfabeto.getSimbolo(i);
             tablaSimbolos.put(simbolo, TokenExprReg.ALFABETO);
         }
