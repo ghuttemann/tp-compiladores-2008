@@ -296,7 +296,13 @@ public abstract class Automata {
          * de un estado de afnOrigen para convertirlo en el
          * correspondiente estado de afnDestino.
          */
-        int incrementoEst = incrementoTrans; //afnDestino.cantidadEstados(); TODO
+        int incrementoEst = incrementoTrans; // TODO:
+                                             // Teóricamente, aquí debería asignarse 
+                                             // afnDestino.cantidadEstados(), pero 
+                                             // el valor asignado actualmente también
+                                             // funciona correctamente, por lo que se
+                                             // se deja así ya que no se pudo analizar
+                                             // el impacto del cambio.
         
         /* Agregamos los nuevos estados para afnDestino */
         for (int i=omitidos; i < afOrigen.cantidadEstados(); i++)
