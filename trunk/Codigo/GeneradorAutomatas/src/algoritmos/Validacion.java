@@ -52,7 +52,7 @@ public class Validacion {
         /* Recorremos mientras hayan simbolos en la entrada */
         while ((simbolo = buffer.poll()) != null) {
             /* Nos movemos al siguiente estado */
-            estadosActuales = Subconjuntos.mover(estadosActuales, simbolo);
+            estadosActuales = Subconjuntos.cerraduraEpsilon(Subconjuntos.mover(estadosActuales, simbolo));
             
             if (estadosActuales.estaVacio()) {
                 /* Si no se alcanza ningún estado, terminamos */
