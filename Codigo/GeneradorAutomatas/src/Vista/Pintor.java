@@ -97,8 +97,8 @@ public class Pintor {
         /* Paso 1.1. Escribir Cabecera  */
         String nombre = "\"".concat(this.proyecto+"\"");
         int longitud = AF.cantidadEstados();
-        if (longitud > 2)
-            longitud--;
+        if (longitud < 5)
+            longitud = 5;
         
         dotWriter.print("digraph " + nombre + "{\n");
         dotWriter.print("\trankdir=LR;\n");
