@@ -32,6 +32,8 @@ public class VSimulador extends javax.swing.JInternalFrame {
         this.automata = automata;
         this.proyecto = proyecto;
         this.config = config;
+        
+        pintarImagenInicial();
     }
 
     /** This method is called from within the constructor to
@@ -256,6 +258,8 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         entradaConsumida.setText("");
         
         entradaActual.setEditable(true);
+        
+        pintarImagenInicial();
     }
 
     @Action
@@ -279,6 +283,11 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
         }
     }
     
+    private void pintarImagenInicial() {
+        Pintor brocha = new Pintor(automata, proyecto, config);
+        ImageIcon imagen = brocha.ManejarImagen(null);
+        Simulacion.setIcon(imagen);
+    }
     
     public void Validacion() {
         String mensaje = null;
@@ -296,8 +305,8 @@ private void formInternalFrameActivated(javax.swing.event.InternalFrameEvent evt
             mensaje = "OK. La cadena es ACEPTADA.\nSe recorrio " + recorrido;
             JOptionPane.showMessageDialog(this.getDesktopPane(), mensaje);
         }
-        
-    }    
+    }
+    
     /*
      * Zona de Variables Locales
      */
