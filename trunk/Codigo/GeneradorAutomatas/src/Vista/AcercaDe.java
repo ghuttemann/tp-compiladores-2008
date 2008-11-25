@@ -30,6 +30,7 @@ public class AcercaDe extends javax.swing.JDialog {
         javax.swing.JLabel imageLabel = new javax.swing.JLabel();
         javax.swing.JLabel versionLabel1 = new javax.swing.JLabel();
         javax.swing.JLabel appVendorLabel1 = new javax.swing.JLabel();
+        javax.swing.JLabel appVendorLabel2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         org.jdesktop.application.ResourceMap resourceMap = org.jdesktop.application.Application.getInstance(Vista.AplicacionAnalizadorLexico.class).getContext().getResourceMap(AcercaDe.class);
@@ -80,6 +81,9 @@ public class AcercaDe extends javax.swing.JDialog {
         appVendorLabel1.setText(resourceMap.getString("appVendorLabel1.text")); // NOI18N
         appVendorLabel1.setName("appVendorLabel1"); // NOI18N
 
+        appVendorLabel2.setText(resourceMap.getString("appVendorLabel2.text")); // NOI18N
+        appVendorLabel2.setName("appVendorLabel2"); // NOI18N
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -92,27 +96,26 @@ public class AcercaDe extends javax.swing.JDialog {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(79, 79, 79)
-                                .addComponent(appTitleLabel))
-                            .addGroup(layout.createSequentialGroup()
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                        .addGap(79, 79, 79)
-                                        .addComponent(versionLabel1))
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addComponent(versionLabel)
-                                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                            .addComponent(appVersionLabel))
-                                        .addComponent(appDescLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(vendorLabel)
-                                        .addGroup(layout.createSequentialGroup()
-                                            .addGap(10, 10, 10)
-                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(appVendorLabel1)
-                                                .addComponent(appVendorLabel)))))))
-                        .addGap(26, 26, 26))
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(versionLabel)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(appVersionLabel))
+                                    .addComponent(appDescLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(vendorLabel)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(10, 10, 10)
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(appVendorLabel1)
+                                            .addComponent(appVendorLabel)
+                                            .addComponent(appVendorLabel2)))))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(79, 79, 79)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(versionLabel1)
+                                    .addComponent(appTitleLabel))))
+                        .addGap(32, 32, 32))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(closeButton)
                         .addContainerGap())))
@@ -125,7 +128,7 @@ public class AcercaDe extends javax.swing.JDialog {
                     .addComponent(imageLabel, javax.swing.GroupLayout.DEFAULT_SIZE, 230, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(appTitleLabel)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 44, Short.MAX_VALUE)
                         .addComponent(versionLabel1)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(appDescLabel)
@@ -133,13 +136,15 @@ public class AcercaDe extends javax.swing.JDialog {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(appVersionLabel)
                             .addComponent(versionLabel))
-                        .addGap(30, 30, 30)
+                        .addGap(18, 18, 18)
                         .addComponent(vendorLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(appVendorLabel)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(appVendorLabel)
+                            .addComponent(appVendorLabel1))
+                        .addGap(4, 4, 4)
+                        .addComponent(appVendorLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(appVendorLabel1)
-                        .addGap(11, 11, 11)
                         .addComponent(closeButton)))
                 .addContainerGap())
         );
